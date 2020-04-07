@@ -42,7 +42,29 @@ include_directories(${MKL_INC} ${SUITE_INC} ${METIS_INC}
         "triangularSolve/")
 link_directories(${MKL_LIB} ${MKL_LIB2} ${SUITE_LIB} ${METIS_LIB} )
 add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
+add_library(nasoq-dev ${SOURCE_FILES})
 target_link_libraries(NASOQ
+        #gomp
+        iomp5
+        #mkl_sequential
+        mkl_intel_lp64
+        mkl_core
+        #mkl_gnu_thread
+        mkl_intel_thread
+        pthread
+        m
+        dl
+        amd
+        cholmod
+        suitesparseconfig
+        metis
+        #pastix_murge
+        #pastix
+        #matrix_driver
+        #scotch
+        #scotcherrexit
+        )
+target_link_libraries(nasoq-dev
         #gomp
         iomp5
         #mkl_sequential

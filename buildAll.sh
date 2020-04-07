@@ -1,14 +1,14 @@
 #!/bin/sh
 
-export MKLROOT=/home/kazem/programs/intel/compilers_and_libraries_2018.2.199/linux/mkl/
-export SUITEROOT=/home/kazem/programs/SuiteSparse/
-export METISROOT=/home/kazem/programs/metis-5.1.0/build/Linux-x86_64/
+export MKLROOT=/opt/intel/compilers_and_libraries/linux/mkl/
+export SUITEROOT=/home/matt/Projects/libs/SuiteSparse/
+export METISROOT=/home/matt/Projects/libs/metis/
 
 mkdir build
 cd build
 make clean
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+make -j
 
 
 ## runing a small QP
