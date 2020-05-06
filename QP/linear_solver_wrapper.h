@@ -1366,6 +1366,7 @@ if(to_del){
  delete_node_tree_simple(col_del);
   }
 #endif
+  return retval;
  }
 
 /*

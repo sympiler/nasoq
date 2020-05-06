@@ -9,7 +9,12 @@
 
 #include <assert.h>
 #include "stddef.h"
+#ifndef _MSC_VER
 #include "sys/param.h"
+#else
+#define MAX(a,b) (((a) > (b)) ? (a) : (b))
+#define MIN(a,b) (((a) < (b)) ? (a) : (b))
+#endif
 #define CS_MAX(a,b) (((a) > (b)) ? (a) : (b))
 #define CS_MIN(a,b) (((a) < (b)) ? (a) : (b))
 #define CS_FLIP(i) (-(i)-2)
@@ -210,7 +215,7 @@ typedef struct Sympiler_BCSC
 
 } BCSC ;
 
-int allocateLC(BCSC *L, int sw){
+void allocateLC(BCSC *L, int sw){
  int sNo = L->nsuper;
  if(sw){
   L->super = new int[sNo+1]();
@@ -246,7 +251,7 @@ int allocateLC(BCSC *L, int sw){
 
 }
 
-int allocateAC(CSC *A, int nrow, int nnz, int sytpe, int sw){
+void allocateAC(CSC *A, int nrow, int nnz, int sytpe, int sw){
  if(sw){
   A->nrow=A->ncol=nrow;
   A->nzmax = nnz;

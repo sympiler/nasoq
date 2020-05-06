@@ -35,7 +35,7 @@ int ldl_parallel_left_simplicial_01 (int n, int* c, int* r, double* values,
  for (int i1 = 0; i1 < nLevels; ++i1) {
 #pragma omp parallel private(f,xi)
   {
-#pragma omp  for schedule(auto) private(f,xi)
+#pragma omp  for schedule(static) private(f,xi)
    for (int j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
     f = new double[n]();
     xi = new int[2*n]();

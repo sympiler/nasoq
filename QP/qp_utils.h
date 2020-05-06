@@ -105,7 +105,7 @@ int build_qp_optimality_from_file(std::string hessian_file,
 /*
  * takes 1 iterations, just add
  */
-int build_qp_01(size_t &sizeH, size_t &nnzH, double* &q,
+void build_qp_01(size_t &sizeH, size_t &nnzH, double* &q,
                int* &colH, int* &rowH, double* &valH,
                size_t &ad1, size_t &ad2,
                size_t &nnzA,
@@ -147,7 +147,7 @@ int build_qp_01(size_t &sizeH, size_t &nnzH, double* &q,
 /*
  * takes 1 iterations, just add
  */
-int build_qp_02(size_t &sizeH, size_t &nnzH, double* &q,
+void build_qp_02(size_t &sizeH, size_t &nnzH, double* &q,
                int* &colH, int* &rowH, double* &valH,
                size_t &ad1, size_t &ad2,
                size_t &nnzA,
@@ -193,7 +193,7 @@ int build_qp_02(size_t &sizeH, size_t &nnzH, double* &q,
 /*
  * takes 2 iterations, just add
  */
-int build_qp_03(size_t &sizeH, size_t &nnzH, double* &q,
+void build_qp_03(size_t &sizeH, size_t &nnzH, double* &q,
                 int* &colH, int* &rowH, double* &valH,
                 size_t &ad1, size_t &ad2,
                 size_t &nnzA,
@@ -249,7 +249,7 @@ int build_qp_03(size_t &sizeH, size_t &nnzH, double* &q,
 /*
  * eq constraints
  */
-int build_qp_04(size_t &sizeH, size_t &nnzH, double* &q,
+void build_qp_04(size_t &sizeH, size_t &nnzH, double* &q,
                 int* &colH, int* &rowH, double* &valH,
                 size_t &ad1, size_t &ad2,
                 size_t &nnzA,

@@ -1037,7 +1037,7 @@ int dual_feasibility(){
 double dual_step_length(int &nxt_drop){
  double step = std::numeric_limits<double>::max();
  for (int i = 0; i < B->nrow; ++i) {//TODO: we don't need all range
-  if(lagrange_mult[i] > 0 and used_const[i]){
+  if(lagrange_mult[i] > 0 && used_const[i]){
    double tmp = dual_vars[i] / lagrange_mult[i];
    if(tmp < step ){
     step = tmp;
@@ -1138,7 +1138,7 @@ int solve_kkt(solve_type s_type){
 /*
  * Editing the nxt_col in the KKT matrix.
  */
-int edit_kkt(int add_del, int nxt_col ){
+void edit_kkt(int add_del, int nxt_col ){
  std::vector<int> sn_list;
  sn_list.push_back(nxt_col);
 

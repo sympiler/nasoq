@@ -72,7 +72,7 @@ int lsolvePar (int n, int* Lp, int* Li, double* Lx, double *x,
   int li=0;
 #pragma omp parallel for \
    default(shared) private(li)  \
-   schedule(auto)
+   schedule(static)
   for ( li = levelPtr[l]; li < levelPtr[l + 1]; ++li) {
    int j = levelSet[li];
    x [j] /= Lx [Lp [j]] ;
@@ -99,7 +99,7 @@ int lsolveParH2 (int n, int* Lp, int* Li, double* Lx, double *x,
  for (int i1 = 0; i1 < levels ; ++i1) {
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto)
+#pragma omp  for schedule(static)
    for (int j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
     for (int k1 = parPtr[j1]; k1 < parPtr[j1 + 1]; ++k1) {
      int j = partition[k1];
@@ -265,7 +265,7 @@ int lsolve_reach_dec (int n, int* Gp, int* Gi, double* Gx, int* Bp, int* Bi, dou
 /*
  * only for motive example
  */
-int lSolveSympiler(int n, int* Lp, int* Li,
+void lSolveSympiler(int n, int* Lp, int* Li,
                     const double* Lx, double *x,
                    int *reachSet, int reachSetSize){
  int p,px,j;

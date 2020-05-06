@@ -139,7 +139,7 @@ int LeveledBlockedLTsolve_update (int n, size_t *Lp, int *Li, double *Lx,
     tempVec = ws_dbl + omp_get_thread_num() * n;
    }
 #pragma omp for \
-            schedule(auto)
+            schedule(static)
    for (li = levelPtr[i1]; li < levelPtr[i1 + 1]; ++li) {
     int i = levelSet[li];
     if(!marked[i])
@@ -267,7 +267,7 @@ int leveledBlockedLsolve (int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_
    //tempVec = new double[n]();
    tempVec = (double *) calloc(n, sizeof(double));
 #pragma omp for \
-            schedule(auto)
+            schedule(static)
    for (li = levelPtr[l]; li < levelPtr[l + 1]; ++li) {
     int i = levelSet[li];
     
@@ -329,7 +329,7 @@ int leveledBlockedLsolve_update(int n, size_t *Lp, int *Li, double *Lx,
     tempVec = ws_dbl + omp_get_thread_num() * n;
    }
 #pragma omp for \
-            schedule(auto)
+            schedule(static)
    for (li = levelPtr[l]; li < levelPtr[l + 1]; ++li) {
     int i = levelSet[li];
     if(!mask[i])
@@ -386,7 +386,7 @@ int H2LeveledBlockedLsolve (int n, size_t *Lp, int *Li, double *Lx, int NNZ, siz
   int j1 = 0;
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto) private(j1, tempVec)
+#pragma omp  for schedule(static) private(j1, tempVec)
    for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
     //tempVec = new double[n]();
     tempVec = (double *) calloc(n , sizeof(double));
@@ -451,7 +451,7 @@ int H2LeveledBlockedLsolve_update (int n, size_t *Lp, int *Li, double *Lx, int N
   int j1 = 0;
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto) private(j1)
+#pragma omp  for schedule(static) private(j1)
    for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
     //tempVec = new double[n]();
     double *tempVec;
@@ -527,7 +527,7 @@ int H2LeveledBlockedLTsolve (int n, size_t *Lp, int *Li, double *Lx, int NNZ, si
   int j1 = 0;
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto) private(j1, tempVec)
+#pragma omp  for schedule(static) private(j1, tempVec)
    for (j1 = levelPtr[i1]; j1 < levelPtr[i1+1]; ++j1) {
     //tempVec = new double[n]();
     tempVec = (double *) calloc(n , sizeof(double));
@@ -590,7 +590,7 @@ int H2LeveledBlockedLTsolve_update (int n, size_t *Lp, int *Li,
   int j1 = 0;
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto) private(j1)
+#pragma omp  for schedule(static) private(j1)
    for (j1 = levelPtr[i1]; j1 < levelPtr[i1+1]; ++j1) {
     //tempVec = new double[n]();
     //tempVec = (double *) calloc(n , sizeof(double));
@@ -672,7 +672,7 @@ int H2LeveledBlockedLsolve_Peeled (int n, size_t *Lp, int *Li, double *Lx, int N
   int j1 = 0;
 #pragma omp parallel //shared(lValues)//private(map, contribs)
   {
-#pragma omp  for schedule(auto) private(j1, tempVec)
+#pragma omp  for schedule(static) private(j1, tempVec)
    for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
     //tempVec = new double[n]();
     tempVec = (double *) calloc(n , sizeof(double));

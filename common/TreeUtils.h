@@ -416,7 +416,7 @@ int heightPartitioning(int levelNo,
  return lClusterCnt;
 }
 
-int makeSlackedLevelSet(int n, int clusterCnt,
+void makeSlackedLevelSet(int n, int clusterCnt,
                         int *partition2Level,
                         int originalHeight,
                         std::vector<std::vector<int>> &slackGroups,//out

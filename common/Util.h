@@ -119,7 +119,7 @@ bool readMatrix(std::string fName, size_t &n, size_t &NNZ, int* &col,//FIXME cha
   std::cout<<"Not in coordinate format; this driver cannot handle that.\"\n";
   return false;
  }
- if(arith.compare("real") and arith.compare("integer")) {
+ if(arith.compare("real") && arith.compare("integer")) {
   if(!arith.compare("complex")) {
    std::cout<<"Complex matrix; use zreadMM instead!\n";
    return false;
@@ -250,7 +250,7 @@ bool readMatrix_rect(std::string fName, size_t &n_row, size_t &n_col,
   std::cout<<"Not in coordinate format; this driver cannot handle that.\"\n";
   return false;
  }
- if(arith.compare("real") and arith.compare("integer")) {
+ if(arith.compare("real") && arith.compare("integer")) {
   if(!arith.compare("complex")) {
    std::cout<<"Complex matrix; use zreadMM instead!\n";
    return false;
@@ -344,7 +344,7 @@ bool readMatrix_rect(std::string fName, size_t &n_row, size_t &n_col,
 /*
  *
  */
-int read_dense(std::string fname,int &n_row, int &n_col, double* &mat) {
+void read_dense(std::string fname,int &n_row, int &n_col, double* &mat) {
  std::ifstream in_file;
  in_file.open(fname);
  in_file>>n_row;
@@ -469,7 +469,7 @@ int read_vector(std::string fName, size_t n, double* perm){
   std::cout<<"Not in coordinate format; this driver cannot handle that.\"\n";
   return false;
  }
- if(arith.compare("real") and arith.compare("integer")) {
+ if(arith.compare("real") && arith.compare("integer")) {
   if(!arith.compare("complex")) {
    std::cout<<"Complex matrix; use zreadMM instead!\n";
    return false;
@@ -594,7 +594,7 @@ bool enableColdCache(int n, std::ifstream &f){
  for (int i = 0; i < n; ++i) {
   delete waste[i];
  }
- delete waste;
+ delete[] waste;
  return true;
 }
 
@@ -749,7 +749,7 @@ int testTriangular(size_t n, const double *x, double epsilon=1e-3) {//Testing
 /*
  * converting CSC to CSR
  */  //TODO
-int csc2csr(int n, int *Ap,  int *Ar, double *Ax,
+void csc2csr(int n, int *Ap,  int *Ar, double *Ax,
             int *row_ptr, int *col_idx, double *Bx){
  int *row_len = new int[n]();
  int *finger = new int[n]();
