@@ -63,3 +63,5 @@ target_link_libraries(NASOQ
         #scotch
         #scotcherrexit
         )
+
+#add_subdirectory(eigen_interface)

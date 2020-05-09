@@ -134,8 +134,8 @@ int QP_demo01(int argc, char **argv){
  omp_set_num_threads(num_thread);
  MKL_Set_Num_Threads(num_thread);
 
- QP_module *qm;
- qm = new QP_module(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
+ Nasoq *qm;
+ qm = new Nasoq(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
                     QPFC->A_eq->nrow,QPFC->A_eq->ncol,QPFC->A_eq->p,QPFC->A_eq->i,
                     QPFC->A_eq->x,QPFC->a_eq,
                     QPFC->A_ineq->nrow,QPFC->A_ineq->ncol,QPFC->A_ineq->p,
@@ -237,7 +237,7 @@ int QP_demo01(int argc, char **argv){
    configs.emplace_back(nasoq_config(2,2,pow(10,-11),pow(10,-17)));
    for (int i = 0; i < configs.size(); ++i) {
     nasoq_config nc = configs[i];
-    qm = new QP_module(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
+    qm = new Nasoq(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
                        QPFC->A_eq->nrow,QPFC->A_eq->ncol,QPFC->A_eq->p,QPFC->A_eq->i,
                        QPFC->A_eq->x,QPFC->a_eq,
                        QPFC->A_ineq->nrow,QPFC->A_ineq->ncol,QPFC->A_ineq->p,

@@ -1,2 +1,12 @@
 
-- Fixing return value, will add infeasible to the return values. 
+- Eigen interface --> DONE
+- igl interface
+- Build cleanup (Etienne)
+- Adding parser to driver
+- Library build project
+- OSQP benchmark
+- Code clean up (namespace, warnings, ...)
+- Fixing return value of NASOQ solve, will add infeasible to the return values.
+- Fixing NASOQ-Tuned variants
+- Hand optimizing NASOQ code
+- Adding fixed term to the objective
