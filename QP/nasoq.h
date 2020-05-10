@@ -20,6 +20,39 @@
 #include "cholmod_utils.h"
 #endif
 #define SYM_REMOV
+
+/*
+ * Class for passing setting to a QP solver. It is a superset of all
+ * important input parameters of a QP solver.
+ */
+struct QPSettings{
+ double eps; // one threshold for all
+ double eps_primal, eps_dual, eps_slack,  eps_nn; // If thresholds are requested per KKT conditions
+ double reg_diag;
+ int batch_size ;
+ double eps_rel;
+ int scaling;
+ double zero_thresh;
+ int inner_iter_ref;
+ int outer_iter_ref;
+ double tol_ref;
+ int max_iter;
+ std::string nasoq_mode;
+
+ QPSettings(){
+  eps = eps_rel = pow(10,-6);
+  eps_primal = eps_dual = eps_slack =  eps_nn = eps;
+  reg_diag = zero_thresh = pow(10,-9);
+  max_iter = 4000;
+  batch_size = 1;
+  scaling = 0;
+  inner_iter_ref = 2; outer_iter_ref=2;
+  tol_ref = 1e-15;
+  nasoq_mode = "Fixed";
+ }
+
+};
+
 enum nasoq_mode{
 Fixed=0, AUTO, Tuned, PREDET
 };
@@ -35,7 +68,7 @@ nasoq_config(int a, int b, double c, double d)
 /*
 * min 0.5*xHx + qx s.t. Ax=a and Bx≤b
 */
-struct QP_module{
+struct Nasoq{
 std::string sol_name;
 int hessian_size, eq_const_size, ineq_const_size;
 CSC *H, *HT, *A, *AT, *B, *BT;
@@ -99,7 +132,7 @@ double lag_res, cons_sat_norm;
  size_t k_size;
 #endif
 
-QP_module(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
+Nasoq(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
           size_t B_row, size_t B_col, int *Bp, int *Bi,
           double *Bx, double *b_ineq){
  H = new CSC;
@@ -159,12 +192,12 @@ QP_module(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
 #endif
 }
 
-QP_module(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
+Nasoq(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
           size_t A_size1, size_t A_size2, int *Ap, int *Ai, double *Ax,
           double *a_eq,
           size_t B_size1, size_t B_size2, int *Bp, int *Bi, double *Bx,
           double *b_ineq):
-  QP_module(H_size, Hp, Hi, Hx, q_in, B_size1,B_size2,Bp,Bi,Bx,b_ineq){
+  Nasoq(H_size, Hp, Hi, Hx, q_in, B_size1,B_size2,Bp,Bi,Bx,b_ineq){
 
   A->ncol= A_size2; A->nrow=A_size1;
  A->stype=1;A->xtype=CHOLMOD_REAL;A->packed=TRUE;
@@ -178,7 +211,7 @@ QP_module(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
  eq_const_size = A->ncol;
 }
 
-~QP_module(){
+~Nasoq(){
  //TODO
  delete []workspace;
  //delete []sKKTrhs;

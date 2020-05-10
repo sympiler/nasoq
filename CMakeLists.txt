@@ -5,21 +5,28 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 project(NASOQ)
 set(CMAKE_CXX_STANDARD 11)
+
 # TODO: remove MKL dependency using OpenBLAS submodule
 find_package(MKL REQUIRED)
+
 # Adding hints for suitesparse
 set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
 set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
 set(BLA_STATIC TRUE)
 find_package(SuiteSparse OPTIONAL_COMPONENTS)
+
 #TODO adding METIS submodule
 IF(NOT SUITESPARSE_FOUND)
 set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
 set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
 find_package(METIS REQUIRED)
+ELSE()
+    set(ignoreMe "${METIS_ROOT_PATH}")
 ENDIF()
+
 find_package(OpenMP)
 
+#find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
@@ -41,3 +48,6 @@ target_link_libraries(NASOQ PUBLIC
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ PUBLIC OpenMP::OpenMP_CXX)
 endif()
+
+
+#add_subdirectory(eigen_interface)
