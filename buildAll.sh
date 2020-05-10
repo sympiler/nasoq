@@ -7,7 +7,7 @@ export METISROOT=/home/kazem/programs/metis-5.1.0/build/Linux-x86_64/
 mkdir build
 cd build
 make clean
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DMKL_ROOT_PATH=/home/kazem/programs/intel -DMETIS_ROOT_PATH=/home/kazem/programs/metis-5.1.0/build/Linux-x86_64/  -DCMAKE_BUILD_TYPE=Release ..
 make
 
 

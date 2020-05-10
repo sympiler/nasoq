@@ -12,6 +12,8 @@
 #  MKL_SOLVER_LIBRARIES - list of libraries to add for the solvers
 #  MKL_CDFT_LIBRARIES - list of libraries to add for the solvers
 
+#  MKL_ROOT_PATH - the variable to the library given by the user
+
 # Do nothing if MKL_FOUND was set before!
 IF (NOT MKL_FOUND)
 
@@ -29,20 +31,26 @@ SET(MKL_CDFT_LIBRARIES)
 INCLUDE(CheckTypeSize)
 INCLUDE(CheckFunctionExists)
 
-# Set default value of INTEL_COMPILER_DIR and INTEL_MKL_DIR
-IF (WIN32)
-  IF(DEFINED ENV{MKLProductDir})
-    SET(DEFAULT_INTEL_COMPILER_DIR $ENV{MKLProductDir})
-  ELSE()
-    SET(DEFAULT_INTEL_COMPILER_DIR
-     "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows")
+IF(MKL_ROOT_PATH)
+  IF(EXISTS ${MKL_ROOT_PATH} AND EXISTS ${MKL_ROOT_PATH}/mkl)
+    SET(DEFAULT_INTEL_COMPILER_DIR "${MKL_ROOT_PATH}")
+    SET(DEFAULT_INTEL_MKL_DIR "${MKL_ROOT_PATH}/mkl")
   ENDIF()
-  SET(DEFAULT_INTEL_MKL_DIR "${DEFAULT_INTEL_COMPILER_DIR}/mkl")
-ELSE (WIN32)
-  SET(DEFAULT_INTEL_COMPILER_DIR "/opt/intel")
-  SET(DEFAULT_INTEL_MKL_DIR "/opt/intel/mkl")
-ENDIF (WIN32)
-
+ELSE()
+  # Set default value of INTEL_COMPILER_DIR and INTEL_MKL_DIR
+  IF (WIN32)
+    IF(DEFINED ENV{MKLProductDir})
+      SET(DEFAULT_INTEL_COMPILER_DIR $ENV{MKLProductDir})
+    ELSE()
+      SET(DEFAULT_INTEL_COMPILER_DIR
+       "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows")
+    ENDIF()
+    SET(DEFAULT_INTEL_MKL_DIR "${DEFAULT_INTEL_COMPILER_DIR}/mkl")
+  ELSE (WIN32)
+    SET(DEFAULT_INTEL_COMPILER_DIR "/opt/intel")
+    SET(DEFAULT_INTEL_MKL_DIR "/opt/intel/mkl")
+  ENDIF (WIN32)
+ENDIF()
 # Intel Compiler Suite
 SET(INTEL_COMPILER_DIR "${DEFAULT_INTEL_COMPILER_DIR}" CACHE STRING
   "Root directory of the Intel Compiler Suite (contains ipp, mkl, etc.)")
@@ -296,7 +304,6 @@ ENDIF(UNIX AND NOT APPLE)
 IF (NOT MKL_LIBRARIES)
   SET(MKL_VERSION 1011)
 ENDIF (NOT MKL_LIBRARIES)
-
 # First: search for parallelized ones with intel thread lib
 IF (NOT "${MKL_THREADING}" STREQUAL "SEQ")
   FOREACH(mklrtl ${mklrtls} "")

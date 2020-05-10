@@ -13,8 +13,9 @@
 #ifdef SCOTCH
 #include "scotch.h"
 #endif
-
+#ifdef SUITESPARSE_FOUND
 #include "amd.h"
+#endif
 #include "metis.h"
 #include "InspectionLevel_06.h"
 #include "performanceModel.h"
