@@ -20,6 +20,8 @@ IF(NOT SUITESPARSE_FOUND)
 set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
 set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
 find_package(METIS REQUIRED)
+set(METIS_LIBRARY "")
+set(METIS_INCLUDE_DIR "")
 ELSE()
     set(ignoreMe "${METIS_ROOT_PATH}")
 ENDIF()
@@ -28,11 +30,11 @@ find_package(OpenMP)
 
 #find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
-if(UNIX)
+if(UNIX )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMKL  ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DMKL  ")
 
 set(SOURCE_FILES nasoq_driver.cpp)
 include_directories(${MKL_INCLUDE_DIR} ${SUITESPARSE_INCLUDE_DIRS}
@@ -44,6 +46,7 @@ add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
 target_link_libraries(NASOQ PUBLIC
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}
+
         )
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ PUBLIC OpenMP::OpenMP_CXX)
