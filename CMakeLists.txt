@@ -28,7 +28,7 @@ ENDIF()
 
 find_package(OpenMP)
 
-#find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+find_package (Eigen3 OPTIONAL_COMPONENTS NO_MODULE)
 
 if(UNIX )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
@@ -46,11 +46,11 @@ add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
 target_link_libraries(NASOQ PUBLIC
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}
-
         )
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
-
-#add_subdirectory(eigen_interface)
+IF(TARGET Eigen3::Eigen)
+add_subdirectory(eigen_interface)
+ENDIF(TARGET Eigen3::Eigen)
