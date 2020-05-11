@@ -8,6 +8,7 @@ mkdir build
 cd build
 make clean
 cmake -DMKL_ROOT_PATH=/home/kazem/programs/intel -DMETIS_ROOT_PATH=/home/kazem/programs/metis-5.1.0/build/Linux-x86_64/  -DCMAKE_BUILD_TYPE=Release ..
+#cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/local/Cellar/gcc/9.1.0/bin/gcc-9 -DCMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/9.1.0/bin/g++-9 -DMETIS_ROOT_PATH=/Users/kazem/programs/metis-5.1.0/build/Darwin-x86_64 -G "CodeBlocks - Unix Makefiles" ..  -DCMAKE_C_COMPILER=/usr/local/Cellar/gcc/9.1.0/bin/gcc-9 -DCMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/9.1.0/bin/g++-9 -DMETIS_ROOT_PATH=/Users/kazem/programs/metis-5.1.0/build/Darwin-x86_64  -DCMAKE_BUILD_TYPE=Release ..
 make
 
 
