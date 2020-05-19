@@ -53,15 +53,17 @@ namespace eigen
    lbl->symbolic_analysis();
    lbl->numerical_factorization();
    double *sol = lbl->solve_only();
-   lbl->compute_norms();
+   //lbl->compute_norms();
+   //std::cout<<"residual: "<<lbl->res_l1<<"\n";
 
    x = Eigen::Map< Eigen::Matrix<double,Eigen::Dynamic,1> >(
      sol,A.rows(),1);
 
-   //std::cout<<"residual: "<<lbl->res_l1<<"\n";
    // Exitflag TODO
    int exitflag = 0;
    delete lbl;
+   delete H;
+   delete []sol;
    return exitflag;
   }
  }
