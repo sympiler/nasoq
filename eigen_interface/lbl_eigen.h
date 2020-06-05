@@ -7,8 +7,7 @@
 
 #include "linear_solver_wrapper.h"
 
-namespace eigen
-{
+
  namespace nasoq
  {
   //  Solving Ax=b
@@ -67,5 +66,4 @@ namespace eigen
    return exitflag;
   }
  }
-}
 #endif //NASOQ_LBL_EIGEN_H

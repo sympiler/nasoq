@@ -10,7 +10,7 @@
 #include "Sym_BLAS.h"
 #include "Util.h"
 
-
+namespace nasoq{
 /*
  * Scale a vector by another vector vec2 = vec2/vec1
  */
@@ -130,14 +130,12 @@ void solve_phase_ldl_blocked_parallel(size_t n, double *d_val, double *x, int *c
  H2LeveledBlockedLsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                         sup2col, nBlocks, x, levels, levelPtr, levelSet,
                         parts, parPtr, partition, chunk);
- /*blockedLsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup, sup2col, nBlocks, x);*/
 #if 0
  for (int i = 0; i < n; ++i) {
   std::cout<<i<<"->"<<x[i]<<"/"<<d_val[i]<<"= "<<x[i]/d_val[i]<<"\n";
  }
 #endif
  //***** diagonal scaling
- //scale_vec_vec(n, d_val, x);
  blocked_2by2_solver(n,d_val,x,1,1,n);
 #if 0
  for (int i = 0; i < n; ++i) {
@@ -148,8 +146,6 @@ void solve_phase_ldl_blocked_parallel(size_t n, double *d_val, double *x, int *c
  H2LeveledBlockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                 sup2col, nBlocks, x, levels, levelPtr, levelSet,
                 parts, parPtr, partition, chunk);
- /*blockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup, sup2col, nBlocks, x);*/
-
 }
 
 
@@ -168,34 +164,12 @@ void solve_phase_ldl_blocked_parallel_permuted(size_t n, double *d_val, double *
  H2LeveledBlockedLsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                         sup2col, nBlocks, x, levels, levelPtr, levelSet,
                         parts, parPtr, partition, chunk);
- //print_vec<double >("x l-solve: ",0,n,x);
-/* for (int i = 0; i < n; ++i) {
-  tmp[iperm[i]] = x[i];
- }*/
- #if 0
- for (int i = 0; i < n; ++i) {
-  std::cout<<i<<"->"<<x[i]<<"/"<<d_val[i]<<"= "<<x[i]/d_val[i]<<"\n";
- }
-#endif
  //***** diagonal scaling
- //scale_vec_vec(n, d_val, x);
  blocked_2by2_solver(n,d_val,x,1,1,n);
- //print_vec<double >("x scaling: ",0,n,x);
- #if 0
- for (int i = 0; i < n; ++i) {
-  std::cout<<i<<"->"<<x[i]<<"\n";
- }
-#endif
-/* for (int i = 0; i < n; ++i) {
-  x[perm[i]] = tmp[i];
- }*/
 //*************** Parallel Blocked BWD solve
  H2LeveledBlockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                          sup2col, nBlocks, x, levels, levelPtr, levelSet,
                          parts, parPtr, partition, chunk);
- //print_vec<double >("x u-solve: ",0,n,x);
- /*blockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup, sup2col, nBlocks, x);*/
-
 }
 
 
@@ -217,48 +191,19 @@ void solve_phase_ldl_blocked_parallel_permuted_update
   H2LeveledBlockedLsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                          sup2col, nBlocks, x, levels, levelPtr, levelSet,
                          parts, parPtr, partition, chunk,mask,ws);
-
-  //print_vec<double >("x l-solve: ",0,n,x);
- #if 0
-  for (int i = 0; i < n; ++i) {
-   std::cout<<i<<"->"<<x[i]<<"/"<<d_val[i]<<"= "<<x[i]/d_val[i]<<"\n";
-  }
- #endif
   //***** diagonal scaling
-  //scale_vec_vec(n, d_val, x);
   blocked_2by2_solver_update(n,d_val,x,1,1,n,mask_col);
-  //print_vec<double >("x scaling: ",0,n,x);
- #if 0
-  for (int i = 0; i < n; ++i) {
-   std::cout<<i<<"->"<<x[i]<<"\n";
-  }
- #endif
  //*************** Parallel Blocked BWD solve
   H2LeveledBlockedLTsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                           sup2col, nBlocks, x, levels, levelPtr, levelSet,
                           parts, parPtr, partition, chunk,mask,ws);
-  //print_vec<double >("x u-solve: ",0,n,x);
-  /*blockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup, sup2col, nBlocks, x);*/
  }else{
   leveledBlockedLsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                               sup2col, nBlocks, x,
                               s_level_no, s_level_ptr, s_level_set,
                               chunk, mask);
-  //print_vec<double >("x l-solve: ",0,n,x);
-#if 0
-  for (int i = 0; i < n; ++i) {
-  std::cout<<i<<"->"<<x[i]<<"/"<<d_val[i]<<"= "<<x[i]/d_val[i]<<"\n";
- }
-#endif
   //***** diagonal scaling
-  //scale_vec_vec(n, d_val, x);
   blocked_2by2_solver_update(n,d_val,x,1,1,n,mask_col);
-  //print_vec<double >("x scaling: ",0,n,x);
-#if 0
-  for (int i = 0; i < n; ++i) {
-  std::cout<<i<<"->"<<x[i]<<"\n";
- }
-#endif
 //*************** Parallel Blocked BWD solve
   LeveledBlockedLTsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                                sup2col, nBlocks, x, s_level_no, s_level_ptr,
@@ -270,5 +215,5 @@ void solve_phase_ldl_blocked_parallel_permuted_update
 
 
 
-
+}
 #endif //PROJECT_SOLVE_PHASE_H

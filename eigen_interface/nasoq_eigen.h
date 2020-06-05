@@ -9,8 +9,7 @@
 #include <nasoq.h>
 
 
-namespace eigen
-{
+
  namespace nasoq
  {
   //  minimize        0.5 x' H x + q' x
@@ -96,6 +95,6 @@ namespace eigen
    return exitflag;
   }
  }
-}
+
 
 #endif //NASOQ_NASOQ_EIGEN_H

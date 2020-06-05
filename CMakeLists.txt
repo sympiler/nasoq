@@ -33,20 +33,25 @@ find_package (Eigen3 OPTIONAL_COMPONENTS NO_MODULE)
 if(UNIX )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
 endif()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DMKL  -Wno-dev ")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DMKL  ")
+set(NASOQ_INCLUDE_DIR ${MKL_INCLUDE_DIR} ${SUITESPARSE_INCLUDE_DIRS}
+        ${METIS_INCLUDE_DIR} ${METIS_INCLUDES}
+        "${CMAKE_CURRENT_LIST_DIR}/symbolic/" "${CMAKE_CURRENT_LIST_DIR}/common/"
+        "${CMAKE_CURRENT_LIST_DIR}/ldl/" "${CMAKE_CURRENT_LIST_DIR}/matrixMatrix/"
+        "${CMAKE_CURRENT_LIST_DIR}/matrixVector/"  "${CMAKE_CURRENT_LIST_DIR}/linear_solver/"
+        "${CMAKE_CURRENT_LIST_DIR}/gmres/" "${CMAKE_CURRENT_LIST_DIR}/QP/"
+        "${CMAKE_CURRENT_LIST_DIR}/triangularSolve/"
+        "${CMAKE_CURRENT_LIST_DIR}/smp-format/")
+
+set(NASOQ_LIB_DIR ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
+        ${METIS_LIBRARY} ${METIS_LIBRARIES} )
 
 set(SOURCE_FILES nasoq_driver.cpp)
-include_directories(${MKL_INCLUDE_DIR} ${SUITESPARSE_INCLUDE_DIRS}
-        ${METIS_INCLUDE_DIR} ${METIS_INCLUDES}
-        "symbolic/" "common/" "ldl/" "matrixMatrix/"
-        "matrixVector/"  "linear_solver/" "gmres/" "QP/"
-        "triangularSolve/")
+include_directories(${NASOQ_INCLUDE_DIR} )
 add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
 target_link_libraries(NASOQ PUBLIC
-        ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
-        ${METIS_LIBRARY} ${METIS_LIBRARIES}
-        )
+        ${NASOQ_LIB_DIR})
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ PUBLIC OpenMP::OpenMP_CXX)
 endif()

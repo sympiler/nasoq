@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstddef>
 #include <assert.h>
+
 /*
  * Mixed BFS and topological sort for BCSC
  */
