@@ -50,7 +50,7 @@ int nasoq_demo(int argc, char **argv) {
  int inner_iter = 2;
  int outer_iter = 2;
  double stop_tol = 1e-15;
- int solver_mode = 1;
+ int solver_mode = Fixed;
  if (qp_args.find("variant") != qp_args.end()) {
   std::string nasoq_mode = qp_args["variant"];
   if (nasoq_mode == "tuned") {

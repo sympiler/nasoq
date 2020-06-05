@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.9)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
-project(NASOQ)
+project(NASOQ-BIN)
 set(CMAKE_CXX_STANDARD 11)
 
 # TODO: remove MKL dependency using OpenBLAS submodule
@@ -17,11 +17,11 @@ find_package(SuiteSparse OPTIONAL_COMPONENTS)
 
 #TODO adding METIS submodule
 IF(NOT SUITESPARSE_FOUND)
-set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-find_package(METIS REQUIRED)
-set(METIS_LIBRARY "")
-set(METIS_INCLUDE_DIR "")
+    set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
+    set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
+    find_package(METIS REQUIRED)
+    set(METIS_LIBRARY "")
+    set(METIS_INCLUDE_DIR "")
 ELSE()
     set(ignoreMe "${METIS_ROOT_PATH}")
 ENDIF()
@@ -48,14 +48,26 @@ set(NASOQ_LIB_DIR ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES} )
 
 set(SOURCE_FILES nasoq_driver.cpp)
-include_directories(${NASOQ_INCLUDE_DIR} )
-add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
-target_link_libraries(NASOQ PUBLIC
+
+add_executable(NASOQ-BIN ${SOURCE_FILES}  nasoq_driver.cpp)
+target_link_libraries(NASOQ-BIN PRIVATE
         ${NASOQ_LIB_DIR})
+target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} )
 if(OpenMP_CXX_FOUND)
-    target_link_libraries(NASOQ PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(NASOQ-BIN PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
+### Building the interface library
+project(NASOQ)
+#file(GLOB_RECURSE SRC_FILES ${NASOQ_INCLUDE_DIR} "*.h" )
+add_library (NASOQ  INTERFACE )
+target_include_directories(NASOQ INTERFACE  ${NASOQ_INCLUDE_DIR} )
+#target_sources(NASOQ ${SRC_FILES})
+target_link_libraries(NASOQ INTERFACE
+        ${NASOQ_LIB_DIR}
+        )
+## TODO static and shared
+
 IF(TARGET Eigen3::Eigen)
-add_subdirectory(eigen_interface)
+    add_subdirectory(eigen_interface)
 ENDIF(TARGET Eigen3::Eigen)

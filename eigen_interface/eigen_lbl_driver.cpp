@@ -6,6 +6,7 @@
 #include <Util.h>
 #include "lbl_eigen.h"
 
+using namespace nasoq;
 
 int main(int argc, char *argv[]){
 
