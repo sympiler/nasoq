@@ -97,6 +97,14 @@ namespace format {
   int get_num_eqc(){ return A ? A->m : 0;}
   int get_num_ineqc(){ return C ? C->m : 0;}
 
+  void print(){
+   print_csc(H->m, H->n, H->p, H->i, H->x);
+   print_csc(A->m, A->n, A->p, A->i, A->x);
+
+   print_csc(C->m, C->n, C->p, C->i, C->x);
+   print_dense(d->row,d->col,d->lda,d->a);
+  }
+
  };
 
  struct BoundedForm{

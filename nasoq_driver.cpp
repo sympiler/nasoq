@@ -82,7 +82,7 @@ int nasoq_demo(int argc, char **argv) {
  int num_thread = mkl_get_max_threads ();
  omp_set_num_threads(num_thread);
  MKL_Set_Num_Threads(num_thread);
-
+QPFC->ief_->print();
  Nasoq *qm;
  qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,QPFC->ief_->H->x,
                        QPFC->ief_->q->a,QPFC->ief_->A->m,QPFC->ief_->A->n,QPFC->ief_->A->p,QPFC->ief_->A->i,
