@@ -28,6 +28,7 @@ namespace format {
  };
 
  struct IEForm{
+  Description desc;
   CSC *A, *C;
   CSC *AT, *CT;
   Dense *b, *d, *q;
@@ -92,9 +93,14 @@ namespace format {
           b_c && b_c && pr_c && du_c && ob_c;
   }
 
+  int get_num_var(){ return H ? H->m : 0;}
+  int get_num_eqc(){ return A ? A->m : 0;}
+  int get_num_ineqc(){ return C ? C->m : 0;}
+
  };
 
  struct BoundedForm{
+  Description desc;
   Dense *l;
   Dense *u;
   Dense *q;
@@ -157,7 +163,7 @@ namespace format {
 
  };
 
-
+// for converting smp to ie
  bool find_inequalities_by_bounds(Dense *ld, Dense *ud, CSC *A, CSC *AT,
                                   IEForm* ie_out){
   if(!A){
@@ -249,9 +255,9 @@ namespace format {
    }
   }
   assert(num_ineq <= 2 * A->m);
-  assert(num_eq <= 2 * A->m);
+  assert(num_eq == 0); // all equalities assumed to be sperated
   /// building the equality constraint matrix
-  if(num_eq > 0) {
+  /*if(num_eq > 0) {
    AT_eq->m = h_dim;
    AT_eq->n = num_eq;
    AT_eq->p = new int[num_eq + 1];
@@ -276,7 +282,7 @@ namespace format {
    ie_out->b = NULLPNTR;
    delete AT_eq;
    ie_out->A = ie_out->AT = NULLPNTR;
-  }
+  }*/
 
   //building the ineq constraint matrix
   if(num_ineq>0){
@@ -402,6 +408,7 @@ namespace format {
    AT_eq->p = new int[num_eq + 1];
    AT_eq->i = new int[nnz_eq];
    AT_eq->x = new double[nnz_eq];
+
    assert(eq_idx.size() == num_eq);
    AT_eq->p[0] = 0;
    for (int ll = 0; ll < eq_idx.size(); ++ll) {
@@ -415,6 +422,8 @@ namespace format {
     }
    }
    smp_out->b_->row = num_eq;
+   AT_eq->nnz = nnz_eq;
+   assert(AT_eq->p[num_eq] == nnz_eq);
   smp_out->AT_ = AT_eq;
   smp_out->A_ = sym_lib::transpose_general(AT_eq);
   } else{
@@ -475,6 +484,7 @@ namespace format {
  struct QPFormatConverter {
   std::string problem_name;
   std::string desc_;
+
   // Bounded format l <= A <= u
   bool bounded_converted;
   BoundedForm *bf_;
@@ -518,8 +528,8 @@ namespace format {
                       a_eq(NULLPNTR), a_ineq(NULLPNTR), H(NULLPNTR), AB_d(NULLPNTR), ab_eqineq(NULLPNTR),
                       H_d(NULLPNTR), A_d(NULLPNTR), B_d(NULLPNTR), q(NULLPNTR){
    mode = 0;
-   max_dbl = 1e+20;//std::numeric_limits<double >::max();
-   min_dbl = -1e+20;//std::numeric_limits<double >::min();
+   max_dbl = max_dbl;//std::numeric_limits<double >::max();
+   min_dbl = -max_dbl;//std::numeric_limits<double >::min();
    num_eq = 0;
    num_ineq = 0;
    nnz_eq = 0;
@@ -533,8 +543,8 @@ namespace format {
   QPFormatConverter(CSC *H_full_in, double *q_in, CSC *A_in, double *l_in, double *u_in) :
     H_full(H_full_in), q(q_in), A(A_in), l(l_in), u(u_in) {
    mode = 1;
-   max_dbl = 1e+20;//std::numeric_limits<double >::max();
-   min_dbl = -1e+20;//std::numeric_limits<double >::min();
+   max_dbl = max_dbl;//std::numeric_limits<double >::max();
+   min_dbl = -max_dbl;//std::numeric_limits<double >::min();
    num_eq = 0;
    num_ineq = 0;
    nnz_eq = 0;
@@ -578,6 +588,8 @@ namespace format {
    if(!smp_converted)
     return false;
    ief_ = new IEForm;
+   ief_->desc = smp_->desc_struct_;
+   problem_name = ief_->desc.name_;
    ief_->H = sym_lib::copy_sparse(smp_->H_);
    ief_->q = sym_lib::copy_dense(smp_->q_);
    ief_->fixed = smp_->r_;
@@ -609,6 +621,9 @@ namespace format {
     return false;
    int num_vars = ief_->H->n;
    smp_ = new SMP("");
+   smp_->desc_struct_=ief_->desc;
+   smp_->desc_=smp_->desc_struct_.get_desc();
+   problem_name = smp_->desc_struct_.name_;
    smp_->H_ = sym_lib::copy_sparse(ief_->H);
    smp_->q_ = sym_lib::copy_dense(ief_->q);
    smp_->r_ = ief_->fixed;
@@ -627,6 +642,9 @@ namespace format {
    if(!bounded_converted) //bounded is neither loaded nor converted
     return false;
    smp_ = new SMP("");
+   smp_->desc_struct_=bf_->desc;
+   smp_->desc_=smp_->desc_struct_.get_desc();
+   problem_name = smp_->desc_struct_.name_;
    smp_->H_ = sym_lib::copy_sparse(bf_->H);
    smp_->q_ = sym_lib::copy_dense(bf_->q);
    smp_->r_ = bf_->fixed;
@@ -643,6 +661,7 @@ namespace format {
    int n_eq = smp_->A_ ? smp_->A_->m : 0;
    int n_ineq = smp_->C_ ? smp_->C_->m : 0;
    bf_ = new BoundedForm;
+   bf_->desc = smp_->desc_struct_;
    bf_->H = sym_lib::copy_sparse(smp_->H_);
    bf_->q = sym_lib::copy_dense(smp_->q_);
    bf_->fixed = smp_->r_;
@@ -691,10 +710,15 @@ namespace format {
    return 0;
   }
 
-  void print_log(){
-
+  void print_log() {
+   std::setprecision(precision);
+   if (ief_) {
+    std::cout << ief_->desc.name_ << "," << ief_->get_num_var() << "," << ief_->H->nnz << ",";
+    std::cout << ief_->get_num_eqc() << "," << (ief_->A ? ief_->A->nnz : 0) <<
+    "," << ief_->get_num_ineqc() << ",";
+    std::cout << (ief_->C ? ief_->C->nnz : 0) << ",";
+   }
   }
-
 
   /*int read_IE_format(std::string hessian_file,
                      std::string linear_file,

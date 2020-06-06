@@ -657,12 +657,8 @@ namespace sym_lib {
  template <class T> bool are_equal(T *m1, T *m2){
   if( m1 == NULLPNTR && m2 == NULLPNTR)
    return true;
-  if( m1 == NULLPNTR || m2 == NULLPNTR)
-   return false;
-  return m1->equality_check(m2);
+  return m1 ? m1->equality_check(m2) : m2->equality_check(m1);
  }
-
-
 
 }
 

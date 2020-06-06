@@ -25,7 +25,7 @@ namespace format{
   application_("contact simulation"){}
 
   std::string get_desc(){
-   std::string out="Sparse Mathematical Programming Repository ";
+   std::string out="Sparse Mathematical Programming Repository\n";
    out += ("ID = "+ ID_ + "\n"); out += ("category = "+ category_+ "\n");
    out += ("application = "+ application_ + "\n");
    out += ("name = "+ name_ + "\n"); out += ("group = "+ group_ + "\n");
@@ -33,6 +33,38 @@ namespace format{
    out += ("date = "+ date_ + "\n");
    return out;
   }
+
+  void set_desc_from_string(std::string d){
+   for (unsigned i=0; i<d.length(); d[i]=tolower(d[i]),i++);
+   std::stringstream ss(d);
+   std::string line;
+   while (std::getline(ss, line, '\n')){
+    auto p1 = line.find('=');
+    if(p1 != std::string::npos){
+     std::string key = line.substr(0, p1);
+     std::string value = line.substr(p1+1);
+     trim(key);
+     trim(value);
+     if(key == "id")
+      ID_ = value;
+     else if(key == "category")
+      category_ = value;
+     else if(key == "application")
+      application_ = value;
+     else if(key =="name")
+      name_ = value;
+     else if(key == "group")
+      group_= value;
+     else if(key == "source")
+      group_ = value;
+     else if(key == "author")
+      author_ = value;
+     else if(key == "date")
+      date_ = value;
+    }
+   }
+  }
+
 
  };
 
@@ -46,6 +78,7 @@ namespace format{
   int num_vars_;
   std::string in_path_;
   std::string desc_;
+  Description desc_struct_;
   // Input attributes
   CSC *H_, *A_, *C_;
   CSC *AT_, *CT_;
@@ -76,6 +109,7 @@ namespace format{
      primals_(NULLPNTR),duals_(NULLPNTR), optimal_obj_(0),desc_(std::move(desc)),
      in_path_(""),num_vars_(0){
    set_num_vars();
+   desc_struct_.set_desc_from_string(desc_);
   };
 
 
@@ -84,6 +118,7 @@ namespace format{
     num_vars_ = smp->num_vars_;
     in_path_ = smp->in_path_;
     desc_ = smp->desc_;
+    desc_struct_.set_desc_from_string(desc_);
     H_ = sym_lib::copy_sparse(smp->H_);
     A_ = sym_lib::copy_sparse(smp->A_);
     C_ = sym_lib::copy_sparse(smp->C_);
@@ -174,6 +209,7 @@ namespace format{
       read_real_constant(fin, optimal_obj_);
      }else if(line == "\"description\": |" || line == "\"description\":") {
       read_string(fin, desc_);
+      desc_struct_.set_desc_from_string(desc_);
      }else if(line.find(':') != std::string::npos){
       std::cout<<"Key in "<<line <<" is unknown\n"; fin.close();
       return false;
@@ -187,7 +223,9 @@ namespace format{
     return false;
    }
    fin.close();
-
+   if(desc_struct_.name_ == ""){//SMP with empty descriptor
+    desc_struct_.name_ = strip_name(in_path_);
+   }
    return true;
   }
 
@@ -253,7 +291,6 @@ namespace format{
      print_csc(H_->m, H_->n, H_->p, H_->i, H_->x, fout.rdbuf());
     }
 
-
    } else{
     std::cout<<"The path: "<< out_path <<" is not available for writing.\n";
     return false;
@@ -288,7 +325,9 @@ namespace format{
    b_c && b_c && p_c && d_c && o_c;
   }
 
-  void set_description(std::string d){desc_ = d;}
+  void set_description(std::string d){
+   desc_ = d;
+  desc_struct_.set_desc_from_string(desc_);}
 
  };
 }
