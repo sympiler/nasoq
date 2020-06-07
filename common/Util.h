@@ -1315,7 +1315,7 @@ namespace nasoq {
     {"input",      required_argument, nullptr, 'i'},
     {"output",      required_argument, nullptr, 'o'},
     {"log",      required_argument, nullptr, 'l'},
-    {"header",      no_argument, nullptr, 'd'},
+    {"header",      required_argument, nullptr, 'd'},
     {"variant",      required_argument, nullptr, 'v'},
     {"perturb",    required_argument, nullptr, 'p'},
     {"refinement", required_argument, nullptr, 'r'},

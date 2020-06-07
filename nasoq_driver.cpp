@@ -44,13 +44,14 @@ int nasoq_demo(int argc, char **argv) {
 
  /// New settings if provided
  std::string input_qp_path = qp_args["input"];
- double reg_diag = 1e-9;
+ double reg_diag = pow(10,-9);
  double zero_threshold = reg_diag;
  double eps = 1e-6;
  int inner_iter = 2;
  int outer_iter = 2;
  double stop_tol = 1e-15;
  int solver_mode = Fixed;
+ bool print_header = false;
  if (qp_args.find("variant") != qp_args.end()) {
   std::string nasoq_mode = qp_args["variant"];
   if (nasoq_mode == "tuned") {
@@ -72,6 +73,8 @@ int nasoq_demo(int argc, char **argv) {
   eps = pow(10, -std::stoi(qp_args["epsilon"]) );
  if(qp_args.find("tolerance") != qp_args.end())
   stop_tol = pow(10, -std::stoi(qp_args["tolerance"]) );
+ if(qp_args.find("header") != qp_args.end())
+  print_header = true;
 
 
  auto *QPFC = new format::QPFormatConverter();
@@ -82,7 +85,7 @@ int nasoq_demo(int argc, char **argv) {
  int num_thread = mkl_get_max_threads ();
  omp_set_num_threads(num_thread);
  MKL_Set_Num_Threads(num_thread);
-QPFC->ief_->print();
+//QPFC->ief_->print();
  Nasoq *qm;
  qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,QPFC->ief_->H->x,
                        QPFC->ief_->q->a,QPFC->ief_->A->m,QPFC->ief_->A->n,QPFC->ief_->A->p,QPFC->ief_->A->i,
@@ -239,7 +242,14 @@ QPFC->ief_->print();
  //std::cout<<"obj: "<<qm->objective<<"\n";
  //std::cout<<QPFC->A_eq->nrow<<"\n";
 
-
+if(print_header){
+ std::cout<<"Tool Name,Problem Name,Hessian dim,Hessian NNZ,# of Eq Constraints,"
+            "Eq Constraint NNZ,# of Ineq Const,Ineq Constraint NNZ,# of Threads,"
+            "eps_abs,Outer GMRES Iter,Inner GMRES Iter,GMRES Tol,Diagonal Pert,"
+            "Status,# of Iterations,Time (s),Active-set Size,Constraint Satisfaction Inf,"
+            "Residual Lagrangian inf,Primal Obj,Dual Obj,Obj Value,Non-negativity Inf,Complementarity Inf,"
+            "Problem Type,\n";
+}
  std::cout<<qm->sol_name<<",";
  QPFC->print_log();
  std::cout<<num_thread<<",";

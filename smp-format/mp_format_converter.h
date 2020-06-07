@@ -201,7 +201,7 @@ namespace format {
    std::fill_n(l, n_const, min_dbl);
   if(!ud)
    std::fill_n(l, n_const, max_dbl);
-  ie_out->b = new Dense(2*n_const,1,1);; a_eq = ie_out->b->a;
+  //ie_out->b = new Dense(2*n_const,1,1);; a_eq = ie_out->b->a;
   ie_out->d = new Dense(2*n_const,1,1);; a_ineq = ie_out->d->a;
   ie_out->AT = AT_eq;
   ie_out->CT = AT_ineq;
@@ -719,7 +719,7 @@ namespace format {
   }
 
   void print_log() {
-   std::setprecision(precision);
+   std::setprecision(20);
    if (ief_) {
     std::cout << ief_->desc.name_ << "," << ief_->get_num_var() << "," << ief_->H->nnz << ",";
     std::cout << ief_->get_num_eqc() << "," << (ief_->A ? ief_->A->nnz : 0) <<
