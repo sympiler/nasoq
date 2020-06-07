@@ -234,7 +234,7 @@ int nasoq_demo(int argc, char **argv) {
  std::string heade_vec = "%%MatrixMarket matrix array real general \n";
  heade_vec += std::to_string(qm->H->ncol);
  heade_vec += " 1\n";
- qm->export_to_file(QPFC->problem_name,heade_vec);
+// qm->export_to_file(QPFC->problem_name,heade_vec);
  //std::cout<<"dual res norm: "<<qm->lagrangian_residual_norm()<<"\n";
  //std::cout<<"constraint sat norm: "<<qm->constraint_sat_norm()<<"\n";
  //std::cout<<"primal FB norm: "<<qm->primal_FB_norm()<<"\n";

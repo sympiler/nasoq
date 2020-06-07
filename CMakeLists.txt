@@ -16,15 +16,16 @@ set(BLA_STATIC TRUE)
 find_package(SuiteSparse OPTIONAL_COMPONENTS)
 
 #TODO adding METIS submodule
-IF(NOT SUITESPARSE_FOUND)
+
+#IF(NOT SUITESPARSE_FOUND)
     set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
     set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
     find_package(METIS REQUIRED)
     set(METIS_LIBRARY "")
     set(METIS_INCLUDE_DIR "")
-ELSE()
-    set(ignoreMe "${METIS_ROOT_PATH}")
-ENDIF()
+#ELSE()
+#    set(ignoreMe "${METIS_ROOT_PATH}")
+#ENDIF()
 
 find_package(OpenMP)
 
