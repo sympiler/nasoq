@@ -70,9 +70,9 @@ int nasoq_demo(int argc, char **argv) {
   inner_iter = std::stoi(qp_args["iterations"]);
  outer_iter = inner_iter;
  if(qp_args.find("epsilon") != qp_args.end())
-  eps = pow(10, -std::stoi(qp_args["epsilon"]) );
+  eps = pow(10, std::stoi(qp_args["epsilon"]) );
  if(qp_args.find("tolerance") != qp_args.end())
-  stop_tol = pow(10, -std::stoi(qp_args["tolerance"]) );
+  stop_tol = pow(10, std::stoi(qp_args["tolerance"]) );
  if(qp_args.find("header") != qp_args.end())
   print_header = true;
 
