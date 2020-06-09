@@ -65,14 +65,14 @@ int nasoq_demo(int argc, char **argv) {
   }
  }
  if(qp_args.find("perturbation") != qp_args.end())
-  reg_diag = pow(10, -std::stoi(qp_args["perturbation"]) );
+  reg_diag = pow(10, std::stoi(qp_args["perturbation"]) );
  if(qp_args.find("iterations") != qp_args.end())
   inner_iter = std::stoi(qp_args["iterations"]);
  outer_iter = inner_iter;
  if(qp_args.find("epsilon") != qp_args.end())
-  eps = pow(10, -std::stoi(qp_args["epsilon"]) );
+  eps = pow(10, std::stoi(qp_args["epsilon"]) );
  if(qp_args.find("tolerance") != qp_args.end())
-  stop_tol = pow(10, -std::stoi(qp_args["tolerance"]) );
+  stop_tol = pow(10, std::stoi(qp_args["tolerance"]) );
  if(qp_args.find("header") != qp_args.end())
   print_header = true;
 
@@ -248,12 +248,14 @@ if(print_header){
             "eps_abs,Outer GMRES Iter,Inner GMRES Iter,GMRES Tol,Diagonal Pert,"
             "Status,# of Iterations,Time (s),Active-set Size,Constraint Satisfaction Inf,"
             "Residual Lagrangian inf,Primal Obj,Dual Obj,Obj Value,Non-negativity Inf,Complementarity Inf,"
-            "Problem Type,\n";
+            "Problem Type,Problem Class,\n";
 }
  std::cout<<qm->sol_name<<",";
  QPFC->print_log();
  std::cout<<num_thread<<",";
  qm->print_log();
+ std::cout<<QPFC->smp_->desc_struct_.application_<<",";
+ std::cout<<QPFC->smp_->desc_struct_.category_<<",";
  //qm->print_qp_range(1);
 /* std::cout<<qm->eps_abs<<";"
           <<qm->num_iter<<";"<<qm->qi->tot<<";"<<num_thread<<";"
