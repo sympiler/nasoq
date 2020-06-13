@@ -835,8 +835,6 @@ namespace nasoq {
    delete[]nodeCost;
   }
 
-  allocateAC(A1, 0, 0, 0, FALSE);
-  allocateAC(A2, 0, 0, 0, FALSE);
 #endif
   if (simplicial_en) {
    L->p_s = new int[n + 1]();
@@ -881,6 +879,9 @@ namespace nasoq {
      finger[col_beg]++;
     }
    }
+/*   for (int j = 0; j < n; ++j) {
+    std::cout<<finger[j]<<"->"<<Lcolcount[j]<<"\n";
+   }*/
 /*  int p_idx=0,pp_idx=0;
   //levelNo_s = levelNo;
   //levelPtr_s = new int[levelNo_s+1];
@@ -905,6 +906,7 @@ namespace nasoq {
     parPtr_s[pp_idx] = p_idx;
    }
   }*/
+//print_csc("L \n", A->ncol, L->p_s, L->i, L->x);
    int *level_set_s;
    /*levelNo_s = getCoarseLevelSet_DAG_CSC03(n,L->p_s,L->i,levelNo_s, levelPtr_s,level_set_s,
                                            parNo_s, parPtr_s, partition_s,
@@ -961,8 +963,11 @@ namespace nasoq {
 #endif
    delete[]xi;
    delete[]finger;
+   delete []nodeCost;
   }
 
+  allocateAC(A1, 0, 0, 0, FALSE);
+  allocateAC(A2, 0, 0, 0, FALSE);
   delete[]Work4n;
   return L;
  }

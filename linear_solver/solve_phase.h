@@ -43,7 +43,7 @@ void solve_phase_simplicial_ldl(int n, int* Lp, int* Li, double* Lx,
  //***** diagonal scaling
  scale_vec_vec(n, d_val, x);
  ltsolve(n,Lp,Li,Lx,x);
- print_vec("\nltsolve: ",0,n,x);
+ //print_vec("\nltsolve: ",0,n,x);
 }
 
 /*
