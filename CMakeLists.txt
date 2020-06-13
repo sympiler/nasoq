@@ -69,6 +69,7 @@ target_link_libraries(NASOQ INTERFACE
         )
 ## TODO static and shared
 
-IF(TARGET Eigen3::Eigen)
+if(TARGET Eigen3::Eigen OR EXISTS "${EIGEN3_INCLUDE_DIR}")
     add_subdirectory(eigen_interface)
-ENDIF(TARGET Eigen3::Eigen)
+endif()
+
