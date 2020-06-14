@@ -962,7 +962,7 @@ namespace nasoq {
   std::cout << n << " " << n << " " << nnz << "\n";
   for (int i = 0; i < n; ++i) {
    for (int j = Ap[i]; j < Ap[i + 1]; ++j) {
-    std::cout << Ai[j] + 1 << " " << i + 1 << " " << std::setprecision(12) << Ax ? Ax[j] : 0;
+    std::cout << Ai[j] + 1 << " " << i + 1 << " " << std::setprecision(12) << (Ax ? Ax[j] : 0);
     if (j + 1 != Ap[n])
      std::cout << "\n";
    }
