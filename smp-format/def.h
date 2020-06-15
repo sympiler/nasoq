@@ -19,7 +19,6 @@
  namespace format {
 #define NULLPNTR nullptr
 #define EMPTY -1
-#define FALSE false
 
 #ifdef DBG_LOG
 #define PRINT_LOG(x) std::cout << (x)
@@ -32,9 +31,10 @@
 #else
 #define PRINT_CSV(x)
 #endif
-
-  double max_dbl = 1e20;
-  double min_dbl = -max_dbl;
+#define MAX_DBL 1e20
+#define MIN_DBL -MAX_DBL
+  //double max_dbl = 1e20;
+//  double min_dbl = -max_dbl;
 
  template <class T> bool is_equal(T a, T b, double threshold = 1e-6){
   if(std::isnan(a) || std::isnan(b))
@@ -361,7 +361,7 @@
    bool is_finite(){
     bool all_infinite = true;
     for (int i = 0; i < row * col; ++i) {
-     if(a[i] != max_dbl){
+     if(a[i] != MAX_DBL){
       all_infinite = false;
       break;
      }
@@ -370,7 +370,7 @@
      return false;
     all_infinite = true;
     for (int i = 0; i < row * col; ++i) {
-     if(a[i] != min_dbl){
+     if(a[i] != MIN_DBL){
       all_infinite = false;
       break;
      }

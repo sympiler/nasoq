@@ -33,12 +33,12 @@ namespace format {
   CSC *AT, *CT;
   Dense *b, *d, *q;
   Dense *duals, *primals;
-  CSC *H;
+  CSC *H, *H_general;
   double fixed;
   double optimal_obj;
   IEForm():b(NULLPNTR),d(NULLPNTR),q(NULLPNTR),A(NULLPNTR),AT(NULLPNTR),
-           C(NULLPNTR),CT(NULLPNTR),H(NULLPNTR),fixed(0),
-           duals(NULLPNTR),primals(NULLPNTR){}
+           C(NULLPNTR),CT(NULLPNTR),H(NULLPNTR),fixed(0),optimal_obj(0),
+           duals(NULLPNTR),primals(NULLPNTR),H_general(NULLPNTR){}
 
   IEForm(const IEForm *ief){
    A = sym_lib::copy_sparse(ief->A);
@@ -46,6 +46,7 @@ namespace format {
    AT = sym_lib::copy_sparse(ief->AT);
    CT = sym_lib::copy_sparse(ief->CT);
    H = sym_lib::copy_sparse(ief->H);
+   H_general = sym_lib::copy_sparse(ief->H_general);
    b = sym_lib::copy_dense(ief->b);
    d = sym_lib::copy_dense(ief->d);
    q = sym_lib::copy_dense(ief->q);
@@ -64,6 +65,7 @@ namespace format {
    delete d;
    delete q;
    delete H;
+   delete H_general;
    delete duals;
    delete primals;
   }
@@ -93,6 +95,7 @@ namespace format {
           b_c && b_c && pr_c && du_c && ob_c;
   }
 
+
   int get_num_var(){ return H ? H->m : 0;}
   int get_num_eqc(){ return A ? A->m : 0;}
   int get_num_ineqc(){ return C ? C->m : 0;}
@@ -107,24 +110,72 @@ namespace format {
 
  };
 
+
+ IEForm *load_ie(std::string quad_name, std::string linear_name,
+                           std::string eq_name, std::string eql_name,
+                           std::string ineq_name, std::string ineql_name){
+  auto *ie = new IEForm;
+  std::ifstream hin(quad_name);
+  if(hin.is_open()){
+   read_mtx_csc_real(hin, ie->H);
+  }
+  hin.close();
+
+  std::ifstream lin(linear_name);
+  if(lin.is_open()){
+   read_mtx_array_real(lin, ie->q);
+  }
+  lin.close();
+
+  std::ifstream blin(eql_name);
+  if(blin.is_open()){
+   read_mtx_array_real(blin, ie->b);
+  }
+  blin.close();
+
+  std::ifstream Ain(eq_name);
+  if(Ain.is_open()){
+   read_mtx_csc_real(Ain, ie->A);
+  }
+  Ain.close();
+
+  std::ifstream Cin(ineq_name);
+  if(Cin.is_open()){
+   read_mtx_csc_real(Cin, ie->C);
+  }
+  Cin.close();
+
+  std::ifstream ulin(ineql_name);
+  if(ulin.is_open()){
+   read_mtx_array_real(ulin, ie->d);
+  }
+  ulin.close();
+ ie->H_general =  sym_lib::make_full(ie->H);
+
+  return ie;
+ }
+
+
+
  struct BoundedForm{
   Description desc;
   Dense *l;
   Dense *u;
   Dense *q;
   CSC *A, *AT;
-  CSC *H;
+  CSC *H, *H_general;
   Dense *duals, *primals;
   double fixed;
   double optimal_obj;
   BoundedForm():l(NULLPNTR),u(NULLPNTR),q(NULLPNTR),A(NULLPNTR),AT(NULLPNTR),
                 H(NULLPNTR),fixed(0),duals(NULLPNTR),primals(NULLPNTR),
-                optimal_obj(0){}
+                optimal_obj(0), H_general(NULLPNTR){}
 
   BoundedForm(const BoundedForm *bf){
    A = sym_lib::copy_sparse(bf->A);
    AT = sym_lib::copy_sparse(bf->AT);
    H = sym_lib::copy_sparse(bf->H);
+   H_general = sym_lib::copy_sparse(bf->H_general);
    l = sym_lib::copy_dense(bf->l);
    u = sym_lib::copy_dense(bf->u);
    q = sym_lib::copy_dense(bf->q);
@@ -141,6 +192,7 @@ namespace format {
    delete u;
    delete q;
    delete H;
+   delete H_general;
    delete duals;
    delete primals;
   }
@@ -171,6 +223,43 @@ namespace format {
 
  };
 
+ BoundedForm *load_bounded(std::string quad_name, std::string linear_name,
+   std::string l_name, std::string constraint_name, std::string u_name){
+  auto *bf = new BoundedForm;
+  std::ifstream hin(quad_name);
+  if(hin.is_open()){
+   read_mtx_csc_real(hin, bf->H);
+  }
+  hin.close();
+
+  std::ifstream lin(linear_name);
+  if(lin.is_open()){
+   read_mtx_array_real(lin, bf->q);
+  }
+  lin.close();
+
+  std::ifstream blin(l_name);
+  if(blin.is_open()){
+   read_mtx_array_real(blin, bf->l);
+  }
+  blin.close();
+
+  std::ifstream Ain(constraint_name);
+  if(Ain.is_open()){
+   read_mtx_csc_real(Ain, bf->A);
+  }
+  Ain.close();
+
+  std::ifstream ulin(u_name);
+  if(ulin.is_open()){
+   read_mtx_array_real(ulin, bf->u);
+  }
+  ulin.close();
+  bf->H_general =  sym_lib::make_full(bf->H);
+  return bf;
+ }
+
+
 // for converting smp to ie
  bool find_inequalities_by_bounds(Dense *ld, Dense *ud, CSC *A, CSC *AT,
                                   IEForm* ie_out){
@@ -198,9 +287,9 @@ namespace format {
   double *l = ld ? ld->a : new double[n_const];
   double *u = ud ? ud->a : new double[n_const];
   if(!ld)
-   std::fill_n(l, n_const, min_dbl);
+   std::fill_n(l, n_const, MIN_DBL);
   if(!ud)
-   std::fill_n(l, n_const, max_dbl);
+   std::fill_n(l, n_const, MAX_DBL);
   //ie_out->b = new Dense(2*n_const,1,1);; a_eq = ie_out->b->a;
   ie_out->d = new Dense(2*n_const,1,1);; a_ineq = ie_out->d->a;
   ie_out->AT = AT_eq;
@@ -210,9 +299,9 @@ namespace format {
    u[i] = std::abs(u[i]) < 1e-14 ? 0 : u[i];
 
    // Invalid constraint
-   if ((is_equal(l[i], min_dbl) && is_equal(u[i], max_dbl)) ||
-       (is_equal(l[i], max_dbl) && is_equal(u[i], max_dbl)) ||
-       (is_equal(l[i], min_dbl) && is_equal(u[i], min_dbl))) {
+   if ((is_equal(l[i], MIN_DBL) && is_equal(u[i], MAX_DBL)) ||
+       (is_equal(l[i], MAX_DBL) && is_equal(u[i], MAX_DBL)) ||
+       (is_equal(l[i], MIN_DBL) && is_equal(u[i], MIN_DBL))) {
     continue;
    }
    if (is_equal(l[i], u[i])) {//eq
@@ -226,7 +315,7 @@ namespace format {
    } else { // ineq
     constraint *c_csnt = new constraint;
     c_csnt->idx_no = i;
-    if (is_equal(l[i], min_dbl)) {//one constraint Ax<=b
+    if (is_equal(l[i], MIN_DBL)) {//one constraint Ax<=b
      a_ineq[num_ineq] = u[i];
      num_ineq++;
      nnz_ineq += (AT->p[i + 1] - AT->p[i]);
@@ -235,7 +324,7 @@ namespace format {
      for (int j = AT->p[i]; j < AT->p[i + 1]; ++j) {
       col_cnt_A_ineq[AT->i[j]]++;
      }
-    } else if (is_equal(u[i], max_dbl)) {//one constraint Ax>=b ==> Ax <= -b
+    } else if (is_equal(u[i], MAX_DBL)) {//one constraint Ax>=b ==> Ax <= -b
      a_ineq[num_ineq] = -l[i];
      num_ineq++;
      nnz_ineq += (AT->p[i + 1] - AT->p[i]);
@@ -372,17 +461,17 @@ namespace format {
   double *l = ld ? ld->a : new double[n_const];
   double *u = ud ? ud->a : new double[n_const];
   if(!ld)
-   std::fill_n(l, n_const, min_dbl);
+   std::fill_n(l, n_const, MIN_DBL);
   if(!ud)
-   std::fill_n(l, n_const, max_dbl);
+   std::fill_n(l, n_const, MAX_DBL);
   smp_out->b_ = new Dense(n_const,1,1); a_eq = smp_out->b_->a;
   smp_out->l_ = new Dense(n_const,1,1); l_ineq = smp_out->l_->a;
   smp_out->u_ = new Dense(n_const,1,1); u_ineq = smp_out->u_->a;
   smp_out->CT_ = AT_ineq;
   for (int i = 0; i < A->m; ++i) {
-   if ((is_equal(l[i], min_dbl) && is_equal(u[i], max_dbl)) ||
-       (is_equal(l[i], max_dbl) && is_equal(u[i], max_dbl)) ||
-       (is_equal(l[i], min_dbl) && is_equal(u[i], min_dbl))) {
+   if ((is_equal(l[i], MIN_DBL) && is_equal(u[i], MAX_DBL)) ||
+       (is_equal(l[i], MAX_DBL) && is_equal(u[i], MAX_DBL)) ||
+       (is_equal(l[i], MIN_DBL) && is_equal(u[i], MIN_DBL))) {
     continue;
    }
    if (is_equal(l[i], u[i])) {//eq
@@ -536,8 +625,8 @@ namespace format {
                       a_eq(NULLPNTR), a_ineq(NULLPNTR), H(NULLPNTR), AB_d(NULLPNTR), ab_eqineq(NULLPNTR),
                       H_d(NULLPNTR), A_d(NULLPNTR), B_d(NULLPNTR), q(NULLPNTR){
    mode = 0;
-   max_dbl = max_dbl;//std::numeric_limits<double >::max();
-   min_dbl = -max_dbl;//std::numeric_limits<double >::min();
+   max_dbl = MAX_DBL;//std::numeric_limits<double >::max();
+   min_dbl = -MAX_DBL;//std::numeric_limits<double >::min();
    num_eq = 0;
    num_ineq = 0;
    nnz_eq = 0;
@@ -551,8 +640,8 @@ namespace format {
   QPFormatConverter(CSC *H_full_in, double *q_in, CSC *A_in, double *l_in, double *u_in) :
     H_full(H_full_in), q(q_in), A(A_in), l(l_in), u(u_in) {
    mode = 1;
-   max_dbl = max_dbl;//std::numeric_limits<double >::max();
-   min_dbl = -max_dbl;//std::numeric_limits<double >::min();
+   max_dbl = MAX_DBL;//std::numeric_limits<double >::max();
+   min_dbl = -MAX_DBL;//std::numeric_limits<double >::min();
    num_eq = 0;
    num_ineq = 0;
    nnz_eq = 0;
@@ -618,6 +707,7 @@ namespace format {
    if(!ief_->C){
     ief_->C = new CSC(0, num_var(),0, false,GENERAL);
    }
+   ief_->H_general = sym_lib::make_full(ief_->H);
    ie_converted = true;
    return true;
   }
@@ -633,12 +723,15 @@ namespace format {
    smp_->desc_=smp_->desc_struct_.get_desc();
    problem_name = smp_->desc_struct_.name_;
    smp_->H_ = sym_lib::copy_sparse(ief_->H);
+   smp_->H_->stype = LOWER;
    smp_->q_ = sym_lib::copy_dense(ief_->q);
    smp_->r_ = ief_->fixed;
    smp_->A_ = sym_lib::copy_sparse(ief_->A);
+   smp_->A_->stype = GENERAL;
    smp_->b_ = sym_lib::copy_dense(ief_->b);
    smp_->l_ = NULLPNTR;
    smp_->C_ = sym_lib::copy_sparse(ief_->C);
+   smp_->C_->stype = GENERAL;
    smp_->u_ = sym_lib::copy_dense(ief_->d);
    smp_converted = true;
    return true;
@@ -654,9 +747,12 @@ namespace format {
    smp_->desc_=smp_->desc_struct_.get_desc();
    problem_name = smp_->desc_struct_.name_;
    smp_->H_ = sym_lib::copy_sparse(bf_->H);
+   smp_->H_->stype = LOWER;
    smp_->q_ = sym_lib::copy_dense(bf_->q);
    smp_->r_ = bf_->fixed;
    find_smp_inequalities_by_bounds(bf_->l, bf_->u, bf_->A, bf_->AT, smp_);
+   smp_->A_->stype = GENERAL;
+
    return true;
   }
 
@@ -671,16 +767,36 @@ namespace format {
    bf_ = new BoundedForm;
    bf_->desc = smp_->desc_struct_;
    bf_->H = sym_lib::copy_sparse(smp_->H_);
+   bf_->H->stype = LOWER;
+   bf_->H_general = sym_lib::make_full(bf_->H);
    bf_->q = sym_lib::copy_dense(smp_->q_);
    bf_->fixed = smp_->r_;
    bf_->A = sym_lib::concatenate_two_CSC(smp_->A_, smp_->C_);
-   bf_->l = sym_lib::copy_dense(smp_->l_);
+   bf_->A->stype=GENERAL;
+   if((!smp_->l_ && smp_->u_) || (smp_->l_ && !smp_->u_)){
+    if(!smp_->l_){
+     auto *d = new Dense(smp_->u_->row, 1, 1, min_dbl);
+     bf_->l = sym_lib::concatenate_two_dense(smp_->b_,d);
+     bf_->u = sym_lib::concatenate_two_dense(smp_->b_,smp_->u_);
+     delete []d;
+    }
+    if(!smp_->u_){
+     auto *d = new Dense(smp_->l_->row, 1, 1, max_dbl);
+     bf_->l = sym_lib::concatenate_two_dense(smp_->b_,smp_->l_);
+     bf_->u = sym_lib::concatenate_two_dense(smp_->b_,d);
+     delete []d;
+    }
+   }else{
+    bf_->l = sym_lib::concatenate_two_dense(smp_->b_,smp_->l_);
+    bf_->u = sym_lib::concatenate_two_dense(smp_->b_,smp_->u_);
+   }
+   //bf_->l = sym_lib::copy_dense(smp_->l_);
    // To avoid null pointer for benchmark
    if(!bf_->l && bf_->A) bf_->l = new Dense(bf_->A->m, 1, 1, min_dbl);
-   bf_->u = sym_lib::copy_dense(smp_->u_);
    if(!bf_->u && bf_->A) bf_->u = new Dense(bf_->A->m, 1, 1, max_dbl);
    if(!bf_->A)
     bf_->A = new CSC(0, num_var(),0, false,GENERAL);
+
    bounded_converted = true;
    return true;
   }

@@ -52,11 +52,11 @@ qfc->smp_to_bounded();
 //qfc->smp_->write("tmp2.yml");
  qfc4->ie_to_smp();
 
- if(!sym_lib::are_equal(qfc3->smp_, qfc4->smp_) )
-  std::cout<<"WRONG IE conversion\n";
-
- if(!sym_lib::are_equal(qfc3->ief_, qfc4->ief_) )
-  std::cout<<"WRONG conversion\n";
+// if(!sym_lib::are_equal(qfc3->smp_, qfc4->smp_) )
+//  std::cout<<"WRONG IE conversion\n";
+//
+// if(!sym_lib::are_equal(qfc3->ief_, qfc4->ief_) )
+//  std::cout<<"WRONG conversion\n";
 
  qfc3->smp_->set_description(dtes);
  qfc3->smp_->write("temp3.yml");
