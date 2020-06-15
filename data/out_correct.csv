@@ -1,0 +1,7 @@
+Tool Name,Problem Name,Hessian dim,Hessian NNZ,# of Eq Constraints,Eq Constraint NNZ,# of Ineq Const,Ineq Constraint NNZ,# of Threads,eps_abs,Outer GMRES Iter,Inner GMRES Iter,GMRES Tol,Diagonal Pert,Status,# of Iterations,Time (s),Active-set Size,Constraint Satisfaction Inf,Residual Lagrangian inf,Primal Obj,Dual Obj,Obj Value,Non-negativity Inf,Complementarity Inf,Problem Type,Problem Class,
+NASOQ-Fixed,matt_qp1,234,1182,0,0,30,164,6,0.001,3,3,1e-15,1e-09,1,2,0.00940938,2,0.000755677,1.13687e-13,-1991.83,4.68474e-13,-1991.83,0,5.32055e-13,contact simulation,computer graphics,
+NASOQ-Fixed,test05_0,185,185,125,2196,60,1890,6,0.001,3,3,1e-15,1e-09,1,7,0.0193286,7,4.44089e-16,6.18624e-15,4.98204,-4.72682e-17,4.98204,0,4.52947e-17,model predictive control,robotics,
+NASOQ-TUNED,matt_qp1,234,1182,0,0,30,164,6,0.001,1,1,1e-15,1e-09,1,2,0.00448474,2,0.000755677,1.13687e-13,-1991.83,4.68474e-13,-1991.83,0,5.32055e-13,contact simulation,computer graphics,
+NASOQ-TUNED,test05_0,185,185,125,2196,60,1890,6,0.001,1,1,1e-15,1e-09,1,7,0.0150365,7,8.88178e-16,1.19085e-14,4.98204,1.31804e-17,4.98204,0,9.05894e-17,model predictive control,robotics,
+NASOQ,matt_qp1,234,1182,0,0,30,164,6,0.001,2,2,1e-15,1e-09,1,2,0.00593103,2,0.000755677,1.13687e-13,-1991.83,4.68474e-13,-1991.83,0,5.32055e-13,contact simulation,computer graphics,
+NASOQ,test05_0,185,185,125,2196,60,1890,6,0.001,2,2,1e-15,1e-09,1,7,0.0167887,7,4.44089e-16,6.19101e-15,4.98204,-4.72682e-17,4.98204,0,4.52947e-17,model predictive control,robotics,

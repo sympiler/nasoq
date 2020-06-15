@@ -778,13 +778,13 @@ namespace format {
      auto *d = new Dense(smp_->u_->row, 1, 1, min_dbl);
      bf_->l = sym_lib::concatenate_two_dense(smp_->b_,d);
      bf_->u = sym_lib::concatenate_two_dense(smp_->b_,smp_->u_);
-     delete []d;
+     delete d;
     }
     if(!smp_->u_){
      auto *d = new Dense(smp_->l_->row, 1, 1, max_dbl);
      bf_->l = sym_lib::concatenate_two_dense(smp_->b_,smp_->l_);
      bf_->u = sym_lib::concatenate_two_dense(smp_->b_,d);
-     delete []d;
+     delete d;
     }
    }else{
     bf_->l = sym_lib::concatenate_two_dense(smp_->b_,smp_->l_);

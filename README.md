@@ -28,6 +28,8 @@ that you can run it as following:
 ```bash
 bash buildAll.sh
 ```
+Upon successful build you should be able to see `data/out.csv` and 
+it should be similar to `data/out_correct.csv`.  
 
 For installing on MAc you might need to use GCC so you need to also set the CMAKE compiler flag.
 
