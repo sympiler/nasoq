@@ -821,6 +821,7 @@ namespace format {
     bounded_to_smp();
     return smp_->C_ ? smp_->C_->m : 0;
    }
+   return 0;
   }
 
   size_t num_var(){

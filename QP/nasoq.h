@@ -652,6 +652,7 @@ namespace nasoq {
     used_const[c_no] = 1;
    }
    warm_start = 1;
+   return warm_start;
   }
 
 /*
@@ -664,6 +665,7 @@ namespace nasoq {
    }
    n_active = 0;
    warm_start = 1;
+   return warm_start;
   }
 
 /*
@@ -1171,6 +1173,7 @@ namespace nasoq {
     lagrange_mult[active_set[i]] = packed_sol[H->ncol + A->nrow + i];
    }
    delete[]packed_sol;
+   return 1;
   }
 
   int solve_kkt(solve_type s_type) {
@@ -1964,6 +1967,7 @@ namespace nasoq {
     sn_list.push_back(nxt_list[i].idx);
    }
    ss->add_del_matrix_qp(add_del, sn_list);
+   return 1;
   }
 
 /*

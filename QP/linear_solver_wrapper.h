@@ -865,6 +865,7 @@ namespace nasoq {
      std::cout << " Wrong algorithm type! \n";
      return -1;
    }
+   return 1;
   }
 
   /*
@@ -1238,21 +1239,21 @@ namespace nasoq {
    * Editing an existing row
    */
   int edit_matrix() {
-
+   return 1;
   }
 
   /*
    *
    */
   int edit_rhs() {
-
+    return 1;
   }
 
   /*
    *
    */
   double *edit_solve_rhs() {
-
+   return NULL;
   }
 
   /*
@@ -1391,11 +1392,11 @@ namespace nasoq {
  * Edits the row/col in original symmetric matrix A and updates L
  */
   int edit_update_factorization(int add_del, std::vector<int> add_drp_const) {
-
+   return 1;
   }
 
   double *update_solve() {
-
+   return NULL;
   }
 
 

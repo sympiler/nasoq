@@ -266,5 +266,5 @@ if(print_header){
 
  delete qm;
  delete QPFC;
-
+ return 0;
 }

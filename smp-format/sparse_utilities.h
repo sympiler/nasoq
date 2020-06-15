@@ -3,7 +3,7 @@
 //
 
 #include <omp.h>
-#include <cstring>
+#include <string>
 #include <cassert>
 #include <cmath>
 #include "def.h"
@@ -35,7 +35,8 @@ namespace sym_lib {
   colind = new int[nnz]();
   values = new double[nnz]();
 
-  memset(rowCnt, 0, sizeof(int) * nrow);
+  std::fill_n(rowCnt, nrow, 0);
+  //memset(rowCnt, 0, sizeof(int) * nrow);
   for (int i = 0; i < ncol; i++) {
    for (int j = Ap[i]; j < Ap[i + 1]; j++) {
     int row = Ai[j];
@@ -70,8 +71,8 @@ namespace sym_lib {
 
   int *colind = B->i;
   double *values = B->x;
-
-  memset(rowCnt, 0, sizeof(int) * nrow);
+  std::fill_n(rowCnt, nrow, 0);
+  //memset(rowCnt, 0, sizeof(int) * nrow);
   for (int i = 0; i < (int)ncol; i++) {
    for (int j = A->p[i]; j < A->p[i + 1]; j++) {
     int row = A->i[j];

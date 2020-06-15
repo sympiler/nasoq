@@ -376,6 +376,7 @@ namespace nasoq {
    value = mat[i];
    out_file << value << " ";
   }
+  return 1;
  }
 
 /*
@@ -565,6 +566,7 @@ namespace nasoq {
    perm[i] = x;
   }
   assert(colCnt == n);
+  return true;
  }
 
  bool enableColdCache(int n, std::ifstream &f) {
@@ -1306,7 +1308,7 @@ namespace nasoq {
      break;
    }
   }
-
+  return true;
  }
 
  bool parse_nasoq_args(int argc, char **argv, std::map<std::string, std::string> &qp_args) {

@@ -7,6 +7,7 @@
 
 #include <utility>
 
+#include <string>
 #include "io.h"
 #include "sparse_utilities.h"
 
