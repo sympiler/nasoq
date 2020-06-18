@@ -78,6 +78,9 @@
     else
      nasoq->nas_mode= PREDET;
    }
+   //TODO: will remove this
+   nasoq->nas_mode= PREDET;
+   nasoq->inner_iter_ref = nasoq->outer_iter_ref=0;
 
    /// Solve Problem
    exitflag = nasoq->solve();
