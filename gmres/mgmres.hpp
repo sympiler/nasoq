@@ -11,27 +11,29 @@
 #include "spmv_CSC.h"
 #include "Norm.h"
 
+namespace nasoq {
 //  Thanks to Philip Sakievich for correcting mismatches between this HPP
 //  file and the corresponding CPP file, 23 March 2016!
 //
 
-void ax_cr ( int n, int nz_num, int ia[], int ja[], double a[], double x[],
-             double w[] );
+ void ax_cr(int n, int nz_num, int ia[], int ja[], double a[], double x[],
+            double w[]);
 
-void diagonal_pointer_cr ( int n, int nz_num, int ia[], int ja[], int ua[] );
+ void diagonal_pointer_cr(int n, int nz_num, int ia[], int ja[], int ua[]);
 
-void mult_givens ( double c, double s, int k, double g[] );
+ void mult_givens(double c, double s, int k, double g[]);
 
-double r8vec_dot ( int n, double a1[], double a2[] );
-void rearrange_cr ( int n, int nz_num, int ia[], int ja[], double a[] );
-void timestamp ( );
+ double r8vec_dot(int n, double a1[], double a2[]);
 
+ void rearrange_cr(int n, int nz_num, int ia[], int ja[], double a[]);
+
+ void timestamp();
 
 
 /******************************************************************************/
 
-void ax_cr ( int n, int nz_num, int ia[], int ja[], double a[], double x[],
-             double w[] )
+ void ax_cr(int n, int nz_num, int ia[], int ja[], double a[], double x[],
+            double w[])
 
 /******************************************************************************/
 /*
@@ -105,30 +107,28 @@ void ax_cr ( int n, int nz_num, int ia[], int ja[], double a[], double x[],
 
     Output, double W[N], the value of A*X.
 */
-{
- int i;
- int k;
- int k1;
- int k2;
-
- for ( i = 0; i < n; i++ )
  {
-  w[i] = 0.0;
-  k1 = ia[i];
-  k2 = ia[i+1];
-  for ( k = k1; k < k2; k++ )
-  {
-   w[i] = w[i] + a[k] * x[ja[k]];
+  int i;
+  int k;
+  int k1;
+  int k2;
+
+  for (i = 0; i < n; i++) {
+   w[i] = 0.0;
+   k1 = ia[i];
+   k2 = ia[i + 1];
+   for (k = k1; k < k2; k++) {
+    w[i] = w[i] + a[k] * x[ja[k]];
+   }
   }
+  return;
  }
- return;
-}
 /******************************************************************************/
 
 
 /******************************************************************************/
 
-void diagonal_pointer_cr ( int n, int nz_num, int ia[], int ja[], int ua[] )
+ void diagonal_pointer_cr(int n, int nz_num, int ia[], int ja[], int ua[])
 
 /******************************************************************************/
 /*
@@ -174,33 +174,31 @@ void diagonal_pointer_cr ( int n, int nz_num, int ia[], int ja[], int ua[] )
 
     Output, int UA[N], the index of the diagonal element of each row.
 */
-{
- int i;
- int j;
- int j1;
- int j2;
- int k;
-
- for ( i = 0; i < n; i++ )
  {
-  ua[i] = -1;
-  j1 = ia[i];
-  j2 = ia[i+1];
+  int i;
+  int j;
+  int j1;
+  int j2;
+  int k;
 
-  for ( j = j1; j < j2; j++ )
-  {
-   if ( ja[j] == i )
-   {
-    ua[i] = j;
+  for (i = 0; i < n; i++) {
+   ua[i] = -1;
+   j1 = ia[i];
+   j2 = ia[i + 1];
+
+   for (j = j1; j < j2; j++) {
+    if (ja[j] == i) {
+     ua[i] = j;
+    }
    }
-  }
 
+  }
+  return;
  }
- return;
-}
+
 /******************************************************************************/
 
-double **dmatrix ( int nrl, int nrh, int ncl, int nch )
+ double **dmatrix(int nrl, int nrh, int ncl, int nch)
 
 /******************************************************************************/
 /*
@@ -233,116 +231,110 @@ double **dmatrix ( int nrl, int nrh, int ncl, int nch )
     Output, double **DMATRIX, a doubly-dimensioned array with
     the requested row and column ranges.
 */
-{
- int i;
- double **m;
- int nrow = nrh - nrl + 1;
- int ncol = nch - ncl + 1;
+ {
+  int i;
+  double **m;
+  int nrow = nrh - nrl + 1;
+  int ncol = nch - ncl + 1;
 /*
   Allocate pointers to the rows.
 */
- m = ( double ** ) malloc ( (size_t) ( ( nrow + 1 ) * sizeof ( double* ) ) );
+  m = (double **) malloc((size_t) ((nrow + 1) * sizeof(double *)));
 
- if ( ! m )
- {
-  fprintf ( stderr, "\n" );
-  fprintf ( stderr, "DMATRIX - Fatal error!\n" );
-  fprintf ( stderr, "  Failure allocating pointers to rows.\n");
-  exit ( 1 );
- }
- m = m + 1;
- m = m - nrl;
+  if (!m) {
+   fprintf(stderr, "\n");
+   fprintf(stderr, "DMATRIX - Fatal error!\n");
+   fprintf(stderr, "  Failure allocating pointers to rows.\n");
+   exit(1);
+  }
+  m = m + 1;
+  m = m - nrl;
 /*
   Allocate each row and set pointers to them.
 */
- m[nrl] = ( double * ) malloc ( (size_t) ( ( nrow * ncol + 1 ) * sizeof ( double ) ) );
+  m[nrl] = (double *) malloc((size_t) ((nrow * ncol + 1) * sizeof(double)));
 
- if ( ! m[nrl] )
- {
-  fprintf ( stderr, "\n" );
-  fprintf ( stderr, "DMATRIX - Fatal error!\n" );
-  fprintf ( stderr, "  Failure allocating rows.\n");
-  exit ( 1 );
- }
- m[nrl] = m[nrl] + 1;
- m[nrl] = m[nrl] - ncl;
+  if (!m[nrl]) {
+   fprintf(stderr, "\n");
+   fprintf(stderr, "DMATRIX - Fatal error!\n");
+   fprintf(stderr, "  Failure allocating rows.\n");
+   exit(1);
+  }
+  m[nrl] = m[nrl] + 1;
+  m[nrl] = m[nrl] - ncl;
 
- for ( i = nrl + 1; i <= nrh; i++ )
- {
-  m[i] = m[i-1] + ncol;
- }
+  for (i = nrl + 1; i <= nrh; i++) {
+   m[i] = m[i - 1] + ncol;
+  }
 /*
   Return the pointer to the array of pointers to the rows;
 */
- return m;
-}
+  return m;
+ }
 
-double **dmatrix_prealloc ( int nrl, int nrh, int ncl, int nch, double *ws )
+ double **dmatrix_prealloc(int nrl, int nrh, int ncl, int nch, double *ws)
 
 /******************************************************************************/
 /*
 
 */
-{
- int i;
- double **m;
- int nrow = nrh - nrl + 1;
- int ncol = nch - ncl + 1;
+ {
+  int i;
+  double **m;
+  int nrow = nrh - nrl + 1;
+  int ncol = nch - ncl + 1;
 /*
   Allocate pointers to the rows.
 */
- m = ( double ** ) malloc ( (size_t) ( ( nrow + 1 ) * sizeof ( double* ) ) );
+  m = (double **) malloc((size_t) ((nrow + 1) * sizeof(double *)));
 
- if ( ! m )
- {
-  fprintf ( stderr, "\n" );
-  fprintf ( stderr, "DMATRIX - Fatal error!\n" );
-  fprintf ( stderr, "  Failure allocating pointers to rows.\n");
-  exit ( 1 );
- }
- m = m + 1;
- m = m - nrl;
+  if (!m) {
+   fprintf(stderr, "\n");
+   fprintf(stderr, "DMATRIX - Fatal error!\n");
+   fprintf(stderr, "  Failure allocating pointers to rows.\n");
+   exit(1);
+  }
+  m = m + 1;
+  m = m - nrl;
 /*
   Allocate each row and set pointers to them.
 */
- //m[nrl] = ( double * ) malloc ( (size_t) ( ( nrow * ncol + 1 ) * sizeof ( double ) ) );
- m[nrl] = ws;
- if ( ! m[nrl] )
- {
-  fprintf ( stderr, "\n" );
-  fprintf ( stderr, "DMATRIX - Fatal error!\n" );
-  fprintf ( stderr, "  Failure allocating rows.\n");
-  exit ( 1 );
- }
- m[nrl] = m[nrl] + 1;
- m[nrl] = m[nrl] - ncl;
+  //m[nrl] = ( double * ) malloc ( (size_t) ( ( nrow * ncol + 1 ) * sizeof ( double ) ) );
+  m[nrl] = ws;
+  if (!m[nrl]) {
+   fprintf(stderr, "\n");
+   fprintf(stderr, "DMATRIX - Fatal error!\n");
+   fprintf(stderr, "  Failure allocating rows.\n");
+   exit(1);
+  }
+  m[nrl] = m[nrl] + 1;
+  m[nrl] = m[nrl] - ncl;
 
- for ( i = nrl + 1; i <= nrh; i++ )
- {
-  m[i] = m[i-1] + ncol;
- }
+  for (i = nrl + 1; i <= nrh; i++) {
+   m[i] = m[i - 1] + ncol;
+  }
 /*
   Return the pointer to the array of pointers to the rows;
 */
- return m;
-}
+  return m;
+ }
 
-void free_dmatrix_prealloc ( double **m, int nrl, int nrh, int ncl, int nch )
+ void free_dmatrix_prealloc(double **m, int nrl, int nrh, int ncl, int nch)
 
 /******************************************************************************/
 /*
 
 */
-{
- //free ( ( char * ) ( m[nrl] + ncl - 1 ) );
- free ( ( char * ) ( m + nrl - 1 ) );
- //free(m);
- return;
-}
+ {
+  //free ( ( char * ) ( m[nrl] + ncl - 1 ) );
+  free((char *) (m + nrl - 1));
+  //free(m);
+  return;
+ }
 
 /******************************************************************************/
 
-void free_dmatrix ( double **m, int nrl, int nrh, int ncl, int nch )
+ void free_dmatrix(double **m, int nrl, int nrh, int ncl, int nch)
 
 /******************************************************************************/
 /*
@@ -371,16 +363,16 @@ void free_dmatrix ( double **m, int nrl, int nrh, int ncl, int nch )
     Input, double **M, the pointer to the doubly-dimensioned array,
     previously created by a call to DMATRIX.
 */
-{
- free ( ( char * ) ( m[nrl] + ncl - 1 ) );
- free ( ( char * ) ( m + nrl - 1 ) );
+ {
+  free((char *) (m[nrl] + ncl - 1));
+  free((char *) (m + nrl - 1));
 
- return;
-}
+  return;
+ }
 
 
-void lus_cr ( int n, int nz_num, int ia[], int ja[], double l[], int ua[],
-              double r[], double z[] )
+ void lus_cr(int n, int nz_num, int ia[], int ja[], double l[], int ua[],
+             double r[], double z[])
 
 /******************************************************************************/
 /*
@@ -430,59 +422,53 @@ void lus_cr ( int n, int nz_num, int ia[], int ja[], double l[], int ua[],
 
     Output, double Z[N], the solution of the system M * Z = R.
 */
-{
- int i;
- int j;
- double *w;
+ {
+  int i;
+  int j;
+  double *w;
 
- w = ( double * ) malloc ( n * sizeof ( double ) );
+  w = (double *) malloc(n * sizeof(double));
 /*
   Copy R in.
 */
- for ( i = 0; i < n; i++ )
- {
-  w[i] = r[i];
- }
+  for (i = 0; i < n; i++) {
+   w[i] = r[i];
+  }
 /*
   Solve L * w = w where L is unit lower triangular.
 */
- for ( i = 1; i < n; i++ )
- {
-  for ( j = ia[i]; j < ua[i]; j++ )
-  {
-   w[i] = w[i] - l[j] * w[ja[j]];
+  for (i = 1; i < n; i++) {
+   for (j = ia[i]; j < ua[i]; j++) {
+    w[i] = w[i] - l[j] * w[ja[j]];
+   }
   }
- }
 /*
   Solve U * w = w, where U is upper triangular.
 */
- for ( i = n - 1; 0 <= i; i-- )
- {
-  for ( j = ua[i] + 1; j < ia[i+1]; j++ )
-  {
-   w[i] = w[i] - l[j] * w[ja[j]];
+  for (i = n - 1; 0 <= i; i--) {
+   for (j = ua[i] + 1; j < ia[i + 1]; j++) {
+    w[i] = w[i] - l[j] * w[ja[j]];
+   }
+   w[i] = w[i] / l[ua[i]];
   }
-  w[i] = w[i] / l[ua[i]];
- }
 /*
   Copy Z out.
 */
- for ( i = 0; i < n; i++ )
- {
-  z[i] = w[i];
- }
+  for (i = 0; i < n; i++) {
+   z[i] = w[i];
+  }
 /*
   Free memory.
 */
- free ( w );
+  free(w);
 
- return;
-}
+  return;
+ }
 
 
 /******************************************************************************/
 
-void mult_givens ( double c, double s, int k, double *g )
+ void mult_givens(double c, double s, int k, double *g)
 
 /******************************************************************************/
 /*
@@ -536,29 +522,30 @@ void mult_givens ( double c, double s, int k, double *g )
     Input/output, double G[K+2], the vector to be modified.  On output,
     the Givens rotation has been applied to entries G(K) and G(K+1).
 */
-{
- double g1;
- double g2;
+ {
+  double g1;
+  double g2;
 
- g1 = c * g[k] - s * g[k+1];
- g2 = s * g[k] + c * g[k+1];
+  g1 = c * g[k] - s * g[k + 1];
+  g2 = s * g[k] + c * g[k + 1];
 
- g[k]   = g1;
- g[k+1] = g2;
+  g[k] = g1;
+  g[k + 1] = g2;
 
- return;
-}
+  return;
+ }
+
 /******************************************************************************/
 
-int pmgmres_ldlt_cr ( int n, int nz_num, int ia[], int ja[], double a[],
-                       size_t *Lp, int *Li, double *Lx, size_t NNZ,
-                       size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
-                       double *d_val,
-                      double x[], double rhs[], int itr_max, int mr,
-                      double tol_abs, double tol_rel, int sorted=1, int blocked=0,
-                      int levels=0, int *levelPtr=NULL, int *levelSet=NULL,
-                      int parts=0,  int *parPtr=NULL, int *partition=NULL,
-                        int chunk=0 )
+ int pmgmres_ldlt_cr(int n, int nz_num, int ia[], int ja[], double a[],
+                     size_t *Lp, int *Li, double *Lx, size_t NNZ,
+                     size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
+                     double *d_val,
+                     double x[], double rhs[], int itr_max, int mr,
+                     double tol_abs, double tol_rel, int sorted = 1, int blocked = 0,
+                     int levels = 0, int *levelPtr = NULL, int *levelSet = NULL,
+                     int parts = 0, int *parPtr = NULL, int *partition = NULL,
+                     int chunk = 0)
 
 /******************************************************************************/
 /*
@@ -647,67 +634,67 @@ int pmgmres_ldlt_cr ( int n, int nz_num, int ia[], int ja[], double a[],
     Input, double TOL_REL, a relative tolerance comparing the
     current residual to the initial residual.
 */
-{
- double av;
- double *c;
- double delta = 1.0e-03;
- double *g;
- double **h;
- double htmp;
- int i;
- int itr;
- int itr_used;
- int j;
- int k;
- int k_copy;
- double *l;
- double mu;
- double *r;
- double rho;
- double rho_tol;
- double *s;
- int *ua;
- double **v;
- int verbose = 0;
- double *y;
- double alp[2] = {1.0, 0};
- double bet[2] = {0.0, 0};
- itr_used = 0;
+ {
+  double av;
+  double *c;
+  double delta = 1.0e-03;
+  double *g;
+  double **h;
+  double htmp;
+  int i;
+  int itr;
+  int itr_used;
+  int j;
+  int k;
+  int k_copy;
+  double *l;
+  double mu;
+  double *r;
+  double rho;
+  double rho_tol;
+  double *s;
+  int *ua;
+  double **v;
+  int verbose = 0;
+  double *y;
+  double alp[2] = {1.0, 0};
+  double bet[2] = {0.0, 0};
+  itr_used = 0;
 
- c = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
- g = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
- h = dmatrix ( 0, mr, 0, mr-1 );
- l = ( double * ) malloc ( ( ia[n] + 1 ) * sizeof ( double ) );
- r = ( double * ) malloc ( n * sizeof ( double ) );
- s = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
- ua = ( int * ) malloc ( n * sizeof ( int ) );
- v = dmatrix ( 0, mr, 0, n-1 );
- y = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
- size_t *ap = ( size_t * ) malloc ( (n+1) * sizeof ( size_t ) );
- for (int m = 0; m < n+1; ++m) {
-  ap[m] = ia[m];
-  //printf("%ld == %d, ", ap[m], ia[m]);
- }
-
- if (!sorted){
-  rearrange_cr ( n, nz_num, ia, ja, a ); //FIXME:
-  diagonal_pointer_cr ( n, nz_num, ia, ja, ua );
- }else{
-  for (int m = 0; m < n; ++m) {
-   ua[m] = ia[m];
+  c = (double *) malloc((mr + 1) * sizeof(double));
+  g = (double *) malloc((mr + 1) * sizeof(double));
+  h = dmatrix(0, mr, 0, mr - 1);
+  l = (double *) malloc((ia[n] + 1) * sizeof(double));
+  r = (double *) malloc(n * sizeof(double));
+  s = (double *) malloc((mr + 1) * sizeof(double));
+  ua = (int *) malloc(n * sizeof(int));
+  v = dmatrix(0, mr, 0, n - 1);
+  y = (double *) malloc((mr + 1) * sizeof(double));
+  size_t *ap = (size_t *) malloc((n + 1) * sizeof(size_t));
+  for (int m = 0; m < n + 1; ++m) {
+   ap[m] = ia[m];
+   //printf("%ld == %d, ", ap[m], ia[m]);
   }
- }
- if ( verbose ) {
-  printf ( "\n" );
-  printf ( "PMGMRES_ILU_CR\n" );
-  printf ( "  Number of unknowns = %d\n", n );
- }
 
- for ( itr = 0; itr < itr_max; itr++ ) {
-  if(!sorted)
-   ax_cr ( n, nz_num, ia, ja, a, x, r );
-  else
-   spmv_csc_sym_one(n, ap, ja, a, -1, alp, bet, 1,x, r );
+  if (!sorted) {
+   rearrange_cr(n, nz_num, ia, ja, a); //FIXME:
+   diagonal_pointer_cr(n, nz_num, ia, ja, ua);
+  } else {
+   for (int m = 0; m < n; ++m) {
+    ua[m] = ia[m];
+   }
+  }
+  if (verbose) {
+   printf("\n");
+   printf("PMGMRES_ILU_CR\n");
+   printf("  Number of unknowns = %d\n", n);
+  }
+
+  for (itr = 0; itr < itr_max; itr++) {
+   if (!sorted)
+    ax_cr(n, nz_num, ia, ja, a, x, r);
+   else
+    spmv_csc_sym_one(n, ap, ja, a, -1, alp, bet, 1, x, r);
 
 /*  printf("\n");
   for (int m = 0; m < n; ++m) {
@@ -718,183 +705,181 @@ int pmgmres_ldlt_cr ( int n, int nz_num, int ia[], int ja[], double a[],
    printf("%f, ",r[m]);
   }
   printf("\n");*/
-  for ( i = 0; i < n; i++ ) {
-   r[i] = rhs[i] - r[i];
-  }
-  if (blocked==2)
-   solve_phase_ldl_blocked_parallel(n, d_val, r, col2sup, sup2col,
-                           Lp, Li, Lx, Li_ptr, supNo, NNZ,
-                           levels, levelPtr, levelSet,
-                           parts, parPtr, partition, chunk);
-  else if(blocked==1)
-   solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
-                           Lp, Li, Lx, Li_ptr, supNo, NNZ);
-  else
-   solve_phase_ldl(n, d_val, r, col2sup, sup2col,
-                   Lp, Li, Lx, Li_ptr, supNo, NNZ);
-
-  rho = sqrt ( r8vec_dot ( n, r, r ) );
-  if(rho < tol_abs)
-   return itr_used;
-  if ( verbose ) {
-   printf ( "  ITR = %d  Residual = %e\n", itr, rho );
-  }
-  if ( itr == 0 ) {
-   rho_tol = rho * tol_rel;
-  }
-
-  for ( i = 0; i < n; i++ ) {
-   v[0][i] = r[i] / rho;
-  }
-  g[0] = rho;
-  for ( i = 1; i < mr + 1; i++ ) {
-   g[i] = 0.0;
-  }
-  for ( i = 0; i < mr + 1; i++ ) {
-   for ( j = 0; j < mr; j++ ) {
-    h[i][j] = 0.0;
+   for (i = 0; i < n; i++) {
+    r[i] = rhs[i] - r[i];
    }
-  }
-  for ( k = 0; k < mr; k++ ) {
-   k_copy = k;
-   if(!sorted)
-    ax_cr ( n, nz_num, ia, ja, a, v[k], v[k+1] );
-   else
-    spmv_csc_sym_one(n, ap, ja, a, -1, alp, bet, 1, v[k], v[k+1] );
-
-   if (blocked==2)
-    solve_phase_ldl_blocked_parallel(n, d_val, v[k+1], col2sup, sup2col,
-                            Lp, Li, Lx, Li_ptr, supNo, NNZ,
-                            levels, levelPtr, levelSet,
-                            parts, parPtr, partition, chunk);
-   else if(blocked==1)
-    solve_phase_ldl_blocked(n, d_val, v[k+1], col2sup, sup2col,
+   if (blocked == 2)
+    solve_phase_ldl_blocked_parallel(n, d_val, r, col2sup, sup2col,
+                                     Lp, Li, Lx, Li_ptr, supNo, NNZ,
+                                     levels, levelPtr, levelSet,
+                                     parts, parPtr, partition, chunk);
+   else if (blocked == 1)
+    solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
    else
-    solve_phase_ldl(n, d_val, v[k+1], col2sup, sup2col,
+    solve_phase_ldl(n, d_val, r, col2sup, sup2col,
                     Lp, Li, Lx, Li_ptr, supNo, NNZ);
 
-   av = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-   for ( j = 0; j <= k; j++ ) {
-    h[j][k] = r8vec_dot ( n, v[k+1], v[j] );
-    for ( i = 0; i < n; i++ ) {
-     v[k+1][i] = v[k+1][i] - h[j][k] * v[j][i];
+   rho = sqrt(r8vec_dot(n, r, r));
+   if (rho < tol_abs)
+    return itr_used;
+   if (verbose) {
+    printf("  ITR = %d  Residual = %e\n", itr, rho);
+   }
+   if (itr == 0) {
+    rho_tol = rho * tol_rel;
+   }
+
+   for (i = 0; i < n; i++) {
+    v[0][i] = r[i] / rho;
+   }
+   g[0] = rho;
+   for (i = 1; i < mr + 1; i++) {
+    g[i] = 0.0;
+   }
+   for (i = 0; i < mr + 1; i++) {
+    for (j = 0; j < mr; j++) {
+     h[i][j] = 0.0;
     }
    }
-   h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
+   for (k = 0; k < mr; k++) {
+    k_copy = k;
+    if (!sorted)
+     ax_cr(n, nz_num, ia, ja, a, v[k], v[k + 1]);
+    else
+     spmv_csc_sym_one(n, ap, ja, a, -1, alp, bet, 1, v[k], v[k + 1]);
 
-   if ( ( av + delta * h[k+1][k]) == av ) {
-    for ( j = 0; j < k + 1; j++ ) {
-     htmp = r8vec_dot ( n, v[k+1], v[j] );
-     h[j][k] = h[j][k] + htmp;
-     for ( i = 0; i < n; i++ ) {
-      v[k+1][i] = v[k+1][i] - htmp * v[j][i];
+    if (blocked == 2)
+     solve_phase_ldl_blocked_parallel(n, d_val, v[k + 1], col2sup, sup2col,
+                                      Lp, Li, Lx, Li_ptr, supNo, NNZ,
+                                      levels, levelPtr, levelSet,
+                                      parts, parPtr, partition, chunk);
+    else if (blocked == 1)
+     solve_phase_ldl_blocked(n, d_val, v[k + 1], col2sup, sup2col,
+                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
+    else
+     solve_phase_ldl(n, d_val, v[k + 1], col2sup, sup2col,
+                     Lp, Li, Lx, Li_ptr, supNo, NNZ);
+
+    av = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+    for (j = 0; j <= k; j++) {
+     h[j][k] = r8vec_dot(n, v[k + 1], v[j]);
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] - h[j][k] * v[j][i];
      }
     }
-    h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-   }
+    h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
 
-   if ( h[k+1][k] != 0.0 ) {
-    for ( i = 0; i < n; i++ ) {
-     v[k+1][i] = v[k+1][i] / h[k+1][k];
+    if ((av + delta * h[k + 1][k]) == av) {
+     for (j = 0; j < k + 1; j++) {
+      htmp = r8vec_dot(n, v[k + 1], v[j]);
+      h[j][k] = h[j][k] + htmp;
+      for (i = 0; i < n; i++) {
+       v[k + 1][i] = v[k + 1][i] - htmp * v[j][i];
+      }
+     }
+     h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+    }
+
+    if (h[k + 1][k] != 0.0) {
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] / h[k + 1][k];
+     }
+    }
+
+    if (0 < k) {
+     for (i = 0; i < k + 2; i++) {
+      y[i] = h[i][k];
+     }
+     for (j = 0; j < k; j++) {
+      mult_givens(c[j], s[j], j, y);
+     }
+     for (i = 0; i < k + 2; i++) {
+      h[i][k] = y[i];
+     }
+    }
+    mu = sqrt(h[k][k] * h[k][k] + h[k + 1][k] * h[k + 1][k]);
+    if (mu == 0)
+     return itr_used;
+    c[k] = h[k][k] / mu;
+    s[k] = -h[k + 1][k] / mu;
+    h[k][k] = c[k] * h[k][k] - s[k] * h[k + 1][k];
+    h[k + 1][k] = 0.0;
+    mult_givens(c[k], s[k], k, g);
+
+    rho = fabs(g[k + 1]);
+
+    itr_used = itr_used + 1;
+
+    if (verbose) {
+     printf("  K   = %d  Residual = %e\n", k, rho);
+    }
+
+    if (rho <= rho_tol && rho <= tol_abs) {
+     break;
     }
    }
 
-   if ( 0 < k ) {
-    for ( i = 0; i < k + 2; i++ ) {
-     y[i] = h[i][k];
+   k = k_copy;
+
+   y[k] = g[k] / h[k][k];
+   for (i = k - 1; 0 <= i; i--) {
+    y[i] = g[i];
+    for (j = i + 1; j < k + 1; j++) {
+     y[i] = y[i] - h[i][j] * y[j];
     }
-    for ( j = 0; j < k; j++ ) {
-     mult_givens ( c[j], s[j], j, y );
-    }
-    for ( i = 0; i < k + 2; i++ ) {
-     h[i][k] = y[i];
+    y[i] = y[i] / h[i][i];
+   }
+   for (i = 0; i < n; i++) {
+    for (j = 0; j < k + 1; j++) {
+     x[i] = x[i] + v[j][i] * y[j];
     }
    }
-   mu = sqrt ( h[k][k] * h[k][k] + h[k+1][k] * h[k+1][k] );
-   if(mu ==0)
-    return itr_used;
-   c[k] = h[k][k] / mu;
-   s[k] = -h[k+1][k] / mu;
-   h[k][k] = c[k] * h[k][k] - s[k] * h[k+1][k];
-   h[k+1][k] = 0.0;
-   mult_givens ( c[k], s[k], k, g );
-
-   rho = fabs ( g[k+1] );
-
-   itr_used = itr_used + 1;
-
-   if ( verbose ) {
-    printf ( "  K   = %d  Residual = %e\n", k, rho );
-   }
-
-   if ( rho <= rho_tol && rho <= tol_abs ) {
+   if (rho <= rho_tol && rho <= tol_abs) {
     break;
    }
   }
 
-  k = k_copy;
-
-  y[k] = g[k] / h[k][k];
-  for ( i = k - 1; 0 <= i; i-- ) {
-   y[i] = g[i];
-   for ( j = i + 1; j < k + 1; j++ ) {
-    y[i] = y[i] - h[i][j] * y[j];
-   }
-   y[i] = y[i] / h[i][i];
+  if (verbose) {
+   printf("\n");
+   printf("PMGMRES_ILU_CR:\n");
+   printf("  Iterations = %d\n", itr_used);
+   printf("  Final residual = %e\n", rho);
   }
-  for ( i = 0; i < n; i++ ) {
-   for ( j = 0; j < k + 1; j++ ) {
-    x[i] = x[i] + v[j][i] * y[j];
-   }
-  }
-  if ( rho <= rho_tol && rho <= tol_abs ) {
-   break;
-  }
+  return itr_used;
  }
 
- if ( verbose )
- {
-  printf ( "\n" );
-  printf ( "PMGMRES_ILU_CR:\n" );
-  printf ( "  Iterations = %d\n", itr_used );
-  printf ( "  Final residual = %e\n", rho );
+
+ void free_ws_ir(double *ws, double *c, double *g, double **h, int mr,
+                 double *r, double *s, double **v, int n, double *y) {
+
+  if (ws == NULL) {
+   free(c);
+   free(g);
+   free_dmatrix(h, 0, mr, 0, mr - 1);
+   free(r);
+   free(s);
+   free_dmatrix(v, 0, mr, 0, n - 1);
+   free(y);
+  } else {
+   //free_dmatrix ( h, 0, mr, 0, mr - 1 );
+   //free_dmatrix ( v, 0, mr, 0, n - 1 );
+   free_dmatrix_prealloc(h, 0, mr, 0, mr - 1);
+   free_dmatrix_prealloc(v, 0, mr, 0, n - 1);
+  }
  }
- return itr_used;
-}
-
-
-
-void free_ws_ir(double *ws, double *c, double *g, double **h, int mr,
-                double *r, double *s, double **v, int n, double *y){
-
- if(ws == NULL){
-  free ( c );
-  free ( g );
-  free_dmatrix ( h, 0, mr, 0, mr - 1 );
-  free ( r );
-  free ( s );
-  free_dmatrix ( v, 0, mr, 0, n - 1 );
-  free ( y );
- }else{
-  //free_dmatrix ( h, 0, mr, 0, mr - 1 );
-  //free_dmatrix ( v, 0, mr, 0, n - 1 );
-  free_dmatrix_prealloc ( h, 0, mr, 0, mr - 1 );
-  free_dmatrix_prealloc ( v, 0, mr, 0, n - 1 );
- }
-}
 
  /******************************************************************************/
 
- int pmgmres_ldlt_auto ( int n, int nz_num, int ia[], int ja[], double a[],
+ int pmgmres_ldlt_auto(int n, int nz_num, int ia[], int ja[], double a[],
                        size_t *Lp, int *Li, double *Lx, size_t NNZ,
                        size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
                        double *d_val,
                        double x[], double rhs[], int itr_max, int mr,
-                       double tol_abs, double tol_rel, int sorted=1, int blocked=0,
-                       int levels=0, int *levelPtr=NULL, int *levelSet=NULL,
-                       int parts=0,  int *parPtr=NULL, int *partition=NULL,
-                       int chunk=0, double *ws=NULL )
+                       double tol_abs, double tol_rel, int sorted = 1, int blocked = 0,
+                       int levels = 0, int *levelPtr = NULL, int *levelSet = NULL,
+                       int parts = 0, int *parPtr = NULL, int *partition = NULL,
+                       int chunk = 0, double *ws = NULL)
 
 /******************************************************************************/
 
@@ -922,154 +907,154 @@ void free_ws_ir(double *ws, double *c, double *g, double **h, int mr,
   double alp[2] = {1.0, 0};
   double bet[2] = {0.0, 0};
   itr_used = 0;
-  double norm_inf=0;
+  double norm_inf = 0;
   // double workspace: 4*(mr+1) + n + mr(mr-1) + mr(n-1)
-  c = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  g = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  h = dmatrix ( 0, mr, 0, mr-1 );
-  r = ( double * ) malloc ( n * sizeof ( double ) );
-  s = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  v = dmatrix ( 0, mr, 0, n-1 );
-  y = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
+  c = (double *) malloc((mr + 1) * sizeof(double));
+  g = (double *) malloc((mr + 1) * sizeof(double));
+  h = dmatrix(0, mr, 0, mr - 1);
+  r = (double *) malloc(n * sizeof(double));
+  s = (double *) malloc((mr + 1) * sizeof(double));
+  v = dmatrix(0, mr, 0, n - 1);
+  y = (double *) malloc((mr + 1) * sizeof(double));
 
-  for ( itr = 0; itr < itr_max; itr++ ) {
-   if(!sorted)
-    ax_cr ( n, nz_num, ia, ja, a, x, r );
+  for (itr = 0; itr < itr_max; itr++) {
+   if (!sorted)
+    ax_cr(n, nz_num, ia, ja, a, x, r);
    else
     spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, x, r);
 
-   for ( i = 0; i < n; i++ ) {
+   for (i = 0; i < n; i++) {
     r[i] = rhs[i] - r[i];
    }
    //norm_inf = norm_dense();
-   if (blocked==2)
+   if (blocked == 2)
     solve_phase_ldl_blocked_parallel(n, d_val, r, col2sup, sup2col,
                                      Lp, Li, Lx, Li_ptr, supNo, NNZ,
                                      levels, levelPtr, levelSet,
                                      parts, parPtr, partition, chunk);
-   else if(blocked==1)
+   else if (blocked == 1)
     solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
    else
     solve_phase_ldl(n, d_val, r, col2sup, sup2col,
                     Lp, Li, Lx, Li_ptr, supNo, NNZ);
 
-   rho = sqrt ( r8vec_dot ( n, r, r ) );
-   if(rho < tol_abs){
-    free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
+   rho = sqrt(r8vec_dot(n, r, r));
+   if (rho < tol_abs) {
+    free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
     return itr_used;
    }
-   if ( itr == 0 ) {
+   if (itr == 0) {
     rho_tol = rho * tol_rel;
    }
 
-   for ( i = 0; i < n; i++ ) {
+   for (i = 0; i < n; i++) {
     v[0][i] = r[i] / rho;
    }
    g[0] = rho;
-   for ( i = 1; i < mr + 1; i++ ) {
+   for (i = 1; i < mr + 1; i++) {
     g[i] = 0.0;
    }
-   for ( i = 0; i < mr + 1; i++ ) {
-    for ( j = 0; j < mr; j++ ) {
+   for (i = 0; i < mr + 1; i++) {
+    for (j = 0; j < mr; j++) {
      h[i][j] = 0.0;
     }
    }
-   for ( k = 0; k < mr; k++ ) {
+   for (k = 0; k < mr; k++) {
     k_copy = k;
-    if(!sorted)
-     ax_cr ( n, nz_num, ia, ja, a, v[k], v[k+1] );
+    if (!sorted)
+     ax_cr(n, nz_num, ia, ja, a, v[k], v[k + 1]);
     else
-     spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, v[k], v[k+1] );
+     spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, v[k], v[k + 1]);
 
-    if (blocked==2)
-     solve_phase_ldl_blocked_parallel(n, d_val, v[k+1], col2sup, sup2col,
+    if (blocked == 2)
+     solve_phase_ldl_blocked_parallel(n, d_val, v[k + 1], col2sup, sup2col,
                                       Lp, Li, Lx, Li_ptr, supNo, NNZ,
                                       levels, levelPtr, levelSet,
                                       parts, parPtr, partition, chunk);
-    else if(blocked==1)
-     solve_phase_ldl_blocked(n, d_val, v[k+1], col2sup, sup2col,
+    else if (blocked == 1)
+     solve_phase_ldl_blocked(n, d_val, v[k + 1], col2sup, sup2col,
                              Lp, Li, Lx, Li_ptr, supNo, NNZ);
     else
-     solve_phase_ldl(n, d_val, v[k+1], col2sup, sup2col,
+     solve_phase_ldl(n, d_val, v[k + 1], col2sup, sup2col,
                      Lp, Li, Lx, Li_ptr, supNo, NNZ);
 
-    av = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-    for ( j = 0; j <= k; j++ ) {
-     h[j][k] = r8vec_dot ( n, v[k+1], v[j] );
-     for ( i = 0; i < n; i++ ) {
-      v[k+1][i] = v[k+1][i] - h[j][k] * v[j][i];
+    av = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+    for (j = 0; j <= k; j++) {
+     h[j][k] = r8vec_dot(n, v[k + 1], v[j]);
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] - h[j][k] * v[j][i];
      }
     }
-    h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
+    h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
 
-    if ( ( av + delta * h[k+1][k]) == av ) {
-     for ( j = 0; j < k + 1; j++ ) {
-      htmp = r8vec_dot ( n, v[k+1], v[j] );
+    if ((av + delta * h[k + 1][k]) == av) {
+     for (j = 0; j < k + 1; j++) {
+      htmp = r8vec_dot(n, v[k + 1], v[j]);
       h[j][k] = h[j][k] + htmp;
-      for ( i = 0; i < n; i++ ) {
-       v[k+1][i] = v[k+1][i] - htmp * v[j][i];
+      for (i = 0; i < n; i++) {
+       v[k + 1][i] = v[k + 1][i] - htmp * v[j][i];
       }
      }
-     h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
+     h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
     }
 
-    if ( h[k+1][k] != 0.0 ) {
-     for ( i = 0; i < n; i++ ) {
-      v[k+1][i] = v[k+1][i] / h[k+1][k];
+    if (h[k + 1][k] != 0.0) {
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] / h[k + 1][k];
      }
     }
 
-    if ( 0 < k ) {
-     for ( i = 0; i < k + 2; i++ ) {
+    if (0 < k) {
+     for (i = 0; i < k + 2; i++) {
       y[i] = h[i][k];
      }
-     for ( j = 0; j < k; j++ ) {
-      mult_givens ( c[j], s[j], j, y );
+     for (j = 0; j < k; j++) {
+      mult_givens(c[j], s[j], j, y);
      }
-     for ( i = 0; i < k + 2; i++ ) {
+     for (i = 0; i < k + 2; i++) {
       h[i][k] = y[i];
      }
     }
-    mu = sqrt ( h[k][k] * h[k][k] + h[k+1][k] * h[k+1][k] );
-    if(mu == 0){
-     free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
+    mu = sqrt(h[k][k] * h[k][k] + h[k + 1][k] * h[k + 1][k]);
+    if (mu == 0) {
+     free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
      return itr_used;
     }
     c[k] = h[k][k] / mu;
-    s[k] = -h[k+1][k] / mu;
-    h[k][k] = c[k] * h[k][k] - s[k] * h[k+1][k];
-    h[k+1][k] = 0.0;
-    mult_givens ( c[k], s[k], k, g );
+    s[k] = -h[k + 1][k] / mu;
+    h[k][k] = c[k] * h[k][k] - s[k] * h[k + 1][k];
+    h[k + 1][k] = 0.0;
+    mult_givens(c[k], s[k], k, g);
 
-    rho = fabs ( g[k+1] );
+    rho = fabs(g[k + 1]);
 
     itr_used = itr_used + 1;
 
-    if ( rho <= rho_tol && rho <= tol_abs ) {
+    if (rho <= rho_tol && rho <= tol_abs) {
      break;
     }
    }
 
    k = k_copy;
-   if(h[k][k] == 0){
-    free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
+   if (h[k][k] == 0) {
+    free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
     return itr_used;
    }
    y[k] = g[k] / h[k][k];
-   for ( i = k - 1; 0 <= i; i-- ) {
+   for (i = k - 1; 0 <= i; i--) {
     y[i] = g[i];
-    for ( j = i + 1; j < k + 1; j++ ) {
+    for (j = i + 1; j < k + 1; j++) {
      y[i] = y[i] - h[i][j] * y[j];
     }
     y[i] = y[i] / h[i][i];
    }
-   for ( i = 0; i < n; i++ ) {
-    for ( j = 0; j < k + 1; j++ ) {
+   for (i = 0; i < n; i++) {
+    for (j = 0; j < k + 1; j++) {
      x[i] = x[i] + v[j][i] * y[j];
     }
    }
-   if ( rho <= rho_tol && rho <= tol_abs ) {
+   if (rho <= rho_tol && rho <= tol_abs) {
     break;
    }
   }
@@ -1078,7 +1063,7 @@ void free_ws_ir(double *ws, double *c, double *g, double **h, int mr,
 /*
   Free memory.
 */
- free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
+  free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
 /* free ( c );
  free ( g );
  free_dmatrix ( h, 0, mr, 0, mr - 1 );
@@ -1086,236 +1071,232 @@ void free_ws_ir(double *ws, double *c, double *g, double **h, int mr,
  free ( s );
  free_dmatrix ( v, 0, mr, 0, n - 1 );
  free ( y );*/
- return itr_used;
-}
-
-
-
-
-
-/******************************************************************************/
-
-int pmgmres_ldlt_auto_update ( int n, int nz_num, int ia[], int ja[], double a[],
-                        size_t *Lp, int *Li, double *Lx, size_t NNZ,
-                        size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
-                        double *d_val,
-                        double x[], double rhs[], int itr_max, int mr,
-                        double tol_abs, double tol_rel,bool *mask, int *mask_col,
-                               int sorted=1, int blocked=0,
-                        int levels=0, int *levelPtr=NULL, int *levelSet=NULL,
-                        int parts=0,  int *parPtr=NULL, int *partition=NULL,
-                        int s_level_no=-1, int *s_level_ptr=NULL,
-                        int *s_level_set=NULL,
-                        int chunk=0 , double *ws=NULL,double *ws_zerod=NULL)
-
-/******************************************************************************/
-{
- double av;
- double *c;
- double delta = 1.0e-03;
- double *g;
- double **h;
- double htmp;
- int i;
- int itr;
- int itr_used;
- int j;
- int k;
- int k_copy;
- double mu;
- double *r;
- double rho;
- double rho_tol;
- double *s;
- double **v;
- int verbose = 0;
- double *y;
- double alp[2] = {1.0, 0};
- double bet[2] = {0.0, 0};
- itr_used = 0;
- double norm_inf=0;
-
- if(ws == NULL){
-  c = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  g = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  h = dmatrix ( 0, mr, 0, mr-1 );
-  r = ( double * ) malloc ( n * sizeof ( double ) );
-  s = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
-  v = dmatrix ( 0, mr, 0, n-1 );
-  y = ( double * ) malloc ( ( mr + 1 ) * sizeof ( double ) );
- } else {
-  //std::fill_n(ws,4*(mr+1) + n,0);
-  // ws size is : 4*(mr+1) + mr*(mr+1) + n + mr*(n-1)
-  c = ws;
-  g = ws+mr+1;
-  r = ws + 2*(mr+1) ;
-  s = ws + 2*(mr+1) + n;
-  y = ws + 3*(mr+1) + n ;
-  h = dmatrix_prealloc(0, mr, 0, mr-1,ws + 4*(mr+1) + n);
-  //h = dmatrix ( 0, mr, 0, mr-1 );
-  v = dmatrix_prealloc(0, mr, 0, n-1,ws + 4*(mr+1) + mr*(mr+1) + n);
-  //v = dmatrix ( 0, mr, 0, n-1 );
+  return itr_used;
  }
 
- for ( itr = 0; itr < itr_max; itr++ ) {
-  if(!sorted)
-   ax_cr ( n, nz_num, ia, ja, a, x, r );
-  else
-   spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, x, r);
 
-  for ( i = 0; i < n; i++ ) {
-   r[i] = rhs[i] - r[i];
-  }
-  //norm_inf = norm_dense();
-  if (blocked==2){
-   solve_phase_ldl_blocked_parallel_permuted_update(n, d_val, r, col2sup, sup2col,
-                                    Lp, Li, Lx, Li_ptr, supNo, NNZ,
-                                    levels, levelPtr, levelSet,
-                                    parts, parPtr, partition, chunk,
-                                    s_level_no,s_level_ptr,s_level_set,
-                                    mask,mask_col,ws_zerod);
-  }
-  else if(blocked==1)
-   solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
-                           Lp, Li, Lx, Li_ptr, supNo, NNZ);
-  else
-   solve_phase_ldl(n, d_val, r, col2sup, sup2col,
-                   Lp, Li, Lx, Li_ptr, supNo, NNZ);
+/******************************************************************************/
 
-  rho = sqrt ( r8vec_dot ( n, r, r ) );
-  if(rho < tol_abs){
-   free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
-   return itr_used;
-  }
-  if ( itr == 0 ) {
-   rho_tol = rho * tol_rel;
+ int pmgmres_ldlt_auto_update(int n, int nz_num, int ia[], int ja[], double a[],
+                              size_t *Lp, int *Li, double *Lx, size_t NNZ,
+                              size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
+                              double *d_val,
+                              double x[], double rhs[], int itr_max, int mr,
+                              double tol_abs, double tol_rel, bool *mask, int *mask_col,
+                              int sorted = 1, int blocked = 0,
+                              int levels = 0, int *levelPtr = NULL, int *levelSet = NULL,
+                              int parts = 0, int *parPtr = NULL, int *partition = NULL,
+                              int s_level_no = -1, int *s_level_ptr = NULL,
+                              int *s_level_set = NULL,
+                              int chunk = 0, double *ws = NULL, double *ws_zerod = NULL)
+
+/******************************************************************************/
+ {
+  double av;
+  double *c;
+  double delta = 1.0e-03;
+  double *g;
+  double **h;
+  double htmp;
+  int i;
+  int itr;
+  int itr_used;
+  int j;
+  int k;
+  int k_copy;
+  double mu;
+  double *r;
+  double rho;
+  double rho_tol;
+  double *s;
+  double **v;
+  int verbose = 0;
+  double *y;
+  double alp[2] = {1.0, 0};
+  double bet[2] = {0.0, 0};
+  itr_used = 0;
+  double norm_inf = 0;
+
+  if (ws == NULL) {
+   c = (double *) malloc((mr + 1) * sizeof(double));
+   g = (double *) malloc((mr + 1) * sizeof(double));
+   h = dmatrix(0, mr, 0, mr - 1);
+   r = (double *) malloc(n * sizeof(double));
+   s = (double *) malloc((mr + 1) * sizeof(double));
+   v = dmatrix(0, mr, 0, n - 1);
+   y = (double *) malloc((mr + 1) * sizeof(double));
+  } else {
+   //std::fill_n(ws,4*(mr+1) + n,0);
+   // ws size is : 4*(mr+1) + mr*(mr+1) + n + mr*(n-1)
+   c = ws;
+   g = ws + mr + 1;
+   r = ws + 2 * (mr + 1);
+   s = ws + 2 * (mr + 1) + n;
+   y = ws + 3 * (mr + 1) + n;
+   h = dmatrix_prealloc(0, mr, 0, mr - 1, ws + 4 * (mr + 1) + n);
+   //h = dmatrix ( 0, mr, 0, mr-1 );
+   v = dmatrix_prealloc(0, mr, 0, n - 1, ws + 4 * (mr + 1) + mr * (mr + 1) + n);
+   //v = dmatrix ( 0, mr, 0, n-1 );
   }
 
-  for ( i = 0; i < n; i++ ) {
-   v[0][i] = r[i] / rho;
-  }
-  g[0] = rho;
-  for ( i = 1; i < mr + 1; i++ ) {
-   g[i] = 0.0;
-  }
-  for ( i = 0; i < mr + 1; i++ ) {
-   for ( j = 0; j < mr; j++ ) {
-    h[i][j] = 0.0;
-   }
-  }
-  for ( k = 0; k < mr; k++ ) {
-   k_copy = k;
-   if(!sorted)
-    ax_cr ( n, nz_num, ia, ja, a, v[k], v[k+1] );
+  for (itr = 0; itr < itr_max; itr++) {
+   if (!sorted)
+    ax_cr(n, nz_num, ia, ja, a, x, r);
    else
-    spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, v[k], v[k+1] );
+    spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, x, r);
 
-   if (blocked==2)
-    solve_phase_ldl_blocked_parallel_permuted_update(n, d_val, v[k+1], col2sup, sup2col,
-                                     Lp, Li, Lx, Li_ptr, supNo, NNZ,
-                                     levels, levelPtr, levelSet,
-                                     parts, parPtr, partition, chunk,
-                                     s_level_no,s_level_ptr,s_level_set,
-                                                     mask,mask_col,ws_zerod);
-   else if(blocked==1)
-    solve_phase_ldl_blocked(n, d_val, v[k+1], col2sup, sup2col,
+   for (i = 0; i < n; i++) {
+    r[i] = rhs[i] - r[i];
+   }
+   //norm_inf = norm_dense();
+   if (blocked == 2) {
+    solve_phase_ldl_blocked_parallel_permuted_update(n, d_val, r, col2sup, sup2col,
+                                                     Lp, Li, Lx, Li_ptr, supNo, NNZ,
+                                                     levels, levelPtr, levelSet,
+                                                     parts, parPtr, partition, chunk,
+                                                     s_level_no, s_level_ptr, s_level_set,
+                                                     mask, mask_col, ws_zerod);
+   } else if (blocked == 1)
+    solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
    else
-    solve_phase_ldl(n, d_val, v[k+1], col2sup, sup2col,
+    solve_phase_ldl(n, d_val, r, col2sup, sup2col,
                     Lp, Li, Lx, Li_ptr, supNo, NNZ);
 
-   av = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-   for ( j = 0; j <= k; j++ ) {
-    h[j][k] = r8vec_dot ( n, v[k+1], v[j] );
-    for ( i = 0; i < n; i++ ) {
-     v[k+1][i] = v[k+1][i] - h[j][k] * v[j][i];
-    }
-   }
-   h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-
-   if ( ( av + delta * h[k+1][k]) == av ) {
-    for ( j = 0; j < k + 1; j++ ) {
-     htmp = r8vec_dot ( n, v[k+1], v[j] );
-     h[j][k] = h[j][k] + htmp;
-     for ( i = 0; i < n; i++ ) {
-      v[k+1][i] = v[k+1][i] - htmp * v[j][i];
-     }
-    }
-    h[k+1][k] = sqrt ( r8vec_dot ( n, v[k+1], v[k+1] ) );
-   }
-
-   if ( h[k+1][k] != 0.0 ) {
-    for ( i = 0; i < n; i++ ) {
-     v[k+1][i] = v[k+1][i] / h[k+1][k];
-    }
-   }
-
-   if ( 0 < k ) {
-    for ( i = 0; i < k + 2; i++ ) {
-     y[i] = h[i][k];
-    }
-    for ( j = 0; j < k; j++ ) {
-     mult_givens ( c[j], s[j], j, y );
-    }
-    for ( i = 0; i < k + 2; i++ ) {
-     h[i][k] = y[i];
-    }
-   }
-   mu = sqrt ( h[k][k] * h[k][k] + h[k+1][k] * h[k+1][k] );
-   if(mu == 0){
-    free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
+   rho = sqrt(r8vec_dot(n, r, r));
+   if (rho < tol_abs) {
+    free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
     return itr_used;
    }
-   c[k] = h[k][k] / mu;
-   s[k] = -h[k+1][k] / mu;
-   h[k][k] = c[k] * h[k][k] - s[k] * h[k+1][k];
-   h[k+1][k] = 0.0;
-   mult_givens ( c[k], s[k], k, g );
+   if (itr == 0) {
+    rho_tol = rho * tol_rel;
+   }
 
-   rho = fabs ( g[k+1] );
+   for (i = 0; i < n; i++) {
+    v[0][i] = r[i] / rho;
+   }
+   g[0] = rho;
+   for (i = 1; i < mr + 1; i++) {
+    g[i] = 0.0;
+   }
+   for (i = 0; i < mr + 1; i++) {
+    for (j = 0; j < mr; j++) {
+     h[i][j] = 0.0;
+    }
+   }
+   for (k = 0; k < mr; k++) {
+    k_copy = k;
+    if (!sorted)
+     ax_cr(n, nz_num, ia, ja, a, v[k], v[k + 1]);
+    else
+     spmv_csc_sym_one_int(n, ia, ja, a, -1, alp, bet, 1, v[k], v[k + 1]);
 
-   itr_used = itr_used + 1;
+    if (blocked == 2)
+     solve_phase_ldl_blocked_parallel_permuted_update(n, d_val, v[k + 1], col2sup, sup2col,
+                                                      Lp, Li, Lx, Li_ptr, supNo, NNZ,
+                                                      levels, levelPtr, levelSet,
+                                                      parts, parPtr, partition, chunk,
+                                                      s_level_no, s_level_ptr, s_level_set,
+                                                      mask, mask_col, ws_zerod);
+    else if (blocked == 1)
+     solve_phase_ldl_blocked(n, d_val, v[k + 1], col2sup, sup2col,
+                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
+    else
+     solve_phase_ldl(n, d_val, v[k + 1], col2sup, sup2col,
+                     Lp, Li, Lx, Li_ptr, supNo, NNZ);
 
-   if ( rho <= rho_tol && rho <= tol_abs ) {
+    av = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+    for (j = 0; j <= k; j++) {
+     h[j][k] = r8vec_dot(n, v[k + 1], v[j]);
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] - h[j][k] * v[j][i];
+     }
+    }
+    h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+
+    if ((av + delta * h[k + 1][k]) == av) {
+     for (j = 0; j < k + 1; j++) {
+      htmp = r8vec_dot(n, v[k + 1], v[j]);
+      h[j][k] = h[j][k] + htmp;
+      for (i = 0; i < n; i++) {
+       v[k + 1][i] = v[k + 1][i] - htmp * v[j][i];
+      }
+     }
+     h[k + 1][k] = sqrt(r8vec_dot(n, v[k + 1], v[k + 1]));
+    }
+
+    if (h[k + 1][k] != 0.0) {
+     for (i = 0; i < n; i++) {
+      v[k + 1][i] = v[k + 1][i] / h[k + 1][k];
+     }
+    }
+
+    if (0 < k) {
+     for (i = 0; i < k + 2; i++) {
+      y[i] = h[i][k];
+     }
+     for (j = 0; j < k; j++) {
+      mult_givens(c[j], s[j], j, y);
+     }
+     for (i = 0; i < k + 2; i++) {
+      h[i][k] = y[i];
+     }
+    }
+    mu = sqrt(h[k][k] * h[k][k] + h[k + 1][k] * h[k + 1][k]);
+    if (mu == 0) {
+     free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
+     return itr_used;
+    }
+    c[k] = h[k][k] / mu;
+    s[k] = -h[k + 1][k] / mu;
+    h[k][k] = c[k] * h[k][k] - s[k] * h[k + 1][k];
+    h[k + 1][k] = 0.0;
+    mult_givens(c[k], s[k], k, g);
+
+    rho = fabs(g[k + 1]);
+
+    itr_used = itr_used + 1;
+
+    if (rho <= rho_tol && rho <= tol_abs) {
+     break;
+    }
+   }
+
+   k = k_copy;
+   if (h[k][k] == 0) {
+    free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
+    return itr_used;
+   }
+   y[k] = g[k] / h[k][k];
+   for (i = k - 1; 0 <= i; i--) {
+    y[i] = g[i];
+    for (j = i + 1; j < k + 1; j++) {
+     y[i] = y[i] - h[i][j] * y[j];
+    }
+    y[i] = y[i] / h[i][i];
+   }
+   for (i = 0; i < n; i++) {
+    for (j = 0; j < k + 1; j++) {
+     x[i] = x[i] + v[j][i] * y[j];
+    }
+   }
+   if (rho <= rho_tol && rho <= tol_abs) {
     break;
    }
   }
-
-  k = k_copy;
-  if(h[k][k] == 0){
-   free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
-   return itr_used;
-  }
-  y[k] = g[k] / h[k][k];
-  for ( i = k - 1; 0 <= i; i-- ) {
-   y[i] = g[i];
-   for ( j = i + 1; j < k + 1; j++ ) {
-    y[i] = y[i] - h[i][j] * y[j];
-   }
-   y[i] = y[i] / h[i][i];
-  }
-  for ( i = 0; i < n; i++ ) {
-   for ( j = 0; j < k + 1; j++ ) {
-    x[i] = x[i] + v[j][i] * y[j];
-   }
-  }
-  if ( rho <= rho_tol && rho <= tol_abs ) {
-   break;
-  }
- }
 
 
 /*
   Free memory.
 */
- free_ws_ir(ws,c,g,h,mr,r,s,v,n,y);
- return itr_used;
-}
+  free_ws_ir(ws, c, g, h, mr, r, s, v, n, y);
+  return itr_used;
+ }
 
 
 /******************************************************************************/
 
-double r8vec_dot ( int n, double a1[], double a2[] )
+ double r8vec_dot(int n, double a1[], double a2[])
 
 /******************************************************************************/
 /*
@@ -1343,22 +1324,21 @@ double r8vec_dot ( int n, double a1[], double a2[] )
 
     Output, double R8VEC_DOT, the dot product of the vectors.
 */
-{
- int i;
- double value;
-
- value = 0.0;
- for ( i = 0; i < n; i++ )
  {
-  value = value + a1[i] * a2[i];
+  int i;
+  double value;
+
+  value = 0.0;
+  for (i = 0; i < n; i++) {
+   value = value + a1[i] * a2[i];
+  }
+  return value;
  }
- return value;
-}
 
 
 /******************************************************************************/
 
-void rearrange_cr ( int n, int nz_num, int ia[], int ja[], double a[] )
+ void rearrange_cr(int n, int nz_num, int ia[], int ja[], double a[])
 
 /******************************************************************************/
 /*
@@ -1409,44 +1389,41 @@ void rearrange_cr ( int n, int nz_num, int ia[], int ja[], double a[] )
     Input/output, double A[NZ_NUM], the matrix values.  On output, the
     order of the entries may have changed because of the sorting.
 */
-{
- double dtemp;
- int i;
- int is;
- int itemp;
- int j;
- int j1;
- int j2;
- int k;
-
- for ( i = 0; i < n; i++ )
  {
-  j1 = ia[i];
-  j2 = ia[i+1];
-  is = j2 - j1;
+  double dtemp;
+  int i;
+  int is;
+  int itemp;
+  int j;
+  int j1;
+  int j2;
+  int k;
 
-  for ( k = 1; k < is; k++ )
-  {
-   for ( j = j1; j < j2 - k; j++ )
-   {
-    if ( ja[j+1] < ja[j] )
-    {
-     itemp = ja[j+1];
-     ja[j+1] =  ja[j];
-     ja[j] =  itemp;
+  for (i = 0; i < n; i++) {
+   j1 = ia[i];
+   j2 = ia[i + 1];
+   is = j2 - j1;
 
-     dtemp = a[j+1];
-     a[j+1] =  a[j];
-     a[j] = dtemp;
+   for (k = 1; k < is; k++) {
+    for (j = j1; j < j2 - k; j++) {
+     if (ja[j + 1] < ja[j]) {
+      itemp = ja[j + 1];
+      ja[j + 1] = ja[j];
+      ja[j] = itemp;
+
+      dtemp = a[j + 1];
+      a[j + 1] = a[j];
+      a[j] = dtemp;
+     }
     }
    }
   }
+  return;
  }
- return;
-}
+
 /******************************************************************************/
 
-void timestamp ( )
+ void timestamp()
 
 /******************************************************************************/
 /*
@@ -1474,21 +1451,22 @@ void timestamp ( )
 
     None
 */
-{
+ {
 # define TIME_SIZE 40
 
- static char time_buffer[TIME_SIZE];
- const struct tm *tm;
- size_t len;
- time_t now;
+  static char time_buffer[TIME_SIZE];
+  const struct tm *tm;
+  size_t len;
+  time_t now;
 
- now = time ( NULL );
- tm = localtime ( &now );
+  now = time(NULL);
+  tm = localtime(&now);
 
- len = strftime ( time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm );
+  len = strftime(time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm);
 
- printf ( "%s\n", time_buffer );
+  printf("%s\n", time_buffer);
 
- return;
+  return;
 # undef TIME_SIZE
+ }
 }

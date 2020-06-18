@@ -9,8 +9,7 @@
 #include <nasoq.h>
 
 
-namespace eigen
-{
+
  namespace nasoq
  {
   //  minimize        0.5 x' H x + q' x
@@ -64,10 +63,10 @@ namespace eigen
    if(qs){
     nasoq->reg_diag=qs->reg_diag;
     nasoq->eps_rel = qs->eps;
-    nasoq->eps_abs = qs->eps_rel;
+    nasoq->eps_abs = qs->eps;
     nasoq->zero_thresh = qs->zero_thresh;
     nasoq->inner_iter_ref = qs->inner_iter_ref;
-    nasoq->outer_iter_ref = qs->outer_iter_ref;
+    nasoq->outer_iter_ref = qs->inner_iter_ref;
     nasoq->tol_ref = qs->tol_ref;
     nasoq->max_iter = qs->max_iter;
     if (qs->nasoq_mode == "fixed")
@@ -96,6 +95,6 @@ namespace eigen
    return exitflag;
   }
  }
-}
+
 
 #endif //NASOQ_NASOQ_EIGEN_H

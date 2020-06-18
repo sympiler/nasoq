@@ -2,17 +2,20 @@
 // Created by kazem on 3/6/19.
 //
 
+#include <string>
+#include <iostream>
 #include <qp_utils.h>
 #include <nasoq.h>
 #include <Norm.h>
-#include "qp_format_converter.h"
+#include <mp_format_converter.h>
 
+using namespace nasoq;
 
-int QP_demo01(int argc, char **argv);
+int nasoq_demo(int argc, char **argv);
 
 int main(int argc, char *argv[]) {
 
- QP_demo01(argc, argv);
+ nasoq_demo(argc, argv);
 
 }
 
@@ -34,113 +37,62 @@ void get_num_iter(double acc_thresh, int& inner_iter_ref,
 /*
  *
  */
-int QP_demo01(int argc, char **argv){
- if (argc < 1) {
-  std::cout << "missing args!\n";
+int nasoq_demo(int argc, char **argv) {
+ std::map<std::string, std::string> qp_args;
+ if (!parse_nasoq_args(argc, argv, qp_args))
   return -1;
- }
 
- double reg_diag=1e-9;
+ /// New settings if provided
+ std::string input_qp_path = qp_args["input"];
+ double reg_diag = pow(10,-9);
  double zero_threshold = reg_diag;
  double eps = 1e-6;
  int inner_iter = 2;
  int outer_iter = 2;
  double stop_tol = 1e-15;
- int solver_mode = 1;
- std::string hessian_file = "";
- std::string linear_file = "";
- std::string ineq_file_l = "";
- std::string ineq_file = "";
- std::string ineq_file_u = "";
- std::string eq_file = "";
- std::string eq_file_u = "";
-
- QPFormatConverter *QPFC = new QPFormatConverter();
-
- int qp_type = atoi(argv[1]);// 1=IE format, 2 general ineq
- if(qp_type == 1){
-  if (argc < 8) {
-   std::cout << "missing args!\n";
-   return -1;
+ int solver_mode = Fixed;
+ bool print_header = false;
+ if (qp_args.find("variant") != qp_args.end()) {
+  std::string nasoq_mode = qp_args["variant"];
+  if (nasoq_mode == "tuned") {
+   solver_mode = Tuned;
+  } else if (nasoq_mode == "auto"){
+   solver_mode = AUTO;
+  } else if (nasoq_mode == "predet") {
+   solver_mode = PREDET;
+  } else {
+   solver_mode = Fixed;
   }
-  hessian_file = argv[2];
-  linear_file = argv[3];
-  eq_file = argv[4];
-  eq_file_u = argv[5];
-  ineq_file = argv[6];
-  ineq_file_u = argv[7];
-  if(argc>8){
-   int reg_diag_in = atoi(argv[8]);
-   int outer_iter_in = atoi(argv[9])-1;
-   int inner_iter_in = atoi(argv[10])-1;
-   int eps_in = atoi(argv[11]);
-   int tol_in = atoi(argv[12]);
-   int sol_mode = 0;
-   if(argc > 13)
-    sol_mode = atoi(argv[13]);
-   reg_diag = pow(10,-reg_diag_in);
-   zero_threshold = reg_diag;
-   eps = pow(10,-eps_in);
-   stop_tol = pow(10,-tol_in);
-   inner_iter = inner_iter_in;
-   outer_iter = outer_iter_in;
-   solver_mode = sol_mode;
-  }
-  QPFC->read_IE_format(hessian_file,linear_file,
-                       eq_file,eq_file_u,ineq_file,
-                       ineq_file_u);
-
- } else if(qp_type==2){
-  if (argc < 7) {
-   std::cout << "missing args!\n";
-   return -1;
-  }
-  hessian_file = argv[2];
-  linear_file = argv[3];
-  ineq_file_l = argv[4];
-  ineq_file = argv[5];
-  ineq_file_u = argv[6];
-
-  if(argc>7){
-   int reg_diag_in = atoi(argv[7]);
-   int outer_iter_in = atoi(argv[8])-1;
-   int inner_iter_in = atoi(argv[9])-1;
-   int eps_in = atoi(argv[10]);
-   int tol_in = atoi(argv[11]);
-   int sol_mode = 0;
-   if(argc > 12)
-    sol_mode = atoi(argv[12]);
-   reg_diag = pow(10,-reg_diag_in);
-   zero_threshold = reg_diag;
-   eps = pow(10,-eps_in);
-   stop_tol = pow(10,-tol_in);
-   inner_iter = inner_iter_in;
-   outer_iter = outer_iter_in;
-   solver_mode = sol_mode;
-  }
-  QPFC->read_bounded_format(hessian_file,linear_file,
-                            ineq_file_l,ineq_file,ineq_file_u);
-  //QPFC->print_bounded_format();
-
-  QPFC->B2IE();
-  //QPFC->print_IE_format();
-  //QPFC->IE_export_to_dense(linear_file);
-
- }else{
-  return -1;
  }
+ if(qp_args.find("perturbation") != qp_args.end())
+  reg_diag = pow(10, std::stoi(qp_args["perturbation"]) );
+ if(qp_args.find("iterations") != qp_args.end())
+  inner_iter = std::stoi(qp_args["iterations"]);
+ outer_iter = inner_iter;
+ if(qp_args.find("epsilon") != qp_args.end())
+  eps = pow(10, std::stoi(qp_args["epsilon"]) );
+ if(qp_args.find("tolerance") != qp_args.end())
+  stop_tol = pow(10, std::stoi(qp_args["tolerance"]) );
+ if(qp_args.find("header") != qp_args.end())
+  print_header = true;
 
+
+ auto *QPFC = new format::QPFormatConverter();
+ if(!QPFC->load_smp(input_qp_path))
+  return -1;
+ QPFC->smp_to_ie();
+ int num_ineq = QPFC->num_ineq_constraints();
  int num_thread = mkl_get_max_threads ();
  omp_set_num_threads(num_thread);
  MKL_Set_Num_Threads(num_thread);
-
+//QPFC->ief_->print();
  Nasoq *qm;
- qm = new Nasoq(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
-                    QPFC->A_eq->nrow,QPFC->A_eq->ncol,QPFC->A_eq->p,QPFC->A_eq->i,
-                    QPFC->A_eq->x,QPFC->a_eq,
-                    QPFC->A_ineq->nrow,QPFC->A_ineq->ncol,QPFC->A_ineq->p,
-                    QPFC->A_ineq->i,
-                    QPFC->A_ineq->x,QPFC->a_ineq);
+ qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,QPFC->ief_->H->x,
+                       QPFC->ief_->q->a,QPFC->ief_->A->m,QPFC->ief_->A->n,QPFC->ief_->A->p,QPFC->ief_->A->i,
+                       QPFC->ief_->A->x,QPFC->ief_->b ? QPFC->ief_->b->a : NULLPNTR,
+                       QPFC->ief_->C->m,QPFC->ief_->C->n,QPFC->ief_->C->p,
+                       QPFC->ief_->C->i,QPFC->ief_->C->x,
+                       QPFC->ief_->d ? QPFC->ief_->d->a : NULLPNTR);
  qm->reg_diag=reg_diag;
  qm->batch_size = 1;
  qm->eps_abs=eps;
@@ -168,7 +120,7 @@ int QP_demo01(int argc, char **argv){
   double etime = qm->qi->tot;
   qm->nas_mode = PREDET;
   qm->max_iter=200000;
-  if(QPFC->A_ineq->nrow >= 10000){
+  if(num_ineq >= 10000){
    qm->inner_iter_ref = 9;
    qm->outer_iter_ref = 9;
    qm->reg_diag=qm->zero_thresh=pow(10,-11);
@@ -227,7 +179,7 @@ int QP_demo01(int argc, char **argv){
     3	3	1.00E-17	1.00E-11
 
     */
-   if(QPFC->A_ineq->nrow >= 10000)
+   if(num_ineq >= 10000)
     configs.emplace_back(nasoq_config(itr_in,itr_out,pow(10,-9),pow(10,-15)));
    configs.emplace_back(nasoq_config(2,2,pow(10,-13),pow(10,-15)));
    configs.emplace_back(nasoq_config(itr_in,itr_out,pow(10,-7),pow(10,-15)));
@@ -237,12 +189,12 @@ int QP_demo01(int argc, char **argv){
    configs.emplace_back(nasoq_config(2,2,pow(10,-11),pow(10,-17)));
    for (int i = 0; i < configs.size(); ++i) {
     nasoq_config nc = configs[i];
-    qm = new Nasoq(QPFC->H->ncol,QPFC->H->p,QPFC->H->i,QPFC->H->x,QPFC->q,
-                       QPFC->A_eq->nrow,QPFC->A_eq->ncol,QPFC->A_eq->p,QPFC->A_eq->i,
-                       QPFC->A_eq->x,QPFC->a_eq,
-                       QPFC->A_ineq->nrow,QPFC->A_ineq->ncol,QPFC->A_ineq->p,
-                       QPFC->A_ineq->i,
-                       QPFC->A_ineq->x,QPFC->a_ineq);
+    qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,
+      QPFC->ief_->H->x,QPFC->ief_->q->a,QPFC->ief_->A->m,QPFC->ief_->A->n,
+      QPFC->ief_->A->p,QPFC->ief_->A->i,QPFC->ief_->A->x,
+      QPFC->ief_->b ? QPFC->ief_->b->a : NULLPNTR,QPFC->ief_->C->m,
+      QPFC->ief_->C->n,QPFC->ief_->C->p,QPFC->ief_->C->i,QPFC->ief_->C->x,
+      QPFC->ief_->d ? QPFC->ief_->d->a : NULLPNTR);
     qm->nas_mode = PREDET;
     qm->reg_diag=nc.pert_diag;
     qm->batch_size = 1;
@@ -282,7 +234,7 @@ int QP_demo01(int argc, char **argv){
  std::string heade_vec = "%%MatrixMarket matrix array real general \n";
  heade_vec += std::to_string(qm->H->ncol);
  heade_vec += " 1\n";
- qm->export_to_file(QPFC->problem_name,heade_vec);
+// qm->export_to_file(QPFC->problem_name,heade_vec);
  //std::cout<<"dual res norm: "<<qm->lagrangian_residual_norm()<<"\n";
  //std::cout<<"constraint sat norm: "<<qm->constraint_sat_norm()<<"\n";
  //std::cout<<"primal FB norm: "<<qm->primal_FB_norm()<<"\n";
@@ -290,11 +242,20 @@ int QP_demo01(int argc, char **argv){
  //std::cout<<"obj: "<<qm->objective<<"\n";
  //std::cout<<QPFC->A_eq->nrow<<"\n";
 
-
+if(print_header){
+ std::cout<<"Tool Name,Problem Name,Hessian dim,Hessian NNZ,# of Eq Constraints,"
+            "Eq Constraint NNZ,# of Ineq Const,Ineq Constraint NNZ,# of Threads,"
+            "eps_abs,Outer GMRES Iter,Inner GMRES Iter,GMRES Tol,Diagonal Pert,"
+            "Status,# of Iterations,Time (s),Active-set Size,Constraint Satisfaction Inf,"
+            "Residual Lagrangian inf,Primal Obj,Dual Obj,Obj Value,Non-negativity Inf,Complementarity Inf,"
+            "Problem Type,Problem Class,\n";
+}
  std::cout<<qm->sol_name<<",";
  QPFC->print_log();
  std::cout<<num_thread<<",";
  qm->print_log();
+ std::cout<<QPFC->smp_->desc_struct_.application_<<",";
+ std::cout<<QPFC->smp_->desc_struct_.category_<<",";
  //qm->print_qp_range(1);
 /* std::cout<<qm->eps_abs<<";"
           <<qm->num_iter<<";"<<qm->qi->tot<<";"<<num_thread<<";"
@@ -305,5 +266,5 @@ int QP_demo01(int argc, char **argv){
 
  delete qm;
  delete QPFC;
-
+ return 0;
 }
