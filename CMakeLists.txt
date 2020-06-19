@@ -39,6 +39,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DMKL  ")
 set(SOURCE_FILES nasoq_driver.cpp)
 include_directories(${MKL_INCLUDE_DIR} ${SUITESPARSE_INCLUDE_DIRS}
         ${METIS_INCLUDE_DIR} ${METIS_INCLUDES}
+        ${EIGEN3_INCLUDE_DIR}
         "symbolic/" "common/" "ldl/" "matrixMatrix/"
         "matrixVector/"  "linear_solver/" "gmres/" "QP/"
         "triangularSolve/")
