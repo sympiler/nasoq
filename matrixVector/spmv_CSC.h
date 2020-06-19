@@ -2,11 +2,13 @@
 // Created by kazem on 3/4/18.
 //
 
-#include "assert.h"
 
+// The code in this file is obtained from Suitesparse.
 #ifndef PROJECT_SPMV_CSC_H
 #define PROJECT_SPMV_CSC_H
+#include "assert.h"
 
+namespace nasoq{
 #define IS_NAN(x)	(((x) != (x)) || (((x) < (x))))
 #define IS_ZERO_R(x)	(((x) == 0.) && !IS_NAN(x))
 #define IS_NONZERO_R(x)	(((x) != 0.) || IS_NAN(x))
@@ -542,5 +544,6 @@ void spmv_csc_sym (
   ADVANCE (X,Xz,4*dx) ;
  }
  delete []w;
+}
 }
 #endif //PROJECT_SPMV_CSC_H

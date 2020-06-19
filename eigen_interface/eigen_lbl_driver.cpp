@@ -6,6 +6,7 @@
 #include <Util.h>
 #include "lbl_eigen.h"
 
+using namespace nasoq;
 
 int main(int argc, char *argv[]){
 
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]){
  Eigen::VectorXd x;
 
  /// call the wrapper.
- int ret = eigen::nasoq::linear_solve(H,q,x);
+ int ret = nasoq::linear_solve(H,q,x);
 
  //print_vec("sol:\n", 0, H.rows(), x.data());
  return ret;

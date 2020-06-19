@@ -10,7 +10,7 @@
 #include <igl/matlab/validate_arg.h>
 
 #include "../eigen_interface/nasoq_eigen.h"
-
+using namespace nasoq;
 void mexFunction(
          int          nlhs,
          mxArray      *plhs[],
@@ -92,8 +92,22 @@ void mexFunction(
         validate_arg_scalar(i,nrhs,prhs,name);
         qs->tol_ref = (double)*mxGetPr(prhs[++i]);
         mexErrMsgTxt(qs->tol_ref>0,"Tol should be positive");
-      }else
-      {
+      }
+//      else if(strcmp("Iter",name) == 0)
+//      {
+//       validate_arg_double(i,nrhs,prhs,name);
+//       validate_arg_scalar(i,nrhs,prhs,name);
+//       qs->inner_iter_ref = (double)*mxGetPr(prhs[++i]);
+//       qs->nasoq_mode = "predet";
+//       mexErrMsgTxt(qs->inner_iter_ref>0,"Iter should be zero or positive");
+//      }
+//      else if(strcmp("Mode",name) == 0)
+//     {
+//      validate_arg_double(i,nrhs,prhs,name);
+//      validate_arg_scalar(i,nrhs,prhs,name);
+//      qs->nasoq_mode = (int)*mxGetPr(prhs[++i]);
+//     }
+      else{
         mexErrMsgTxt(false,"Unknown parameter");
       }
       i++;
@@ -102,7 +116,7 @@ void mexFunction(
 
 
   Eigen::MatrixXd ret(1,1);
-  ret(0,0) = eigen::nasoq::quadprog(
+  ret(0,0) = nasoq::quadprog(
     H.triangularView<Eigen::Lower>(),q,A,b,C,d,x,y,z,qs);
 
   switch(nlhs)

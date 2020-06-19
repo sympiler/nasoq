@@ -6,7 +6,7 @@
 #include <Util.h>
 #include "nasoq_eigen.h"
 
-
+using namespace nasoq;
 int main(int argc, char *argv[]){
 
  std::map<std::string,std::string> qp_args;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
  Eigen::VectorXd x, y, z;
 
  /// call the wrapper.
- int ret = eigen::nasoq::quadprog(H,q,A,b,C,d,x,y,z,qs);
+ int ret = nasoq::quadprog(H,q,A,b,C,d,x,y,z,qs);
 
  //std::cout<<" -->"<< ret<<"\n";
  delete qs;
