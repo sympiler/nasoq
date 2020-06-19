@@ -4,6 +4,7 @@ add_executable(NASOQ_Eigen ${SOURCE_FILES_EIG}  eigen_nasoq_driver.cpp)
 target_link_libraries(NASOQ_Eigen PUBLIC
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}
+        Eigen3::Eigen
         )
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ_Eigen PUBLIC OpenMP::OpenMP_CXX)
