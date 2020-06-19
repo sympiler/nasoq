@@ -82,8 +82,10 @@ void mexFunction(
       {
         validate_arg_double(i,nrhs,prhs,name);
         validate_arg_scalar(i,nrhs,prhs,name);
-        qs->eps = (double)*mxGetPr(prhs[++i]);
-        mexErrMsgTxt(qs->eps>0,"Eps should be positive");
+        //qs->eps = (double)*mxGetPr(prhs[++i]);
+        //qs->eps_rel = (double)*mxGetPr(prhs[++i]);
+        qs->eps_abs = (double)*mxGetPr(prhs[++i]);
+        mexErrMsgTxt(qs->eps_abs>0,"Eps should be positive");
       }else if(strcmp("Tol",name) == 0)
       {
         validate_arg_double(i,nrhs,prhs,name);
