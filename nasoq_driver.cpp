@@ -35,7 +35,7 @@ void get_num_iter(double acc_thresh, int& inner_iter_ref,
  *
  */
 int QP_demo01(int argc, char **argv){
- if (argc < 1) {
+ if (argc <= 1) {
   std::cout << "missing args!\n";
   return -1;
  }
