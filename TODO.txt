@@ -2,11 +2,12 @@
 - Eigen interface --> DONE
 - igl interface --> DONE
 - Build cleanup (Etienne) --> DONE
-- Adding parser to driver
+- Adding parser to driver --> DONE
 - Library build project and adding submodules
-- OSQP benchmark
+- NASOQ benchmark --> DONE
 - Code clean up (namespace, warnings, ...)
-- Fixing return value of NASOQ solve, will add infeasible to the return values.
+- Fixing return value of NASOQ solve, 
+- will add infeasible to the return values. --> DONE
 - Fixing NASOQ-Tuned variants
 - Hand optimizing NASOQ code
 - Adding fixed term to the objective
