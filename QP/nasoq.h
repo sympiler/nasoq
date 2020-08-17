@@ -449,7 +449,7 @@ namespace nasoq {
    }
 
    size_t total_nnz = H->nzmax + B->nzmax;
-   double min_v, max_v;
+   double min_v=0, max_v=0;
    //max_min_spmat(H->ncol, H->p, H->i, H->x,max_v,min_v);
    //setting perturbation
    if (auto_reg_en == 2) {

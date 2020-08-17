@@ -419,7 +419,7 @@ namespace nasoq {
        }
        if (first_idx <= 1) {//no nonzero and no row to swap, just renaming
         assert(lR[Li_ptr_cSN + lb + map_sup[src_row] - 1] == curCol + src_row);
-        first_idx == 0;
+        first_idx = 0;
         lR[Li_ptr_cSN + lb + map_sup[src_row] - 1] = real_dst_row;
         map_sup[dst_row] = map_sup[src_row];
         map_sup[src_row] = 0;

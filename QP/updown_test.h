@@ -17,7 +17,7 @@ namespace nasoq {
                                 size_t &SM_size, size_t &SM_nz,
                                 int *&SMp, int *&SMi, double *&SMx,
                                 double *&sm_rhs) {
-  int status;
+  int status=0;
   if (B->nrow > 0) {
    if (C == NULL || C->nrow == 0) {
     SM_size = A->ncol + B->nrow;
