@@ -45,14 +45,14 @@ namespace nasoq {
   std::string nasoq_mode;
 
   QPSettings() {
-   eps = eps_rel = pow(10, -6);
+   eps = eps_rel = pow(10, -3);
    eps_primal = eps_dual = eps_slack = eps_nn = eps;
    reg_diag = zero_thresh = pow(10, -9);
    max_iter = 4000;
    batch_size = 1;
    scaling = 0;
-   inner_iter_ref = 2;
-   outer_iter_ref = 2;
+   inner_iter_ref = 0;
+   outer_iter_ref = 0;
    tol_ref = 1e-15;
    nasoq_mode = "Fixed";
   }
@@ -295,17 +295,17 @@ namespace nasoq {
    max_iter = 4000;
    reg_diag = 1e-9;
    zero_thresh = 1e-9;
-   eps_abs = 1e-6;
-   eps_rel = 1e-6;
+   eps_abs = 1e-3;
+   eps_rel = 1e-3;
    warm_start = 0;
    batch_size = 1;
    scaling = 0;
-   inner_iter_ref = 2;
-   outer_iter_ref = 2;
+   inner_iter_ref = 0;
+   outer_iter_ref = 0;
    tol_ref = 1e-15;
    auto_reg_en = 0;
    nas_mode = nasoq_mode::Fixed;
-   sol_name = "NASOQ-fixed";
+   sol_name = "NASOQ-predet";
   }
 
 #ifdef CHOLROWMOD

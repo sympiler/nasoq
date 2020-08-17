@@ -33,17 +33,19 @@ it should be similar to `data/out_correct.csv`.
 
 For installing on MAc you might need to use GCC so you need to also set the CMAKE compiler flag.
 
+More details are provided in: https://nasoq.github.io/docs/getting-started-nasoq/
+
 ### Using NASOQ as a Library
 You can use NASOQ as a header file and call it in your application.
-You may look at `nasoq_driver.cpp` as an example.
+More details: https://nasoq.github.io/docs/getting-started-nasoq/
 
-An Eigen interface and driver is provided in`eigen_interface`.
 
 ### Testing a QP example
 To test a QP example you may also use `NASOQ-BIN` which is a command line interfce for NASOQ.
 Some small QP problems are available in `data` folder.
 For evaluating NASOQ versus other solvers a separate repository is also provided in:
 https://github.com/sympiler/nasoq-benchmarks
+More details: https://nasoq.github.io/docs/repository/
 
 
 Copyright 2020 Kazem Cheshmi
