@@ -23,8 +23,8 @@ cmake -DMKL_ROOT_PATH=path/to/intel -DMETIS_ROOT_PATH=path/to//metis-5.1.0/build
 make
 ```
 
-A quick script for building and running NASOQ is provided in `buildALL.ah`
-that you can run it as following:
+A quick script for building and running NASOQ is provided in `buildALL.ah`. 
+You need to first correct paths to libraries and then you can run it as following:
 ```bash
 bash buildAll.sh
 ```
