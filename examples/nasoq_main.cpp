@@ -41,11 +41,10 @@ int main(int argc, char *argv[]){
  nasoq::Nasoq *qm;
  qm = new nasoq::Nasoq(sizeH,Hp,Hi,Hx,
                        q,CRows,CCols,Cp, Ci, Cx, d);
- qm->reg_diag=pow(10,-9);
+ qm->diag_perturb=pow(10,-9);
  qm->eps_abs=pow(10,-3);
- qm->eps_rel=pow(10,-3);
- qm->inner_iter_ref = 0;
- qm->outer_iter_ref = 0;
+ qm->max_iter = 0;
+ qm->variant = nasoq::PREDET;
  int converged = qm->solve();
 
  /// Printing results

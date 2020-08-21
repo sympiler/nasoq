@@ -61,22 +61,19 @@
                       C.valuePtr(),d.data());
    /// Define solver settings if provided
    if(qs){
-    nasoq->reg_diag=qs->reg_diag;
-    nasoq->eps_rel = qs->eps;
+    nasoq->diag_perturb=qs->diag_perturb;
     nasoq->eps_abs = qs->eps;
-    nasoq->zero_thresh = qs->zero_thresh;
-    nasoq->inner_iter_ref = qs->inner_iter_ref;
-    nasoq->outer_iter_ref = qs->inner_iter_ref;
-    nasoq->tol_ref = qs->tol_ref;
     nasoq->max_iter = qs->max_iter;
-    if (qs->nasoq_mode == "fixed")
-     nasoq->nas_mode = Fixed;
-    else if (qs->nasoq_mode == "tuned")
-     nasoq->nas_mode = Tuned;
-    else if(qs->nasoq_mode == "auto")
-     nasoq->nas_mode = AUTO;
+    nasoq->stop_tol = qs->stop_tol;
+    nasoq->max_iter_nas = qs->max_iter_nas;
+    if (qs->nasoq_variant == "fixed")
+     nasoq->variant = Fixed;
+    else if (qs->nasoq_variant == "tuned")
+     nasoq->variant = Tuned;
+    else if(qs->nasoq_variant == "auto")
+     nasoq->variant = AUTO;
     else
-     nasoq->nas_mode= PREDET;
+     nasoq->variant= PREDET;
    }
 
    /// Solve Problem

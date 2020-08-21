@@ -32,11 +32,11 @@ int main(int argc, char *argv[]){
   mode = std::stoi(qp_args["mode"]);
  if(qp_args.find("nasoq") != qp_args.end()){
   nasoq_mode = qp_args["nasoq"];
-  qs->nasoq_mode=nasoq_mode;
+  qs->nasoq_variant=nasoq_mode;
  }
  if(qp_args.find("perturbation") != qp_args.end()){
   pert = pow(10, std::stoi(qp_args["perturbation"]) );
-  qs->reg_diag=pert;
+  qs->diag_perturb=pert;
  }
  if(qp_args.find("iterations") != qp_args.end()){
   iter = std::stoi(qp_args["iterations"]);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
  }
  if(qp_args.find("tolerance") != qp_args.end()){
   tol = pow(10, std::stoi(qp_args["tolerance"]) );
-  qs->tol_ref=tol;
+  qs->stop_tol=tol;
  }
 
 

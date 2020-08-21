@@ -98,7 +98,7 @@ namespace nasoq {
   //Putting a small value in diagonals
   base1 = A->ncol;
   for (int l = SMp[A->ncol], j = 0; l < SM_nz; ++l, ++j) {
-   //SMx[l] = reg_diag;
+   //SMx[l] = diag_perturb;
    SMi[l] = base1 + j;
   }
 
