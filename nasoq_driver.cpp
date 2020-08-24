@@ -93,42 +93,37 @@ int nasoq_demo(int argc, char **argv) {
                        QPFC->ief_->C->m,QPFC->ief_->C->n,QPFC->ief_->C->p,
                        QPFC->ief_->C->i,QPFC->ief_->C->x,
                        QPFC->ief_->d ? QPFC->ief_->d->a : NULLPNTR);
- qm->reg_diag=reg_diag;
- qm->batch_size = 1;
+ qm->diag_perturb=reg_diag;
  qm->eps_abs=eps;
- qm->eps_rel=eps;
- qm->scaling=0;
- qm->zero_thresh = zero_threshold;
- qm->inner_iter_ref = inner_iter;
- qm->outer_iter_ref = outer_iter;
- qm->tol_ref = stop_tol;
- qm->max_iter=200000;
+ qm->max_iter = inner_iter;
+ qm->stop_tol = stop_tol;
+ qm->max_iter_nas=200000;
  int converged;
  //solver_mode = 0;
  if(solver_mode==0 || solver_mode==1 || solver_mode==3){
   if(solver_mode == 0)
-   qm->nas_mode = Fixed;
+   qm->variant = Fixed;
   else if(solver_mode == 1)
-   qm->nas_mode = AUTO;
+   qm->variant = AUTO;
   else if(solver_mode == 3)
-   qm->nas_mode = PREDET;
+   qm->variant = PREDET;
   converged = qm->solve();
  }else{
   std::chrono::time_point<std::chrono::system_clock> tot_st, tot_end;
   std::chrono::duration<double> elapsed_seconds;
   tot_st = std::chrono::system_clock::now();
   double etime = qm->qi->tot;
-  qm->nas_mode = PREDET;
-  qm->max_iter=200000;
+  qm->variant = PREDET;
+  qm->max_iter_nas=200000;
   if(num_ineq >= 10000){
    qm->inner_iter_ref = 9;
    qm->outer_iter_ref = 9;
-   qm->reg_diag=qm->zero_thresh=pow(10,-11);
-   qm->tol_ref = pow(10,-20);
+   qm->diag_perturb=qm->zero_thresh=pow(10,-11);
+   qm->stop_tol = pow(10,-20);
   }else{
    get_num_iter(eps,qm->inner_iter_ref,qm->outer_iter_ref);
-   qm->reg_diag=qm->zero_thresh=pow(10,-9);
-   qm->tol_ref = pow(10,-15);
+   qm->diag_perturb=qm->zero_thresh=pow(10,-9);
+   qm->stop_tol = pow(10,-15);
   }
 
   converged = qm->solve();
@@ -195,8 +190,8 @@ int nasoq_demo(int argc, char **argv) {
       QPFC->ief_->b ? QPFC->ief_->b->a : NULLPNTR,QPFC->ief_->C->m,
       QPFC->ief_->C->n,QPFC->ief_->C->p,QPFC->ief_->C->i,QPFC->ief_->C->x,
       QPFC->ief_->d ? QPFC->ief_->d->a : NULLPNTR);
-    qm->nas_mode = PREDET;
-    qm->reg_diag=nc.pert_diag;
+    qm->variant = PREDET;
+    qm->diag_perturb=nc.pert_diag;
     qm->batch_size = 1;
     qm->eps_abs=eps;
     qm->eps_rel=eps;
@@ -204,19 +199,19 @@ int nasoq_demo(int argc, char **argv) {
     qm->zero_thresh = nc.pert_diag;
     qm->inner_iter_ref = nc.inner_iter;
     qm->outer_iter_ref = nc.outer_iter;
-    qm->tol_ref = nc.stop_tol;
-    qm->max_iter=200000;
+    qm->stop_tol = nc.stop_tol;
+    qm->max_iter_nas=200000;
     converged = qm->solve();
     if(i == configs.size()-1){
      tot_end = std::chrono::system_clock::now();
-     qm->nas_mode = Tuned;
+     qm->variant = Tuned;
      break;
     }
     if(converged != nasoq_status::Optimal ){
      delete qm;
     } else {
      tot_end = std::chrono::system_clock::now();
-     qm->nas_mode = Tuned;
+     qm->variant = Tuned;
      break;
     }
    }
@@ -225,7 +220,7 @@ int nasoq_demo(int argc, char **argv) {
    qm->qi->tot=etime;
 
   } else{
-   qm->nas_mode = Tuned;
+   qm->variant = Tuned;
   }
 
  }

@@ -33,28 +33,29 @@ namespace nasoq {
  struct QPSettings {
   double eps; // one threshold for all
   double eps_primal, eps_dual, eps_slack, eps_nn; // If thresholds are requested per KKT conditions
-  double reg_diag;
+  double diag_perturb;
   int batch_size;
   double eps_rel;
   int scaling;
   double zero_thresh;
   int inner_iter_ref;
   int outer_iter_ref;
-  double tol_ref;
   int max_iter;
-  std::string nasoq_mode;
+  double stop_tol;
+  int max_iter_nas;
+  std::string nasoq_variant;
 
   QPSettings() {
-   eps = eps_rel = pow(10, -6);
+   eps = eps_rel = pow(10, -3);
    eps_primal = eps_dual = eps_slack = eps_nn = eps;
-   reg_diag = zero_thresh = pow(10, -9);
-   max_iter = 4000;
+   diag_perturb = zero_thresh = pow(10, -9);
+   max_iter_nas = 4000;
    batch_size = 1;
    scaling = 0;
-   inner_iter_ref = 2;
-   outer_iter_ref = 2;
-   tol_ref = 1e-15;
-   nasoq_mode = "Fixed";
+   inner_iter_ref = 0;
+   outer_iter_ref = 0; max_iter=0;
+   stop_tol = 1e-15;
+   nasoq_variant = "Fixed";
   }
 
  };
@@ -63,7 +64,7 @@ namespace nasoq {
   Fixed = 0, AUTO, Tuned, PREDET
  };
  enum nasoq_status {
-  Optimal = 1, Inaccurate = 2, NotConverged = 0
+  Optimal = 1, Inaccurate = 2, NotConverged = 3, Infeasible=0
  };
 
  struct nasoq_config {
@@ -84,11 +85,11 @@ namespace nasoq {
 
   double *q, *a, *b;
   int n_active;
-  double reg_diag, zero_thresh, eps_abs, eps_rel;
+  double diag_perturb, zero_thresh, eps_abs, eps_rel;
   double primal_obj, dual_obj, objective;
   double non_negativity_infn, complementarity_infn;
-  int inner_iter_ref, outer_iter_ref;
-  double tol_ref;
+  int inner_iter_ref, outer_iter_ref, max_iter;
+  double stop_tol;
 
 /// Symbolic info
   int *eTree; //skkt_size
@@ -116,14 +117,14 @@ namespace nasoq {
   std::vector<int> active_set;
   int *as0;// Initial active set, warm-start
   int is_converged; // 0/1
-  int num_iter, max_iter;
+  int num_iter, max_iter_nas;
   int used_constraints, num_active; //
   int auto_reg_en;
   int warm_start;
   int batch_size;
   double *workspace;
   double qp_scalar, inv_qp_scalar;
-  nasoq_mode nas_mode;
+  nasoq_mode variant;
   nasoq_status ret_val;
   SolverSettings *ss;
 
@@ -292,20 +293,21 @@ namespace nasoq {
 * Setting default setting for QP
 */
   void default_setting() {
-   max_iter = 4000;
-   reg_diag = 1e-9;
-   zero_thresh = 1e-9;
-   eps_abs = 1e-6;
-   eps_rel = 1e-6;
+   max_iter_nas = 4000;
+   diag_perturb = 1e-9;
+   zero_thresh = diag_perturb;
+   eps_abs = 1e-3;
+   eps_rel = eps_abs; // no use
    warm_start = 0;
    batch_size = 1;
    scaling = 0;
-   inner_iter_ref = 2;
-   outer_iter_ref = 2;
-   tol_ref = 1e-15;
+   inner_iter_ref = 0;
+   outer_iter_ref = 0;
+   max_iter=0;
+   stop_tol = 1e-15;
    auto_reg_en = 0;
-   nas_mode = nasoq_mode::Fixed;
-   sol_name = "NASOQ-fixed";
+   variant = nasoq_mode::Fixed;
+   sol_name = "NASOQ-Fixed";
   }
 
 #ifdef CHOLROWMOD
@@ -341,25 +343,25 @@ namespace nasoq {
     double H_norm2 = norm_sparse_int(H->ncol, H->p, H->i, H->x, -1, 2);
     auto_perturbation2(H->ncol, total_nnz,H_norm2, max_v-min_v,
                        B->nrow, B->nrow/double(H->ncol), eps_abs,
-                       reg_diag,
-                       outer_iter_ref,inner_iter_ref,tol_ref);
+                       diag_perturb,
+                       outer_iter_ref,inner_iter_ref,stop_tol);
    } else if(auto_reg_en==1){
     determine_iterations(total_nnz, eps_abs,outer_iter_ref,inner_iter_ref);
-    tol_ref = 1e-15;
+    stop_tol = 1e-15;
    }
-    reg_diag = pow(10, -6);
-   /*ss->tol_abs = ss->tol_rel = tol_ref;
+    diag_perturb = pow(10, -6);
+   /*ss->tol_abs = ss->tol_rel = stop_tol;
    ss->req_ref_iter = outer_iter_ref ;
    ss->max_inner_iter = inner_iter_ref ;
-   ss->reg_diag=reg_diag;*/
-   zero_thresh = reg_diag;
+   ss->diag_perturb=diag_perturb;*/
+   zero_thresh = diag_perturb;
    //status = analyze_kkt();
    //ss->symbolic_analysis();
    k_size = H->ncol + B->nrow + A->nrow;
    skkt_col = k_size;
    sKKTrhs = new double[k_size]();
    kkt_solution = new double[k_size]();
-   //reg_diag = pow(10, -6);
+   //diag_perturb = pow(10, -6);
 
    descent = kkt_solution;
    lagrange_mult_eq = kkt_solution + H->ncol;
@@ -383,10 +385,10 @@ namespace nasoq {
     //print_vec("\n RHS: \n",0,sKKT->ncol,sKKTrhs);
     if(A->nrow == 0)
      L = initial_solve_1(kkt,H,NULL,B->nrow,sKKTrhs,kkt_solution,
-                         cm,reg_diag); //unconstrained solution
+                         cm,diag_perturb); //unconstrained solution
     else
      L = initial_solve_1(kkt,H,A,B->nrow,sKKTrhs,kkt_solution,
-                         cm,reg_diag); //unconstrained solution
+                         cm,diag_perturb); //unconstrained solution
 
     //ss->ldl_update_variant =2;
     for (int i = 0; i < H->ncol; ++i) {
@@ -406,7 +408,7 @@ namespace nasoq {
 
    int edit_kkt_cholmod(int add_del, int nxt_col ){
     int row_of_kkt = H->ncol+A->nrow+nxt_col;
-    edit_l_factor(row_of_kkt,nxt_col,L,BT,add_del,cm,reg_diag);
+    edit_l_factor(row_of_kkt,nxt_col,L,BT,add_del,cm,diag_perturb);
    }
 
    int solve_kkt_cholmod(solve_type s_type){
@@ -441,33 +443,42 @@ namespace nasoq {
    ss->ldl_variant = 4;
    ss->ldl_update_variant = 2;
    ss->solver_mode = 1;
-   ss->req_ref_iter = outer_iter_ref;
+   ss->req_ref_iter = max_iter;
+   ss->max_inner_iter = max_iter;
+/*
    if (outer_iter_ref > 0 && inner_iter_ref == 0) {
     ss->max_inner_iter = 1; // will be wrong if it is zero
    } else {
     ss->max_inner_iter = inner_iter_ref;
    }
+*/
 
    size_t total_nnz = H->nzmax + B->nzmax;
-   double min_v, max_v;
+   double min_v=0, max_v=0;
    //max_min_spmat(H->ncol, H->p, H->i, H->x,max_v,min_v);
    //setting perturbation
    if (auto_reg_en == 2) {
     double H_norm2 = norm_sparse_int(H->ncol, H->p, H->i, H->x, -1, 2);
     auto_perturbation2(H->ncol, total_nnz, H_norm2, max_v - min_v,
                        B->nrow, B->nrow / double(H->ncol), eps_abs,
-                       reg_diag,
-                       outer_iter_ref, inner_iter_ref, tol_ref);
+                       diag_perturb,
+                       outer_iter_ref, inner_iter_ref, stop_tol);
    } else if (auto_reg_en == 1) {
     determine_iterations(total_nnz, eps_abs, outer_iter_ref, inner_iter_ref);
-    tol_ref = 1e-15;
-    reg_diag = pow(10, -9);
+    stop_tol = 1e-15;
+    double H_norm2 = norm_sparse_int(H->ncol, H->p, H->i, H->x, -1, 2);
+    if(H_norm2 < 1)
+     diag_perturb = pow(10, -7);
+    else
+     diag_perturb = pow(10, -9);
+   } else{
+    outer_iter_ref = inner_iter_ref = max_iter;
    }
-   ss->tol_abs = ss->tol_rel = tol_ref;
+   ss->tol_abs = ss->tol_rel = stop_tol;
    ss->req_ref_iter = outer_iter_ref;
    ss->max_inner_iter = inner_iter_ref;
-   ss->reg_diag = reg_diag;
-   zero_thresh = reg_diag;
+   ss->reg_diag = diag_perturb;
+   zero_thresh = diag_perturb;
    //status = analyze_kkt();
    ss->symbolic_analysis();
    delete[]sKKTrhs_init; //TODO: define a new ss construtor
@@ -549,7 +560,7 @@ namespace nasoq {
     tol = 1e-10;
 //   if (range > 1e3) {
 //    //std::cout<<"range;"<<range<<";";
-//    reg_diag = pow(10, -9);
+//    diag_perturb = pow(10, -9);
 //    tol = 1e-16;
 //   } else
     if (H_norm2 < 1) {
@@ -584,18 +595,18 @@ namespace nasoq {
                             int &outer_iter_ref, int &inner_iter_ref) {
 
    if (acc_thresh >= 1e-3) {
+    inner_iter_ref = outer_iter_ref = 0;
+   } else if (acc_thresh <= 1e-4 && acc_thresh > 1e-7) {
     inner_iter_ref = outer_iter_ref = 1;
-   } else if (acc_thresh <= 1e-4 && acc_thresh > 1e-10) {
+   } else if (acc_thresh <= 1e-7 && acc_thresh > 1e-10) {
     inner_iter_ref = outer_iter_ref = 2;
-   } else if (acc_thresh <= 1e-11 && acc_thresh > 1e-13) {
-    inner_iter_ref = outer_iter_ref = 3;
    } else {
-    inner_iter_ref = outer_iter_ref = 9;
+    inner_iter_ref = outer_iter_ref = 4;
    }
 
 /*  if(ineq_ratio>2.5 || n_ineq >= 1e4){
   //inner_iter_ref = outer_iter_ref = 3;
-  reg_diag=pow(10,-11);
+  diag_perturb=pow(10,-11);
  }*/
 
    if (total_nnz <= 20000) {
@@ -604,9 +615,9 @@ namespace nasoq {
    //std::cout<<acc_thresh<<";"<<iter_low<<";"<<iter_high<<";"<<iter_large<<"\n";
 
 /* if(H_norm2<1){
-  reg_diag=pow(10,-7);
+  diag_perturb=pow(10,-7);
  }*//*else if(ineq_ratio>2.5 || n_ineq >= 1e4){
-   reg_diag = pow(10, -11);
+   diag_perturb = pow(10, -11);
    inner_iter_ref = outer_iter_ref = 9;
   }*/
 
@@ -714,7 +725,7 @@ namespace nasoq {
    if (warm_start)
     typ_nxt_solve = REFACTOR;
    while (true) {
-    if (num_iter > max_iter) {
+    if (num_iter > max_iter_nas) {
      is_converged = 0;
      return is_converged;
     }
@@ -908,7 +919,7 @@ namespace nasoq {
    if (scaling < 0) {
     scale_data_2();
    }
-   if (nas_mode == nasoq_mode::Tuned) {//TODO: reuse symbolic QP
+   if (variant == nasoq_mode::Tuned) {//TODO: reuse symbolic QP
     symbolic_QP();
     for (int i = 0; i < 4; i++) {
      initialize_x();
@@ -916,9 +927,9 @@ namespace nasoq {
     }
 
    } else { // Fixed or Auto
-    if (nas_mode == nasoq_mode::AUTO) {
+    if (variant == nasoq_mode::AUTO) {
      auto_reg_en = 2;
-    } else if (nas_mode == nasoq_mode::Fixed) {
+    } else if (variant == nasoq_mode::Fixed) {
      auto_reg_en = 1;
     } else {
      auto_reg_en = 0;
@@ -946,12 +957,14 @@ namespace nasoq {
    qi->tot = qi->elapsed_time(qi->tot_st, qi->tot_end);
    compute_objective();
 
-   ret_val = check_solve_status();
+   ret_val = check_solve_status(status);
    detect_solver_name();
    return ret_val;
   }
 
-  nasoq_status check_solve_status() {
+  nasoq_status check_solve_status(int st) {
+   if(st == 0)
+    return nasoq_status::Infeasible;
    constraint_sat_norm();
    lagrangian_residual_norm();
    complementarity_norm();
@@ -961,18 +974,18 @@ namespace nasoq {
     ret_val = nasoq_status::Optimal; //converged
    } else if (cons_sat_norm <= eps_abs) {//low accuracy
     ret_val = nasoq_status::Inaccurate;
-   } else {
-    ret_val = nasoq_status::NotConverged; //not converged
+   } else{
+    ret_val = nasoq_status::NotConverged; //not converged or maybe very inaccurate
    }
    return ret_val;
   }
 
   void detect_solver_name() {
-   if (nas_mode == nasoq_mode::Fixed)
+   if (variant == nasoq_mode::Fixed)
     sol_name = "NASOQ-Fixed";
-   else if (nas_mode == nasoq_mode::AUTO)
+   else if (variant == nasoq_mode::AUTO)
     sol_name = "NASOQ-AUTO";
-   else if (nas_mode == nasoq_mode::Tuned)
+   else if (variant == nasoq_mode::Tuned)
     sol_name = "NASOQ-TUNED";
    else
     sol_name = "NASOQ";
@@ -1158,11 +1171,11 @@ namespace nasoq {
    }
    double *packed_sol = new double[H->ncol + A->nrow + active_set.size()]();
    //print_vec<double >("\n\nrrhhssss\n: ",0,sKKT->ncol,sKKTrhs);
-   build_super_solve_with_eq(H, B, A, sKKTrhs, reg_diag, active_set, packed_sol,
-                             outer_iter_ref, inner_iter_ref, tol_ref);
+   build_super_solve_with_eq(H, B, A, sKKTrhs, diag_perturb, active_set, packed_sol,
+                             outer_iter_ref, inner_iter_ref, stop_tol);
 
-/*    build_super_solve_with_eq_mkl(H,B,A,sKKTrhs,reg_diag,active_set,packed_sol,
-   outer_iter_ref,inner_iter_ref,tol_ref);*/
+/*    build_super_solve_with_eq_mkl(H,B,A,sKKTrhs,diag_perturb,active_set,packed_sol,
+   outer_iter_ref,inner_iter_ref,stop_tol);*/
    for (int i = 0; i < H->ncol; ++i) {
     descent[i] = packed_sol[i];
    }
@@ -1520,7 +1533,7 @@ namespace nasoq {
   void print_log() {
 
    std::cout << eps_abs << "," << outer_iter_ref << "," << inner_iter_ref << ",";
-   std::cout << tol_ref << "," << reg_diag << "," << ret_val << "," << num_iter << ",";
+   std::cout << stop_tol << "," << diag_perturb << "," << ret_val << "," << num_iter << ",";
    std::cout << qi->tot << "," << active_set.size() << "," << cons_sat_norm << ",";
    std::cout << lag_res << "," << primal_obj << "," << dual_obj << "," << objective << ",";
    std::cout << non_negativity_infn << "," << complementarity_infn << ",";
@@ -1867,7 +1880,7 @@ namespace nasoq {
    double prime_step, dual_step, step;
    solve_type typ_nxt_solve = SOLVE;
    while (true) { // Outer iterations
-    if (num_iter > max_iter) {
+    if (num_iter > max_iter_nas) {
      is_converged = 0;
      return is_converged;
     }

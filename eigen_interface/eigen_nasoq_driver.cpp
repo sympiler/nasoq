@@ -24,15 +24,33 @@ int main(int argc, char *argv[]){
  if( !Eigen::loadMarketVector( d, qp_args["d"] ) ){ std::cout<<message<<"d"; return 1; }
 
  /// New settings if provided
- int mode = std::stoi(qp_args["mode"]);
- std::string nasoq_mode = qp_args["nasoq"];
- double pert = pow(10, -std::stoi(qp_args["perturbation"]) );
- int iter = std::stoi(qp_args["iterations"]);
- double eps = pow(10, -std::stoi(qp_args["epsilon"]) );
- double tol = pow(10, -std::stoi(qp_args["tolerance"]) );
+ int mode, iter;
+ std::string nasoq_mode;
+ double  pert, eps, tol;
  auto *qs = new QPSettings();
- qs->eps=eps; qs->reg_diag=pert; qs->inner_iter_ref=qs->outer_iter_ref=iter;
- qs->tol_ref=tol; qs->nasoq_mode=nasoq_mode;
+ if(qp_args.find("mode") != qp_args.end())
+  mode = std::stoi(qp_args["mode"]);
+ if(qp_args.find("nasoq") != qp_args.end()){
+  nasoq_mode = qp_args["nasoq"];
+  qs->nasoq_variant=nasoq_mode;
+ }
+ if(qp_args.find("perturbation") != qp_args.end()){
+  pert = pow(10, std::stoi(qp_args["perturbation"]) );
+  qs->diag_perturb=pert;
+ }
+ if(qp_args.find("iterations") != qp_args.end()){
+  iter = std::stoi(qp_args["iterations"]);
+  qs->inner_iter_ref=qs->outer_iter_ref=iter;
+ }
+ if(qp_args.find("epsilon") != qp_args.end()){
+  eps = pow(10, std::stoi(qp_args["epsilon"]) );
+  qs->eps=eps;
+ }
+ if(qp_args.find("tolerance") != qp_args.end()){
+  tol = pow(10, std::stoi(qp_args["tolerance"]) );
+  qs->stop_tol=tol;
+ }
+
 
  /// output vectors
  Eigen::VectorXd x, y, z;

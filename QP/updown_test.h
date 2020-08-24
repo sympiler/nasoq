@@ -17,7 +17,7 @@ namespace nasoq {
                                 size_t &SM_size, size_t &SM_nz,
                                 int *&SMp, int *&SMi, double *&SMx,
                                 double *&sm_rhs) {
-  int status;
+  int status=0;
   if (B->nrow > 0) {
    if (C == NULL || C->nrow == 0) {
     SM_size = A->ncol + B->nrow;
@@ -98,7 +98,7 @@ namespace nasoq {
   //Putting a small value in diagonals
   base1 = A->ncol;
   for (int l = SMp[A->ncol], j = 0; l < SM_nz; ++l, ++j) {
-   //SMx[l] = reg_diag;
+   //SMx[l] = diag_perturb;
    SMi[l] = base1 + j;
   }
 

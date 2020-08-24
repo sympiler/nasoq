@@ -753,6 +753,7 @@ namespace nasoq {
 /*
  * converting CSC to CSR
  */  //TODO
+/*
  void csc2csr(int n, int *Ap, int *Ar, double *Ax,
               int *row_ptr, int *col_idx, double *Bx) {
   int *row_len = new int[n]();
@@ -770,6 +771,7 @@ namespace nasoq {
    }
   }
  }
+*/
 
 
 /*
@@ -1140,7 +1142,7 @@ namespace nasoq {
                              size_t &SM_size, size_t &SM_nz,
                              int *&SMp, int *&SMi, double *&SMx,
                              double *&sm_rhs) {
-  int status;
+  int status=0;
   SM_size = A->ncol + B->nrow;
   SMp = new int[SM_size + 1];
   SMp[0] = 0;
@@ -1178,7 +1180,7 @@ namespace nasoq {
   }
   //Putting a small value in diagonals
   for (int l = SMp[A->ncol], j = 0; l < SM_nz; ++l, ++j) {
-   //SMx[l] = reg_diag;
+   //SMx[l] = diag_perturb;
    SMi[l] = base1 + j;
   }
 

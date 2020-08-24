@@ -131,7 +131,7 @@ namespace nasoq {
   //sparsity related
   int n_relax[3];
   double z_relax[3];
-  int max_sup_wid, max_col, status;
+  int max_sup_wid, max_col, status=0;
   int ordering_type; //TODO to be used later.
   //etree info
   int *atree, *etree, *etree_mod;
@@ -336,7 +336,7 @@ namespace nasoq {
   * the constraints. All stored in CSC.
   */
   int build_super_matrix() {
-   int status;
+   int status=0;
    size_t SM_nz;
    int *SMp;
    int *SMi;
