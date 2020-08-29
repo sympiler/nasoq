@@ -7,7 +7,7 @@
 #include "nasoq_eigen.h"
 
 using namespace nasoq;
-int main(int argc, char *argv[]){
+int main(int argc, const char *argv[]){
 
  std::map<std::string,std::string> qp_args;
  parse_args(argc, argv, qp_args);
@@ -24,14 +24,13 @@ int main(int argc, char *argv[]){
  if( !Eigen::loadMarketVector( d, qp_args["d"] ) ){ std::cout<<message<<"d"; return 1; }
 
  /// New settings if provided
- int mode, iter;
+ int iter;
  std::string nasoq_mode;
  double  pert, eps, tol;
  auto *qs = new QPSettings();
- if(qp_args.find("mode") != qp_args.end())
-  mode = std::stoi(qp_args["mode"]);
- if(qp_args.find("nasoq") != qp_args.end()){
-  nasoq_mode = qp_args["nasoq"];
+
+ if(qp_args.find("variant") != qp_args.end()){
+  nasoq_mode = qp_args["variant"];
   qs->nasoq_variant=nasoq_mode;
  }
  if(qp_args.find("perturbation") != qp_args.end()){

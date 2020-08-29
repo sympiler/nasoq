@@ -20,6 +20,8 @@
 #include "def.h"
 #include "transpose_unsym.h"
 
+#include "cxxopts.hpp"
+
 namespace nasoq {
 /*
  * reading a CSC matrix from a coordinate file, stored col-ordered
@@ -1241,140 +1243,253 @@ namespace nasoq {
   }
  }
 
-// bool parse_args(int argc, char **argv, std::map<std::string, std::string> &qp_args) {
-//  const char *const short_opts = "m:o:l:a:b:c:d:n:p:r:e:t:h";
-//  const option long_opts[] = {
-//    {"mode",       required_argument, nullptr, 'm'},
-//    {"objective",  required_argument, nullptr, 'o'},
-//    {"linear",     required_argument, nullptr, 'l'},
-//    {"eq",         required_argument, nullptr, 'a'},
-//    {"eqb",        required_argument, nullptr, 'b'},
-//    {"ineq",       required_argument, nullptr, 'c'},
-//    {"ineqb",      required_argument, nullptr, 'd'},
-//    {"nasoq",      required_argument, nullptr, 'n'},
-//    {"perturb",    required_argument, nullptr, 'p'},
-//    {"refinement", required_argument, nullptr, 'r'},
-//    {"epsilon",    required_argument, nullptr, 'e'},
-//    {"toli",       required_argument, nullptr, 't'},
-//    {"help",       no_argument,       nullptr, 'h'},
-//    {nullptr,      no_argument,       nullptr, 0}
-//  };
-//
-//  auto print_help = [](){std::cout<<"Input argument is wrong, you need at least an input QP file ";};
-//  while (true) {
-//   const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
-//   if (-1 == opt)
-//    break;
-//
-//   switch (opt) {
-//    case 'm':
-//     qp_args.insert(std::pair<std::string, std::string>("mode", optarg));
-//     break;
-//    case 'o':
-//     qp_args.insert(std::pair<std::string, std::string>("H", optarg));
-//     break;
-//    case 'l':
-//     qp_args.insert(std::pair<std::string, std::string>("q", optarg));
-//     break;
-//    case 'a':
-//     qp_args.insert(std::pair<std::string, std::string>("A", optarg));
-//     break;
-//    case 'b':
-//     qp_args.insert(std::pair<std::string, std::string>("b", optarg));
-//     break;
-//    case 'c':
-//     qp_args.insert(std::pair<std::string, std::string>("C", optarg));
-//     break;
-//    case 'd':
-//     qp_args.insert(std::pair<std::string, std::string>("d", optarg));
-//     break;
-//    case 'n':
-//     qp_args.insert(std::pair<std::string, std::string>("nasoq", optarg));
-//     break;
-//    case 'p':
-//     qp_args.insert(std::pair<std::string, std::string>("perturbation", optarg));
-//     break;
-//    case 'r':
-//     qp_args.insert(std::pair<std::string, std::string>("iterations", optarg));
-//     break;
-//    case 'e':
-//     qp_args.insert(std::pair<std::string, std::string>("epsilon", optarg));
-//     break;
-//    case 't':
-//     qp_args.insert(std::pair<std::string, std::string>("tolerance", optarg));
-//     break;
-//    case 'h': // -h or --help
-//    case '?': // Unrecognized option
-//    default:
-//     print_help();
-//     break;
-//   }
-//  }
-//  return true;
-// }
-//
-// bool parse_nasoq_args(int argc, char **argv, std::map<std::string, std::string> &qp_args) {
-//  const char *const short_opts = "i:o:l:d:v:p:r:e:t:h";
-//  const option long_opts[] = {
-//    {"input",      required_argument, nullptr, 'i'},
-//    {"output",      required_argument, nullptr, 'o'},
-//    {"log",      required_argument, nullptr, 'l'},
-//    {"header",      required_argument, nullptr, 'd'},
-//    {"variant",      required_argument, nullptr, 'v'},
-//    {"perturb",    required_argument, nullptr, 'p'},
-//    {"refinement", required_argument, nullptr, 'r'},
-//    {"epsilon",    required_argument, nullptr, 'e'},
-//    {"toli",       required_argument, nullptr, 't'},
-//    {"help",       no_argument,       nullptr, 'h'},
-//    {nullptr,      no_argument,       nullptr, 0}
-//  };
-//  auto print_help = [](){std::cout<<"Input argument is wrong, you need at least an input QP file ";};
-//  while (true) {
-//   const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
-//
-//   if (-1 == opt)
-//    break;
-//   switch (opt) {
-//    case 'i':
-//     qp_args.insert(std::pair<std::string, std::string>("input", optarg));
-//     break;
-//    case 'o':
-//     qp_args.insert(std::pair<std::string, std::string>("output", optarg));
-//     break;
-//     case 'l':
-//     qp_args.insert(std::pair<std::string, std::string>("log", optarg));
-//     break;
-//    case 'd':
-//     qp_args.insert(std::pair<std::string, std::string>("header", optarg));
-//     break;
-//     case 'v':
-//     qp_args.insert(std::pair<std::string, std::string>("variant", optarg));
-//     break;
-//    case 'p':
-//     qp_args.insert(std::pair<std::string, std::string>("perturbation", optarg));
-//     break;
-//    case 'r':
-//     qp_args.insert(std::pair<std::string, std::string>("iterations", optarg));
-//     break;
-//    case 'e':
-//     qp_args.insert(std::pair<std::string, std::string>("epsilon", optarg));
-//     break;
-//    case 't':
-//     qp_args.insert(std::pair<std::string, std::string>("tolerance", optarg));
-//     break;
-//    case 'h': // -h or --help
-//    case '?': // Unrecognized option
-//    default:
-//     print_help();
-//     break;
-//   }
-//  }
-//  if(qp_args.find("input") == qp_args.end()){
-//   print_help();
-//   return false;
-//  }
-//  return true;
-// }
+
+ bool parse_args(int argc, const char *argv[], std::map<std::string, std::string> &qp_args) {
+  auto print_help = [](){std::cout<<"Input argument is wrong, you need at least an input QP file ";};
+  try
+  {
+   cxxopts::Options options(argv[0], " - example command line options");
+   options
+     .positional_help("[optional args]")
+     .show_positional_help();
+
+   options
+     .allow_unrecognised_options()
+     .add_options()
+       ("v,variant", "NASOQ Variant", cxxopts::value<std::string>())
+       ("i,input", "Input SMP format", cxxopts::value<std::string>()) //nasoq driver
+       ("u,output", "Output SMP format", cxxopts::value<std::string>()) // not imp
+       ("d,header", "Print CSV header", cxxopts::value<std::string>()) // only for nasoq driver
+       ("o,objective", "Quadratic matrix",  cxxopts::value<std::string>())
+       ("l,linear", "linear vector",  cxxopts::value<std::string>())
+       ("a,eq", "Equality matrix",  cxxopts::value<std::string>() )
+       ("b,eqb", "Equality vector", cxxopts::value<std::string>())
+       ("c,ineq", "Inequality matrix", cxxopts::value<std::string>())
+       ("g,ineqb", "Inequality vector", cxxopts::value<std::string>())
+       ("p,perturb", "Pertubation power value",
+         cxxopts::value<std::string>())
+       ("r,refinement", "Refinement iterations",
+         cxxopts::value<std::string>())
+       ("e,epsilon", "Accuracy threshold power",
+         cxxopts::value<std::string>())
+       ("t,toli", "Iterative refinement threshold",
+         cxxopts::value<std::string>())
+       ("help", "Print help")
+#ifdef CXXOPTS_USE_UNICODE
+    ("unicode", u8"A help option with non-ascii: à. Here the size of the"
+        " string should be correct")
+#endif
+     ;
+
+   auto result = options.parse(argc, argv);
+   if(result.count("v"))
+    qp_args.insert(std::pair<std::string, std::string>("variant",
+      result["v"].as<std::string>()));
+
+   if(result.count("i"))
+    qp_args.insert(std::pair<std::string, std::string>("input",
+      result["i"].as<std::string>()));
+
+   if(result.count("o"))
+    qp_args.insert(std::pair<std::string, std::string>("H",
+      result["o"].as<std::string>()));
+
+   if(result.count("l"))
+    qp_args.insert(std::pair<std::string, std::string>("q",
+      result["l"].as<std::string>()));
+
+   if(result.count("a"))
+    qp_args.insert(std::pair<std::string, std::string>("A",
+      result["a"].as<std::string>()));
+
+   if(result.count("b"))
+    qp_args.insert(std::pair<std::string, std::string>("b",
+      result["b"].as<std::string>()));
+
+   if(result.count("c"))
+    qp_args.insert(std::pair<std::string, std::string>("C",
+      result["c"].as<std::string>()));
+
+   if(result.count("g"))
+    qp_args.insert(std::pair<std::string, std::string>("d",
+      result["g"].as<std::string>()));
+
+   if(result.count("p"))
+    qp_args.insert(std::pair<std::string, std::string>("perturbation",
+      result["p"].as<std::string>()));
+
+   if(result.count("e"))
+    qp_args.insert(std::pair<std::string, std::string>("epsilon",
+      result["e"].as<std::string>()));
+
+   if(result.count("r"))
+    qp_args.insert(std::pair<std::string, std::string>("iterations",
+      result["r"].as<std::string>()));
+
+   if(result.count("t"))
+    qp_args.insert(std::pair<std::string, std::string>("tolerance",
+      result["t"].as<std::string>()));
+
+   if(result.count("d"))
+    qp_args.insert(std::pair<std::string, std::string>("header",
+      result["d"].as<std::string>()));
+
+   if(result.count("u"))
+    qp_args.insert(std::pair<std::string, std::string>("output",
+                                                       result["u"].as<std::string>()));
+   if (result.count("h"))
+   {
+    std::cout << "needs to write it! :|" << std::endl;
+    exit(0);
+   }
+  }
+  catch (const cxxopts::OptionException& e)
+  {
+   std::cout << "error parsing options: " << e.what() << std::endl;
+   exit(1);
+  }
+  return true;
+ }
+
+/*
+ bool parse_args(int argc, char **argv, std::map<std::string, std::string> &qp_args) {
+  const char *const short_opts = "m:o:l:a:b:c:d:n:p:r:e:t:h";
+  const option long_opts[] = {
+    {"mode",       required_argument, nullptr, 'm'},
+    {"objective",  required_argument, nullptr, 'o'},
+    {"linear",     required_argument, nullptr, 'l'},
+    {"eq",         required_argument, nullptr, 'a'},
+    {"eqb",        required_argument, nullptr, 'b'},
+    {"ineq",       required_argument, nullptr, 'c'},
+    {"ineqb",      required_argument, nullptr, 'd'},
+    {"nasoq",      required_argument, nullptr, 'n'},
+    {"perturb",    required_argument, nullptr, 'p'},
+    {"refinement", required_argument, nullptr, 'r'},
+    {"epsilon",    required_argument, nullptr, 'e'},
+    {"toli",       required_argument, nullptr, 't'},
+    {"help",       no_argument,       nullptr, 'h'},
+    {nullptr,      no_argument,       nullptr, 0}
+  };
+
+  auto print_help = [](){std::cout<<"Input argument is wrong, you need at least an input QP file ";};
+  while (true) {
+   const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
+   if (-1 == opt)
+    break;
+
+   switch (opt) {
+    case 'm':
+     qp_args.insert(std::pair<std::string, std::string>("mode", optarg));
+     break;
+    case 'o':
+     qp_args.insert(std::pair<std::string, std::string>("H", optarg));
+     break;
+    case 'l':
+     qp_args.insert(std::pair<std::string, std::string>("q", optarg));
+     break;
+    case 'a':
+     qp_args.insert(std::pair<std::string, std::string>("A", optarg));
+     break;
+    case 'b':
+     qp_args.insert(std::pair<std::string, std::string>("b", optarg));
+     break;
+    case 'c':
+     qp_args.insert(std::pair<std::string, std::string>("C", optarg));
+     break;
+    case 'd':
+     qp_args.insert(std::pair<std::string, std::string>("d", optarg));
+     break;
+    case 'n':
+     qp_args.insert(std::pair<std::string, std::string>("nasoq", optarg));
+     break;
+    case 'p':
+     qp_args.insert(std::pair<std::string, std::string>("perturbation", optarg));
+     break;
+    case 'r':
+     qp_args.insert(std::pair<std::string, std::string>("iterations", optarg));
+     break;
+    case 'e':
+     qp_args.insert(std::pair<std::string, std::string>("epsilon", optarg));
+     break;
+    case 't':
+     qp_args.insert(std::pair<std::string, std::string>("tolerance", optarg));
+     break;
+    case 'h': // -h or --help
+    case '?': // Unrecognized option
+    default:
+     print_help();
+     break;
+   }
+  }
+  return true;
+ }
+*/
+
+/*
+ bool parse_nasoq_args(int argc, char **argv, std::map<std::string, std::string> &qp_args) {
+  const char *const short_opts = "i:o:l:d:v:p:r:e:t:h";
+  const option long_opts[] = {
+    {"input",      required_argument, nullptr, 'i'},
+    {"output",      required_argument, nullptr, 'o'},
+    {"log",      required_argument, nullptr, 'l'},
+    {"header",      required_argument, nullptr, 'd'},
+    {"variant",      required_argument, nullptr, 'v'},
+    {"perturb",    required_argument, nullptr, 'p'},
+    {"refinement", required_argument, nullptr, 'r'},
+    {"epsilon",    required_argument, nullptr, 'e'},
+    {"toli",       required_argument, nullptr, 't'},
+    {"help",       no_argument,       nullptr, 'h'},
+    {nullptr,      no_argument,       nullptr, 0}
+  };
+  auto print_help = [](){std::cout<<"Input argument is wrong, you need at least an input QP file ";};
+  while (true) {
+   const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
+
+   if (-1 == opt)
+    break;
+   switch (opt) {
+    case 'i':
+     qp_args.insert(std::pair<std::string, std::string>("input", optarg));
+     break;
+    case 'o':
+     qp_args.insert(std::pair<std::string, std::string>("output", optarg));
+     break;
+     case 'l':
+     qp_args.insert(std::pair<std::string, std::string>("log", optarg));
+     break;
+    case 'd':
+     qp_args.insert(std::pair<std::string, std::string>("header", optarg));
+     break;
+     case 'v':
+     qp_args.insert(std::pair<std::string, std::string>("variant", optarg));
+     break;
+    case 'p':
+     qp_args.insert(std::pair<std::string, std::string>("perturbation", optarg));
+     break;
+    case 'r':
+     qp_args.insert(std::pair<std::string, std::string>("iterations", optarg));
+     break;
+    case 'e':
+     qp_args.insert(std::pair<std::string, std::string>("epsilon", optarg));
+     break;
+    case 't':
+     qp_args.insert(std::pair<std::string, std::string>("tolerance", optarg));
+     break;
+    case 'h': // -h or --help
+    case '?': // Unrecognized option
+    default:
+     print_help();
+     break;
+   }
+  }
+  if(qp_args.find("input") == qp_args.end()){
+   print_help();
+   return false;
+  }
+  return true;
+ }
+*/
+
 
 
 }

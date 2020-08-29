@@ -11,9 +11,9 @@
 
 using namespace nasoq;
 
-int nasoq_demo(int argc, char **argv);
+int nasoq_demo(int argc, const char **argv);
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
 
  nasoq_demo(argc, argv);
 
@@ -34,9 +34,12 @@ void get_num_iter(double acc_thresh, int& inner_iter_ref,
 }
 
 
-int nasoq_demo(int argc, char **argv) {
+/*
+ *
+ */
+int nasoq_demo(int argc, const char **argv) {
  std::map<std::string, std::string> qp_args;
- if (!parse_nasoq_args(argc, argv, qp_args))
+ if (!parse_args(argc, argv, qp_args))
   return -1;
 
  /// New settings if provided

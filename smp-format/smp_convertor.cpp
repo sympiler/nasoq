@@ -13,11 +13,12 @@
 
 using namespace format;
 
-int main(int argc, char *argv[]){
+int main(int argc,const char *argv[]){
 
  std::map<std::string,std::string> qp_args;
  parse_args(argc, argv, qp_args);
-
+  if(qp_args.find("input") == qp_args.end())
+   return 0;
  /*SMP *smp = new SMP(qp_args["H"]);
  smp->load();
  std::cout<<"\n";
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]){
  Description test;
  std::string dtes=test.get_desc();
  auto *qfc = new QPFormatConverter();
- qfc->load_smp(qp_args["H"]);
+ qfc->load_smp(qp_args["input"]);
 //qfc->smp_->write("tmp2.yml");
 qfc->smp_to_bounded();
 
@@ -44,7 +45,7 @@ qfc->smp_to_bounded();
 
 
  auto *qfc3 = new QPFormatConverter();
- qfc3->load_smp(qp_args["H"]);
+ qfc3->load_smp(qp_args["input"]);
 //qfc->smp_->write("tmp2.yml");
  qfc3->smp_to_ie();
 
@@ -59,7 +60,7 @@ qfc->smp_to_bounded();
 //  std::cout<<"WRONG conversion\n";
 
  qfc3->smp_->set_description(dtes);
- qfc3->smp_->write("temp3.yml");
+ qfc3->smp_->write(qp_args["output"]);
 
  delete qfc3;
  delete qfc4;

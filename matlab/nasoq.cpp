@@ -88,8 +88,8 @@ void mexFunction(
       {
         validate_arg_double(i,nrhs,prhs,name);
         validate_arg_scalar(i,nrhs,prhs,name);
-        qs->tol_ref = (double)*mxGetPr(prhs[++i]);
-        mexErrMsgTxt(qs->tol_ref>0,"Tol should be positive");
+        qs->stop_tol = (double)*mxGetPr(prhs[++i]);
+        mexErrMsgTxt(qs->stop_tol>0,"Tol should be positive");
       }
 //      else if(strcmp("Iter",name) == 0)
 //      {
