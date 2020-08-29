@@ -8,7 +8,7 @@
 
 using namespace nasoq;
 
-int main(int argc, char *argv[]){
+int main(int argc, const char *argv[]){
 
  std::map<std::string,std::string> qp_args;
  parse_args(argc, argv, qp_args);

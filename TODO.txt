@@ -3,11 +3,18 @@
 - igl interface --> DONE
 - Build cleanup (Etienne) --> DONE
 - Adding parser to driver --> DONE
-- Library build project and adding submodules
 - NASOQ benchmark --> DONE
-- Code clean up (namespace, warnings, ...)
-- Fixing return value of NASOQ solve, 
+- Code clean up (namespace, warnings, ...) --> DONE
+- Fixing return value of NASOQ solve, --> DONE
 - will add infeasible to the return values. --> DONE
-- Fixing NASOQ-Tuned variants
+
+
+
+
+- Library build project and adding submodules
+- Matlab interface
+- Fixing NASOQ-Tuned variants and its API
 - Hand optimizing NASOQ code
 - Adding fixed term to the objective
+- Adding CHOLMOD mode inside the solver
+- push igl interface to libigl
