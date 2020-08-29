@@ -34,9 +34,6 @@ void get_num_iter(double acc_thresh, int& inner_iter_ref,
 }
 
 
-/*
- *
- */
 int nasoq_demo(int argc, char **argv) {
  std::map<std::string, std::string> qp_args;
  if (!parse_nasoq_args(argc, argv, qp_args))

@@ -54,11 +54,17 @@ set(NASOQ_LIB_DIR ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES})
 
 set(SOURCE_FILES nasoq_driver.cpp)
-
-add_executable(NASOQ-BIN ${SOURCE_FILES}  nasoq_driver.cpp)
-target_link_libraries(NASOQ-BIN PRIVATE
-         ${NASOQ_LIB_DIR} )
-target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} )
+include_directories(${MKL_INCLUDE_DIR} ${SUITESPARSE_INCLUDE_DIRS}
+        ${METIS_INCLUDE_DIR} ${METIS_INCLUDES}
+        ${EIGEN3_INCLUDE_DIR}
+        "symbolic/" "common/" "ldl/" "matrixMatrix/"
+        "matrixVector/"  "linear_solver/" "gmres/" "QP/"
+        "triangularSolve/")
+add_executable(NASOQ ${SOURCE_FILES}  nasoq_driver.cpp)
+target_link_libraries(NASOQ PUBLIC
+        ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
+        ${METIS_LIBRARY} ${METIS_LIBRARIES}
+        )
 if(OpenMP_CXX_FOUND)
     target_link_libraries(NASOQ-BIN PRIVATE OpenMP::OpenMP_CXX)
 endif()
@@ -77,4 +83,3 @@ target_link_libraries(NASOQ INTERFACE
 if(TARGET Eigen3::Eigen OR EXISTS "${EIGEN3_INCLUDE_DIR}")
     add_subdirectory(eigen_interface)
 endif()
-
