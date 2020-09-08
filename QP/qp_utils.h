@@ -627,6 +627,7 @@ namespace nasoq {
    tmp[i] = dual_vars[i] > 0.0 ? 0 : dual_vars[i];
   }
   double non_negativity_infn = norm_dense(B->nrow, 1, tmp, 0);
+  delete []tmp;
   return non_negativity_infn;
  }
 
