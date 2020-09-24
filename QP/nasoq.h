@@ -192,6 +192,8 @@ namespace nasoq {
    ineq_const_size = B->nrow;
    if (B->nrow > 0) {
     B->nzmax = Bp[B_col];
+   }else{
+    B->nzmax=0;
    }
 
    //sKKT = new CSC;
