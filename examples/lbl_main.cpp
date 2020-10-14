@@ -29,8 +29,7 @@ int main(int argc, char *argv[]){
  Hx[0]=2;Hx[1]=2;
 
  auto *H = new nasoq::CSC; H->nzmax = nnzH; H->ncol= H->nrow =sizeH;
- H->p = Hp; H->i = Hi; H->x = Hx; H->stype=-1;
-
+ H->p = Hp; H->i = Hi; H->x = Hx; H->stype=-1; H->packed=1;
 /// Solving the linear system
  auto *lbl = new nasoq::SolverSettings(H,q);
  lbl->ldl_variant = 4;
@@ -50,6 +49,11 @@ int main(int argc, char *argv[]){
  }
 
  delete lbl;
+ delete []Hp;
+ delete []Hi;
+ delete []Hx;
+ delete []q;
+ delete []x;
  delete H;
  return 0;
 }
