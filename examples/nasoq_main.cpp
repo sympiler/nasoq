@@ -1,5 +1,5 @@
 
-#include "nasoq.h"
+#include "../include/nasoq.h"
 
 /*
  * Minimizing 1/2 x^THx + q^Tx + C; Cx <= d

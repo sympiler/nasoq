@@ -4,9 +4,12 @@
 
 #include <string>
 #include <iostream>
-#include <qp_utils.h>
-#include <nasoq.h>
-#include <Norm.h>
+#include <cassert>
+
+#include "mkl.h"
+#include "nasoq.h"
+
+#include "utils.h"
 #include <mp_format_converter.h>
 
 using namespace nasoq;
@@ -39,7 +42,7 @@ void get_num_iter(double acc_thresh, int& inner_iter_ref,
  */
 int nasoq_demo(int argc, const char **argv) {
  std::map<std::string, std::string> qp_args;
- if (!parse_args(argc, argv, qp_args))
+ if (!format::parse_args(argc, argv, qp_args))
   return -1;
 
  /// New settings if provided
