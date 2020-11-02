@@ -21,12 +21,18 @@ namespace nasoq{
  }
 
  double* LBLSolver::solve() {
-  return ss_->solve_only();
+  sol_ = ss_->solve_only();
+  return sol_;
  }
 
  double* LBLSolver::solve(double *in_rhs) {
   memcpy(ss_->rhs, in_rhs, n_ * sizeof(double));
-  return ss_->solve_only();
+  sol_ = ss_->solve_only();
+  return sol_;
+ }
+
+ double* LBLSolver::solution(){
+  return sol_;
  }
 
 }

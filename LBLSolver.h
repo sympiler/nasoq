@@ -13,13 +13,30 @@ class LBLSolver {
  double *sol_;
  int n_;
 public:
+ /// Takes a lower triangular CSC indefinite matrix and a right hand side vector
+ /// with size of n
+ /// \param n
+ /// \param Ap
+ /// \param Ai
+ /// \param Ax
+ /// \param rhs
  LBLSolver(int n, int *Ap, int *Ai, double *Ax, double *rhs);
  ~LBLSolver();
 
-
+ /// Symbolic factorization, happens once and can be reused as long as sparsity does not change
+ /// \return
  int symbolic_fact();
+
+ /// Actual factorization happens here
+ /// \return
  int numeric_fact();
+
+ /// Solves the system for the RHS given to the constructor.
+ /// \return
  double *solve();
+
+ /// Replaces the initial RHS with the given input
+ /// \return
  double *solve(double *);
  double *solution();
 };
