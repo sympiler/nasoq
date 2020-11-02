@@ -68,6 +68,14 @@ target_link_libraries(NASOQ INTERFACE
         )
 ## TODO static and shared
 
+project(NASOQ_LBLSolver)
+add_library (NASOQ_LBLSolver STATIC
+	NASOQ_LBLSolver.cpp)
+target_include_directories(NASOQ_LBLSolver PRIVATE  ${NASOQ_INCLUDE_DIR} )
+target_link_libraries(NASOQ_LBLSolver PRIVATE
+        ${NASOQ_LIB_DIR}
+        )
+
 if(TARGET Eigen3::Eigen)
     add_subdirectory(eigen_interface)
 endif()
