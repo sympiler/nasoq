@@ -7,9 +7,9 @@
 
 #include <linear_solver_wrapper.h>
 
-namespace nasoq{
+namespace nasoq_lib{
 class LBLSolver {
- SolverSettings *ss_;
+ nasoq::SolverSettings *ss_;
  double *sol_;
  int n_;
 public:
@@ -20,7 +20,7 @@ public:
  /// \param Ai
  /// \param Ax
  /// \param rhs
- LBLSolver(int n, int *Ap, int *Ai, double *Ax, double *rhs);
+ LBLSolver(int n, int nzmax, int *Ap, int *Ai, double *Ax, double *rhs);
  ~LBLSolver();
 
  /// Symbolic factorization, happens once and can be reused as long as sparsity does not change
