@@ -6,7 +6,7 @@
 #define CHOLOPENMP_DFS_H
 
 #include <vector>
-
+#include <cstdlib>
 namespace nasoq {
 /* non-recursive version for actual use */
 

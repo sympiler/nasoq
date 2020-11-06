@@ -6,7 +6,7 @@
 #define PROJECT_SERIAL_UPDATE_LDL_STATIC_H
 
 #include <vector>
-
+#include <cstdlib>
 namespace nasoq {
 /*
  * LDLT factorization without pivoting or static pivoting

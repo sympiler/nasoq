@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include <vector>
-
+#include <cstdlib>
 #include "common/Reach.h"
 
 namespace nasoq {

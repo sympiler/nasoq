@@ -6,7 +6,7 @@
 
 #include <limits>
 #include <iostream>
-
+#include <cmath>
 namespace nasoq {
 
  int max_min_sparse_matrix(const CSC *M, double &max_v, double &min_v, double &avg, double &var, double m_val) {

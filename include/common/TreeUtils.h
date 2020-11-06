@@ -6,7 +6,7 @@
 #define CHOLOPENMP_TREEUTILS_H
 
 #include <vector>
-
+#include <cstdlib>
 namespace nasoq {
 /*
  * Populates the children
