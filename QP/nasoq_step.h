@@ -14,6 +14,7 @@ namespace nasoq {
   int nxt_drop = -1;
   int to_add = 1;
   int num_violated = 0;
+  int compute_norms_per_step = 0;
   double prime_step, dual_step, step;
   solve_type typ_nxt_solve = SOLVE;
 
@@ -60,8 +61,8 @@ namespace nasoq {
  };
 
  int NasoqStep::solve_init() {
-  ret_val = nasoq_status::NotConverged;
-  int status = 0;
+  ret_val = nasoq_status::NotFinished;
+  int status = 1;
   warm_start = 0;
   //print_csc("BT fisrt:\n",BT->ncol,BT->p,BT->i,BT->x);
   qi->tot_st = qi->tic();
@@ -89,10 +90,9 @@ namespace nasoq {
    status = symbolic_QP_cholmod();
     initialize_x_cholmod();
 #else
-   status = symbolic_QP();
-   initialize_x();
+   symbolic_QP();
+   status = initialize_x();
 #endif
-   return status;
   }
 
   nxt_active = -1;
@@ -105,6 +105,7 @@ namespace nasoq {
 
   if (warm_start)
    typ_nxt_solve = REFACTOR;
+  return status;
  }
 
  int NasoqStep::solve_step() {
@@ -216,25 +217,31 @@ namespace nasoq {
   }
   qi->tot_end = qi->toc();
   qi->tot = qi->elapsed_time(qi->tot_st, qi->tot_end);
-  compute_objective();
 
 //  ret_val = check_solve_status(status);
   detect_solver_name();
 //  return ret_val;
 
-  if (status == 0)
-   return nasoq_status::Infeasible;
-  constraint_sat_norm();
-  lagrangian_residual_norm();
-  complementarity_norm();
-  non_negativity_norm();
-  if (lag_res <= eps_abs && cons_sat_norm <= eps_abs &&
-      non_negativity_infn <= eps_abs) {//&& complementarity_infn <= eps_abs
-   ret_val = nasoq_status::Optimal; //converged
-  } else if (cons_sat_norm <= eps_abs) {//low accuracy
-   ret_val = nasoq_status::Inaccurate;
-  } else {
-   ret_val = nasoq_status::NotConverged; //not converged or maybe very inaccurate
+  if(step_solve_finished && status == 0)
+    return nasoq_status::Infeasible;
+  if(compute_norms_per_step || step_solve_finished){
+   compute_objective();
+   constraint_sat_norm();
+   lagrangian_residual_norm();
+   complementarity_norm();
+   non_negativity_norm();
+  }
+  if(step_solve_finished){
+   if (lag_res <= eps_abs && cons_sat_norm <= eps_abs &&
+       non_negativity_infn <= eps_abs) {//&& complementarity_infn <= eps_abs
+    ret_val = nasoq_status::Optimal; //converged
+   } else if (cons_sat_norm <= eps_abs) {//low accuracy
+    ret_val = nasoq_status::Inaccurate;
+   } else {
+    ret_val = nasoq_status::NotConverged; //not converged or maybe very inaccurate
+   }
+  } else{
+   ret_val = nasoq_status::NotFinished;
   }
   return ret_val;
  }

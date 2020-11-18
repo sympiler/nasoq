@@ -497,6 +497,7 @@ namespace nasoq {
    compute_recieporical_length(B,b,rec_length);
    //print_vec("rec_length\n",0,B->nrow,rec_length);
 #endif
+   status = 1;
    return status;
   }
 

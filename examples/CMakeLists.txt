@@ -4,6 +4,11 @@ cmake_minimum_required(VERSION 3.14)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
+    if(NOT DEFINED NASOQ_ROOT)
+        set(NASOQ_ROOT_DIR "../") #assumed the example folder is within nasoq
+    else()
+        set(NASOQ_ROOT_DIR "${NASOQ_ROOT}")
+    endif()
 
 ### NASOQ example
 project(NASOQ_Test)
@@ -24,9 +29,11 @@ set(METIS_LIBRARY "")
 set(METIS_INCLUDE_DIR "")
 
 include_directories(${METIS_INCLUDES} ${MKL_INCLUDE_DIR}
-        "nasoq/QP/" "nasoq/symbolic/" "nasoq/common/" "nasoq/ldl/"
-        "nasoq/triangularSolve/" "nasoq/linear_solver/" "nasoq/gmres/"
-        "nasoq/matrixVector/" "nasoq/matrixMatrix/")
+        "${NASOQ_ROOT_DIR}/QP/" "${NASOQ_ROOT_DIR}/symbolic/"
+        "${NASOQ_ROOT_DIR}/common/" "${NASOQ_ROOT_DIR}/ldl/"
+        "${NASOQ_ROOT_DIR}/triangularSolve/" "${NASOQ_ROOT_DIR}/linear_solver/"
+        "${NASOQ_ROOT_DIR}/gmres/"
+        "${NASOQ_ROOT_DIR}/matrixVector/" "${NASOQ_ROOT_DIR}/matrixMatrix/")
 
 set(SOURCE_FILES_NAS nasoq_main.cpp)
 add_executable(NASOQ_Test ${SOURCE_FILES_NAS} nasoq_main.cpp)
@@ -38,6 +45,14 @@ if(OpenMP_CXX_FOUND)
 endif()
 
 
+set(SOURCE_FILES_NAS_ST nasoq_step_main.cpp)
+add_executable(NASOQ_Step_Test ${SOURCE_FILES_NAS_ST} )
+target_link_libraries(NASOQ_Step_Test PRIVATE
+        ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
+        ${METIS_LIBRARY} ${METIS_LIBRARIES}        )
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(NASOQ_Step_Test PRIVATE OpenMP::OpenMP_CXX)
+endif()
 
 
 
@@ -60,9 +75,11 @@ set(METIS_LIBRARY "")
 set(METIS_INCLUDE_DIR "")
 
 include_directories(${METIS_INCLUDES} ${MKL_INCLUDE_DIR}
-        "nasoq/QP/" "nasoq/symbolic/" "nasoq/common/" "nasoq/ldl/"
-        "nasoq/triangularSolve/" "nasoq/linear_solver/" "nasoq/gmres/"
-        "nasoq/matrixVector/" "nasoq/matrixMatrix/")
+        "${NASOQ_ROOT_DIR}/QP/" "${NASOQ_ROOT_DIR}/symbolic/"
+        "${NASOQ_ROOT_DIR}/common/" "${NASOQ_ROOT_DIR}/ldl/"
+        "${NASOQ_ROOT_DIR}/triangularSolve/" "${NASOQ_ROOT_DIR}/linear_solver/"
+        "${NASOQ_ROOT_DIR}/gmres/"
+        "${NASOQ_ROOT_DIR}/matrixVector/" "${NASOQ_ROOT_DIR}/matrixMatrix/")
 
 set(SOURCE_FILES_NAS lbl_main.cpp)
 add_executable(LBL_Test ${SOURCE_FILES_NAS} lbl_main.cpp)
