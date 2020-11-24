@@ -20,7 +20,7 @@
   //     .triangularView<Eigen::Lower>() )
   //   q  n by 1 linear coefficients
   //   A  m1 by n linear equality constraint coefficients
-  //   a  m1 by 1 linear equality upper bounds
+  //   b  m1 by 1 linear equality upper bounds
   //   C  m2 by n linear inequality constraint coefficients
   //   d  m2 by 1 linear inequality upper bounds
 
