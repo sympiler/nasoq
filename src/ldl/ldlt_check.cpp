@@ -72,7 +72,7 @@ namespace nasoq {
   delete[]row_comp;
   delete[]valTmp;
   delete[]L_csc->p;
-  delete[]L_csc;
+  delete L_csc;
   allocateAC(LT, 0, 0, 0, FALSE);
   return true;
 
