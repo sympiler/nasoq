@@ -9,6 +9,11 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
     else()
         set(NASOQ_ROOT_DIR "${NASOQ_ROOT}")
     endif()
+set(NASOQ_INC ${NASOQ_ROOT_DIR}/include)
+set(NASOQ_LIB ${NASOQ_ROOT_DIR}/lib/)
+
+include_directories(${NASOQ_INC} ${METIS_INCLUDES} ${MKL_INCLUDE_DIR})
+link_directories(${NASOQ_LIB})
 
 ### NASOQ example
 project(NASOQ_Test)
@@ -28,16 +33,10 @@ find_package(METIS REQUIRED)
 set(METIS_LIBRARY "")
 set(METIS_INCLUDE_DIR "")
 
-include_directories(${METIS_INCLUDES} ${MKL_INCLUDE_DIR}
-        "${NASOQ_ROOT_DIR}/QP/" "${NASOQ_ROOT_DIR}/symbolic/"
-        "${NASOQ_ROOT_DIR}/common/" "${NASOQ_ROOT_DIR}/ldl/"
-        "${NASOQ_ROOT_DIR}/triangularSolve/" "${NASOQ_ROOT_DIR}/linear_solver/"
-        "${NASOQ_ROOT_DIR}/gmres/"
-        "${NASOQ_ROOT_DIR}/matrixVector/" "${NASOQ_ROOT_DIR}/matrixMatrix/")
-
 set(SOURCE_FILES_NAS nasoq_main.cpp)
 add_executable(NASOQ_Test ${SOURCE_FILES_NAS} nasoq_main.cpp)
 target_link_libraries(NASOQ_Test PRIVATE
+        nasoq
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}        )
 if(OpenMP_CXX_FOUND)
@@ -48,6 +47,7 @@ endif()
 set(SOURCE_FILES_NAS_ST nasoq_step_main.cpp)
 add_executable(NASOQ_Step_Test ${SOURCE_FILES_NAS_ST} )
 target_link_libraries(NASOQ_Step_Test PRIVATE
+        nasoq
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}        )
 if(OpenMP_CXX_FOUND)
@@ -74,16 +74,11 @@ find_package(METIS REQUIRED)
 set(METIS_LIBRARY "")
 set(METIS_INCLUDE_DIR "")
 
-include_directories(${METIS_INCLUDES} ${MKL_INCLUDE_DIR}
-        "${NASOQ_ROOT_DIR}/QP/" "${NASOQ_ROOT_DIR}/symbolic/"
-        "${NASOQ_ROOT_DIR}/common/" "${NASOQ_ROOT_DIR}/ldl/"
-        "${NASOQ_ROOT_DIR}/triangularSolve/" "${NASOQ_ROOT_DIR}/linear_solver/"
-        "${NASOQ_ROOT_DIR}/gmres/"
-        "${NASOQ_ROOT_DIR}/matrixVector/" "${NASOQ_ROOT_DIR}/matrixMatrix/")
 
 set(SOURCE_FILES_NAS lbl_main.cpp)
 add_executable(LBL_Test ${SOURCE_FILES_NAS} lbl_main.cpp)
 target_link_libraries(LBL_Test PRIVATE
+        nasoq
         ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY} ${METIS_LIBRARIES}        )
 if(OpenMP_CXX_FOUND)

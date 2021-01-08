@@ -1,4 +1,6 @@
 
+#include <cmath>
+#include <iostream>
 #include "../include/nasoq.h"
 
 /*

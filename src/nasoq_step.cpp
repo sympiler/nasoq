@@ -2,20 +2,20 @@
 // Created by Shujian Qian on 2020-11-17.
 //
 
-#ifndef NASOQ_NASOQ_STEP_H
-#define NASOQ_NASOQ_STEP_H
 
 #include "nasoq_step.h"
+#include <cstdio>
+#include <iostream>
 
 namespace nasoq {
 
- int NasoqStep::NasoqStep(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
+ NasoqStep::NasoqStep(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
                           size_t B_row, size_t B_col, int *Bp, int *Bi,
                           double *Bx, double *b_ineq) : Nasoq(H_size, Hp, Hi, Hx, q_in,
                                                               B_row, B_col, Bp, Bi,
                                                               Bx, b_ineq) {}
 
- Nint NasoqStep::asoqStep(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
+ NasoqStep::NasoqStep(size_t H_size, int *Hp, int *Hi, double *Hx, double *q_in,
                           size_t A_size1, size_t A_size2, int *Ap, int *Ai, double *Ax,
                           double *a_eq,
                           size_t B_size1, size_t B_size2, int *Bp, int *Bi, double *Bx,
@@ -221,4 +221,3 @@ namespace nasoq {
 }
 }
 
-#endif //NASOQ_NASOQ_STEP_H

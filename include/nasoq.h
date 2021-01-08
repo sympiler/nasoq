@@ -46,7 +46,7 @@ namespace nasoq {
   Fixed = 0, AUTO, Tuned, PREDET
  };
  enum nasoq_status {
-  Optimal = 1, Inaccurate = 2, NotConverged = 3, Infeasible=0
+  Optimal = 1, Inaccurate = 2, NotConverged = 3, Infeasible=0, NotFinished=4
  };
 
  struct nasoq_config {

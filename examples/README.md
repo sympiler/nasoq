@@ -4,7 +4,7 @@ thus it needs nasoq repo to be cloned somewhere that is defined by
 `NASOQ_ROOT` cmake option. If `NASOQ_ROOT` is not defined, the parent 
 directory will be used, i.e., `../`. 
 
-You need to first clone NASOQ where you like
+You need to first clone NASOQ where you like (`NASOQ_ROOT`)
 ```
 git clone https://github.com/sympiler/nasoq
 ```

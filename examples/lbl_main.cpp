@@ -2,7 +2,10 @@
 // Created by kazem on 8/15/20.
 //
 
-#include "linear_solver_wrapper.h"
+#include <QP/linear_solver_wrapper.h>
+#include <cstdio>
+#include <iostream>
+#include <cmath>
 
 /*
  * Solving Hx = q

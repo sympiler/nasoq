@@ -5,6 +5,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
+
 
 project(libnasoq_static)
 
@@ -88,6 +90,7 @@ set(NASOQ_LIB_DIR
 
 set(SOURCE_FILES
         src/nasoq.cpp
+        src/nasoq_step.cpp
         src/common/def.cpp
         src/common/transpose_unsym.cpp
         src/common/Util.cpp
@@ -131,21 +134,25 @@ set(SOURCE_FILES
         src/QP/osqp_utils.cpp
         src/QP/updown_test.cpp
         src/QP/nasoq_utils.cpp
-        src/QP/linear_solver_wrapper.cpp)
+        src/QP/linear_solver_wrapper.cpp
+        )
 
 
 add_library(nasoq_static STATIC ${SOURCE_FILES})
 target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
 target_link_libraries(nasoq_static ${NASOQ_LIB_DIR})
-set_target_properties(nasoq_static PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/libnasoq/)
+#set_target_properties(nasoq_static PROPERTIES
+#        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
+#set_target_properties(nasoq_static PROPERTIES
+#        CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 
 project(libnasoq_shared)
-add_library(nasoq_shared SHARED ${SOURCE_FILES})
-target_include_directories(nasoq_shared PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-target_link_libraries(nasoq_shared ${NASOQ_LIB_DIR})
-set_target_properties(nasoq_shared PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/libnasoq/)
+add_library(nasoq SHARED ${SOURCE_FILES})
+target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
+target_link_libraries(nasoq ${NASOQ_LIB_DIR})
+set_target_properties(nasoq PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
+
 
 project(NASOQ-BIN)
 add_executable(NASOQ-BIN nasoq_driver.cpp)
@@ -168,7 +175,6 @@ target_link_libraries(NASOQ-BIN nasoq_static)
 #target_link_libraries(NASOQ INTERFACE
 #        ${NASOQ_LIB_DIR}
 #        )
-### TODO static and shared
 #
 #if(TARGET Eigen3::Eigen)
 #    add_subdirectory(eigen_interface)

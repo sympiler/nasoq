@@ -3,7 +3,9 @@
 //
 
 
-#include "nasoq_step.h"
+#include <nasoq_step.h>
+#include <iostream>
+#include <cmath>
 
 /*
  * Minimizing 1/2 x^THx + q^Tx + C; Cx <= d
