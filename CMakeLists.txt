@@ -3,9 +3,13 @@ cmake_minimum_required(VERSION 3.9)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
+#include(ExternalProject)
+include(DownloadProject)
 
 set(CMAKE_CXX_STANDARD 11)
+set(NASOQ_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
+set(NASOQ_EXTERNAL ${CMAKE_CURRENT_LIST_DIR}/external)
 
 
 project(libnasoq_static)
@@ -19,17 +23,41 @@ set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_
 set(BLA_STATIC TRUE)
 find_package(SuiteSparse OPTIONAL_COMPONENTS)
 
-#TODO adding METIS submodule
 
 #IF(NOT SUITESPARSE_FOUND)
-    set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-    set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-    find_package(METIS REQUIRED)
-    set(METIS_LIBRARY "")
-    set(METIS_INCLUDE_DIR "")
+   # set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
+   # set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
+    find_package(METIS OPTIONAL_COMPONENTS)
+   # set(METIS_LIBRARY "")
+   # set(METIS_INCLUDE_DIR "")
 #ELSE()
 #    set(ignoreMe "${METIS_ROOT_PATH}")
 #ENDIF()
+if(METIS_VERSION_OK)
+#    find_program(MAKE_EXE NAMES gmake nmake make)
+#    set(metis_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/metis")
+#    set(metis_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${metis_INSTALL_DIR})
+#set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_LIST_DIR}/external)
+    set(GKLIB_PATH ${NASOQ_EXTERNAL}/metis/metis-src/GKLIB/ CACHE PATH "d")
+   download_project(PROJ metis
+      GIT_REPOSITORY https://github.com/cheshmi/METIS.git  # https://github.com/KarypisLab/METIS.git
+         #  BUILD_IN_SOURCE 1
+          #PREFIX  ${metis_BINARY_DIR}
+      #     URL http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
+           PREFIX  ${NASOQ_EXTERNAL}/metis/
+           #SOURCE_DIR ${NASOQ_EXTERNAL}/metis/metis-src/
+           BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis/
+          UPDATE_DISCONNECTED 1
+          CMAKE_ARGS  -DGKLIB_PATH=${metis_SOURCE_DIR}/GKlib/
+          # BUILD_COMMAND ${MAKE_EXE}
+      )
+    add_subdirectory(${metis_SOURCE_DIR})
+    set(METIS_INCLUDE_DIR ${metis_SOURCE_DIR}/include)
+    set(METIS_INCLUDES ${metis_SOURCE_DIR}/include/)
+    set(METIS_LIBRARY ${NASOQ_ROOT_DIR}/lib/)
+    set(METIS_LIBRARIES ${NASOQ_ROOT_DIR}/lib/)
+endif()
+
 
 find_package(OpenMP)
 
@@ -83,6 +111,7 @@ set(NASOQ_INCLUDE_DIR
         "${CMAKE_CURRENT_LIST_DIR}/include/")
 
 set(NASOQ_LIB_DIR
+        ${NASOQ_ROOT_DIR}/lib/
         ${MKL_LIBRARIES}
         ${SUITESPARSE_LIBRARIES}
         ${METIS_LIBRARY}
@@ -139,8 +168,9 @@ set(SOURCE_FILES
 
 
 add_library(nasoq_static STATIC ${SOURCE_FILES})
+add_dependencies(nasoq_static metis)
 target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-target_link_libraries(nasoq_static ${NASOQ_LIB_DIR})
+target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
 #set_target_properties(nasoq_static PROPERTIES
 #        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 #set_target_properties(nasoq_static PROPERTIES
@@ -148,6 +178,7 @@ target_link_libraries(nasoq_static ${NASOQ_LIB_DIR})
 
 project(libnasoq_shared)
 add_library(nasoq SHARED ${SOURCE_FILES})
+add_dependencies(nasoq metis)
 target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
 target_link_libraries(nasoq ${NASOQ_LIB_DIR})
 set_target_properties(nasoq PROPERTIES
@@ -156,8 +187,13 @@ set_target_properties(nasoq PROPERTIES
 
 project(NASOQ-BIN)
 add_executable(NASOQ-BIN nasoq_driver.cpp)
+#add_dependencies(NASOQ-BIN metis)
 target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR})
-target_link_libraries(NASOQ-BIN nasoq_static)
+link_directories(NASOQ-BIN PRIVATE
+        ${NASOQ_LIB_DIR}
+        #${NASOQ_ROOT_DIR}/lib
+        )
+target_link_libraries(NASOQ-BIN metis nasoq_static)
 
 #target_link_libraries(NASOQ-BIN PRIVATE
 #        ${NASOQ_LIB_DIR})
