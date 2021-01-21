@@ -166,11 +166,15 @@ set(SOURCE_FILES
         src/QP/linear_solver_wrapper.cpp
         )
 
+message("OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
+message("OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})
 
 add_library(nasoq_static STATIC ${SOURCE_FILES})
 add_dependencies(nasoq_static metis)
-target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
+#target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
+#target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
+target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR} ${OpenMP_CXX_LIBRARIES})
 #set_target_properties(nasoq_static PROPERTIES
 #        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 #set_target_properties(nasoq_static PROPERTIES
@@ -179,21 +183,23 @@ target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
 project(libnasoq_shared)
 add_library(nasoq SHARED ${SOURCE_FILES})
 add_dependencies(nasoq metis)
-target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-target_link_libraries(nasoq ${NASOQ_LIB_DIR})
+#target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
+#target_link_libraries(nasoq ${NASOQ_LIB_DIR})
+target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_link_libraries(nasoq metis ${NASOQ_LIB_DIR} ${OpenMP_CXX_LIBRARIES})
 set_target_properties(nasoq PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 
 
 project(NASOQ-BIN)
 add_executable(NASOQ-BIN nasoq_driver.cpp)
-#add_dependencies(NASOQ-BIN metis)
 target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR})
 link_directories(NASOQ-BIN PRIVATE
         ${NASOQ_LIB_DIR}
         #${NASOQ_ROOT_DIR}/lib
         )
-target_link_libraries(NASOQ-BIN metis nasoq_static)
+target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_link_libraries(NASOQ-BIN nasoq_static ${OpenMP_CXX_LIBRARIES})
 
 #target_link_libraries(NASOQ-BIN PRIVATE
 #        ${NASOQ_LIB_DIR})
