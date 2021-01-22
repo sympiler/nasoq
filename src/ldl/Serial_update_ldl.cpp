@@ -2,13 +2,12 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/Serial_update_ldl.h"
 
 #include <cassert>
 #include <chrono>
 
-#include <mkl_lapacke.h>
-#include <mkl_blas.h>
+
+#include "ldl/Serial_update_ldl.h"
 
 #include "common/Reach.h"
 #include "common/Sym_BLAS.h"
@@ -148,7 +147,7 @@ namespace nasoq {
     src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
     double *srcL = &lValues[lC[cSN] + ub + 1];
     blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-    dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+    SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
           src, &nSNRCur, zero, contribs, &nSupRs);
 
 //   }
@@ -202,7 +201,7 @@ namespace nasoq {
 //  std::cout<<"\n";
 //  /////
 
-   dtrsm("R", "L", "C", "U", &rowNo, &supWdt, one,
+   SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
          cur, &nSupR, &cur[supWdt], &nSupR);
 
 //  /////

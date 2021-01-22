@@ -4,6 +4,9 @@
 
 #include "QP/updown_test.h"
 
+#ifdef MKL_BLAS
+#include "mkl.h"
+#endif
 #include "common/Util.h"
 #include "common/Transpose.h"
 #include "QP/linear_solver_wrapper.h"
@@ -166,6 +169,7 @@ namespace nasoq {
   delete[]rhs_test;
  }
 
+#ifdef MKL_BLAS
  void build_super_solve_with_eq_mkl(CSC *H, const CSC *A, CSC *B, const double *rhs, double reg_diag,
                                     const std::vector<int> &mod_col, double *x_all, int outer_iter, int inner_iter,
                                     double stop_tol) {
@@ -338,4 +342,6 @@ namespace nasoq {
   delete[]rhs_test;
   mkl_free(x);
  }
+
+#endif
 }

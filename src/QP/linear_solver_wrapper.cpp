@@ -29,6 +29,14 @@
 #include "linear_solver/solve_phase.h"
 #include "symbolic/symbolic_phase.h"
 
+#ifdef MKL_BLAS
+#include "mkl.h"
+#endif
+#ifdef OPENBLAS
+#include "openblas/cblas.h"
+
+#endif
+
 namespace nasoq {
 
  profiling_solver_info::profiling_solver_info(int nt) : fact_time(0), analysis_time(0),
@@ -202,8 +210,14 @@ namespace nasoq {
  void SolverSettings::default_setting() {
   ldl_variant = 4;
   ldl_update_variant = 2;
+#ifdef MKL_BLAS
   num_thread = mkl_get_max_threads();
   MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+#else
+  num_thread = openblas_get_num_procs();
+  openblas_set_num_threads(1);
+
+#endif
   chunk = 1;
   cost_param = num_thread;
   level_param = -3;

@@ -10,12 +10,35 @@
 #include <cstdlib>
 #include "common/Reach.h"
 
+#ifdef OPENBLAS
+#include "openblas/lapacke.h"
+//#include "f77blas.h"
+#include "openblas/cblas.h"
+//#include "common_interface.h"
+#else
+#include "mkl.h"
+#include <mkl_blas.h>
+#include <mkl_lapacke.h>
+#endif
 namespace nasoq {
 #  define VEC_SCAL(n, a, x, u){               \
     int i; double *pt,*p=(x);                    \
     for((pt)=(p+n);(p)<(pt);)                   \
       *((p)++)*= (a);                           \
   }
+
+#ifdef OPENBLAS
+#define SYM_DGEMM dgemm_
+#define SYM_DTRSM dtrsm_
+#define SYM_DGEMV dgemv_
+#define SYM_DSCAL dscal_
+#else
+#define SYM_DGEMM dgemm
+#define SYM_DTRSM dtrsm
+#define SYM_DGEMV dgemv
+#define SYM_DSCAL dscal
+#endif
+
 
  void
  sym_sytrf(double *A, int n, const int stride, int *nbpivot,

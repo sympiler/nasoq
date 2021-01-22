@@ -5,8 +5,9 @@
 #include "ldl/Serial_blocked_ldl.h"
 
 #include <cassert>
+#include <common/Sym_BLAS.h>
 
-#include "mkl.h"
+
 
 #include "common/Reach.h"
 
@@ -113,19 +114,17 @@ namespace nasoq {
 
 
     //  if(ndrow3>0) {
-#ifdef MKL
+//#ifdef MKL
     /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
           src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-    dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
-          src, &nSNRCur, zero, contribs, &nSupRs);
-#endif
-#ifdef OPENBLAS
-    dgemm_("N","C",&ndrow3,&ndrow1,&supWdts,one,srcL,&nSNRCur,
+//    dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+//          src, &nSNRCur, zero, contribs, &nSupRs);
+//#endif
+//#ifdef OPENBLAS
+    SYM_DGEMM("N","C",&ndrow3,&ndrow1,&supWdts,one,srcL,&nSNRCur,
                        src,&nSNRCur,zero,contribs+ndrow1,&nSupRs );
-#endif
-#ifdef MYBLAS
-    //TODO
-#endif
+//#endif
+
 
 //   }
 
@@ -145,34 +144,7 @@ namespace nasoq {
    }
 
 
-#ifdef MKL
-   //dpotrf("L",&supWdt,cur,&nSupR,&info);
-
-/*   for (int m = 0; m < supWdt; ++m) {
-    for (int i = m; i < supWdt; ++i) {
-     contribs[m*su]
-    }
-   }
-   dspff*/
-   /*std::cout<<"after sytrf: \n";
-   for (int m = 0; m < supWdt; ++m) {
-    for (int i = m; i < supWdt; ++i) {
-     std::cout<<cur[m*nSupR+i]<<",";
-    }
-    std::cout<<"\n";
-   }
-   std::cout<<"\n pars: ";
-   std::cout<< supWdt<<";"<<nSupR<<";"<<nbpivot<<";"<<threshold<<"\n";*/
    sym_sytrf(cur, supWdt, nSupR, &nbpivot, threshold);
-/*  std::cout<<"after sytrf: \n";
-  for (int m = 0; m < supWdt; ++m) {
-   for (int i = m; i < supWdt; ++i) {
-    std::cout<<cur[m*nSupR+i]<<",";
-   }
-   std::cout<<"\n";
-  }
-  std::cout<<"\n";*/
-#endif
 
    // Making L*D
    int rowNo = nSupR - supWdt;
@@ -186,7 +158,7 @@ namespace nasoq {
      *(++stCol) = tmp * *(++curCol);
     }
    }
-   dtrsm("R", "L", "C", "N", &rowNo, &supWdt, one,
+   SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
          trn_diag, &supWdt, &cur[supWdt], &nSupR);
 
    for (int k = 0; k < supWdt; ++k) {

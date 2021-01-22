@@ -6,11 +6,10 @@
 
 #include <cassert>
 #include <chrono>
+#include "common/Sym_BLAS.h"
 
-#include "mkl.h"
 
 #include "common/Reach.h"
-#include "common/Sym_BLAS.h"
 
 namespace nasoq {
 
@@ -144,7 +143,7 @@ namespace nasoq {
        }
        /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
              src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-       dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+       SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
              src, &nSNRCur, zero, contribs, &nSupRs);
 
        //copying contrib to L
@@ -158,11 +157,7 @@ namespace nasoq {
         }
        }
       }
-#ifdef MKL
-      //dpotrf("L",&supWdt,cur,&nSupR,&info);
       sym_sytrf(cur, supWdt, nSupR, &nbpivot, threshold);
-      //LAPACKE_dsytrf(LAPACK_COL_MAJOR,'L',supWdt,cur,nSupR,ipiv);
-#endif
 
       // Making L*D
       int rowNo = nSupR - supWdt;
@@ -176,7 +171,7 @@ namespace nasoq {
         *(++stCol) = tmp * *(++curCol);
        }
       }
-      dtrsm("R", "L", "C", "N", &rowNo, &supWdt, one,
+      SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
             trn_diag, &supWdt, &cur[supWdt], &nSupR);
 
       for (int k = 0; k < supWdt; ++k) {
@@ -212,7 +207,11 @@ namespace nasoq {
 
 #if 1
   //LAst iteration
+#ifdef OPENBLAS
+  openblas_set_num_threads(threads);
+#else
   MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
+#endif
 
   map = new int[n]();
   contribs = new double[super_max * col_max]();
@@ -279,7 +278,7 @@ namespace nasoq {
      src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
      double *srcL = &lValues[lC[cSN] + ub + 1];
      blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-     dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+     SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
            src, &nSNRCur, zero, contribs, &nSupRs);
 
 //   }
@@ -298,6 +297,7 @@ namespace nasoq {
       }
      }
     }
+
     LAPACKE_dsytrf(LAPACK_COL_MAJOR, 'L', supWdt, cur, nSupR, ipiv);
     int is_perm = reorder_after_sytrf(supWdt, cur, nSupR, ipiv,
                                       &perm_piv[curCol], &D[curCol], n, &swap_full[curCol], ws + supWdt);
@@ -321,7 +321,7 @@ namespace nasoq {
      D[curCol + l] = cur[l + l * nSupR];
      cur[l + l * nSupR] = 1.0;
     }
-    dtrsm("R", "L", "C", "U", &rowNo, &supWdt, one,
+    SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
           cur, &nSupR, &cur[supWdt], &nSupR);
     blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
    }

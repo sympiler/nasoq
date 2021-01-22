@@ -8,10 +8,9 @@
 #include <chrono>
 #include <vector>
 
-#include "mkl.h"
 
-#include "common/Reach.h"
 #include "common/Sym_BLAS.h"
+#include "common/Reach.h"
 
 namespace nasoq {
 
@@ -122,7 +121,7 @@ namespace nasoq {
        src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
        double *srcL = &lValues[lC[cSN] + ub + 1];
        blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-       dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+       SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
              src, &nSNRCur, zero, contribs, &nSupRs);
 
 //   }
@@ -166,7 +165,7 @@ namespace nasoq {
        D[curCol + l] = cur[l + l * nSupR];
        cur[l + l * nSupR] = 1.0;
       }
-      dtrsm("R", "L", "C", "U", &rowNo, &supWdt, one,
+      SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
             cur, &nSupR, &cur[supWdt], &nSupR);
       blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
 
@@ -191,7 +190,11 @@ namespace nasoq {
 
 #if 1
   //LAst iteration
+#ifdef OPENBLAS
+  openblas_set_num_threads(threads);
+#else
   MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
+#endif
 
   map = new int[n]();
   contribs = new double[super_max * col_max]();
@@ -258,7 +261,7 @@ namespace nasoq {
      src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
      double *srcL = &lValues[lC[cSN] + ub + 1];
      blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-     dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+     SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
            src, &nSNRCur, zero, contribs, &nSupRs);
 
 //   }
@@ -300,7 +303,7 @@ namespace nasoq {
      D[curCol + l] = cur[l + l * nSupR];
      cur[l + l * nSupR] = 1.0;
     }
-    dtrsm("R", "L", "C", "U", &rowNo, &supWdt, one,
+    SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
           cur, &nSupR, &cur[supWdt], &nSupR);
     blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
    }

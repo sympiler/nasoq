@@ -9,13 +9,13 @@
 #include <iostream>
 
 #include "common/Norm.h"
-#include "common/Sym_BLAS.h"
 #include "common/transpose_unsym.h"
 #include "common/Util.h"
 #include "matrixVector/spmv_CSC.h"
 #include "QP/nasoq_utils.h"
 #include "QP/osqp_utils.h"
 #include "QP/updown_test.h"
+#include <common/Sym_BLAS.h>
 
 namespace nasoq {
  QPSettings::QPSettings() {

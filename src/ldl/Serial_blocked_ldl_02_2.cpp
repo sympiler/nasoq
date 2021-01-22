@@ -8,8 +8,7 @@
 #include <chrono>
 #include <vector>
 
-#include <mkl_lapacke.h>
-#include <mkl_blas.h>
+
 
 #include "common/Reach.h"
 #include "common/Sym_BLAS.h"
@@ -98,7 +97,7 @@ namespace nasoq {
     src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
     double *srcL = &lValues[lC[cSN] + ub + 1];
     blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-    dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+    SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
           src, &nSNRCur, zero, contribs, &nSupRs);
 
 //   }
@@ -140,7 +139,7 @@ namespace nasoq {
     D[curCol + l] = cur[l + l * nSupR];
     cur[l + l * nSupR] = 1.0;
    }
-   dtrsm("R", "L", "C", "U", &rowNo, &supWdt, one,
+   SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
          cur, &nSupR, &cur[supWdt], &nSupR);
    blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
   }

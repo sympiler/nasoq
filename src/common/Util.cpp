@@ -560,7 +560,7 @@ namespace nasoq {
    b[j] = 0;
   }
   for (int c = 0; c < n; ++c) {
-   for (MKL_INT cc = Ap[c]; cc < Ap[c + 1]; ++cc) {
+   for (int cc = Ap[c]; cc < Ap[c + 1]; ++cc) {
     b[Ai[cc]] += Ax[cc];
    }
    for (int i = Bp[c] + 1; i < Bp[c + 1]; ++i) {
@@ -591,7 +591,7 @@ namespace nasoq {
    b[j] = 0;
   }
   for (int c = 0; c < n; ++c) {
-   for (MKL_INT cc = Ap[c]; cc < Ap[c + 1]; ++cc) {
+   for (int cc = Ap[c]; cc < Ap[c + 1]; ++cc) {
     b[Ai[cc]] += Ax[cc];
    }
   }
@@ -680,7 +680,7 @@ namespace nasoq {
    assert(supWdt > 0);
 
    for (int j = curCol; j < nxtCol; ++j) {
-    for (MKL_INT k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
+    for (int k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
          k < Ap[j + 1]; ++k, ++kk) {
      Cx[actualNNZ] = Ax[k];
      assert(Ai[kk] < n);
@@ -706,7 +706,7 @@ namespace nasoq {
 /*  if(i==660)
    printf("here");*/
    for (int j = curCol; j < nxtCol; ++j) {
-    for (MKL_INT k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
+    for (int k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
          k < Ap[j + 1]; ++k, ++kk) {
      if (Ax[k] != 0) {
       Cx[actualNNZ] = Ax[k];
@@ -753,7 +753,7 @@ namespace nasoq {
    assert(supWdt > 0);
 
    for (int j = curCol; j < nxtCol; ++j) {
-    for (MKL_INT k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
+    for (int k = Ap[j] + (j - curCol), kk = AiP[curCol] + (j - curCol);
          k < Ap[j + 1]; ++k, ++kk) {
      if (Ax[k] != 0) {
       Cx[actualNNZ] = Ax[k];

@@ -6,8 +6,10 @@
 
 #include <cassert>
 #include <chrono>
+#include <common/Sym_BLAS.h>
 
-#include "mkl.h"
+
+
 
 #include "common/Reach.h"
 
@@ -137,7 +139,7 @@ namespace nasoq {
        }
        /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
              src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-       dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+       SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
              src, &nSNRCur, zero, contribs, &nSupRs);
 
        //copying contrib to L
@@ -169,7 +171,7 @@ namespace nasoq {
         *(++stCol) = tmp * *(++curCol);
        }
       }
-      dtrsm("R", "L", "C", "N", &rowNo, &supWdt, one,
+      SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
             trn_diag, &supWdt, &cur[supWdt], &nSupR);
 
       for (int k = 0; k < supWdt; ++k) {
@@ -204,7 +206,12 @@ namespace nasoq {
 
 #if 1
   //LAst iteration
+#ifdef OPENBLAS
+  openblas_set_num_threads(threads);
+#else
   MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
+#endif
+
 
   map = new int[n]();
   contribs = new double[super_max * col_max]();
@@ -294,7 +301,7 @@ namespace nasoq {
      }
      /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
            src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-     dgemm("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
+     SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
            src, &nSNRCur, zero, contribs, &nSupRs);
 
      //copying contrib to L
@@ -334,7 +341,7 @@ namespace nasoq {
       *(++stCol) = tmp * *(++curCol);
      }
     }
-    dtrsm("R", "L", "C", "N", &rowNo, &supWdt, one,
+    SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
           trn_diag, &supWdt, &cur[supWdt], &nSupR);
 
     for (int k = 0; k < supWdt; ++k) {

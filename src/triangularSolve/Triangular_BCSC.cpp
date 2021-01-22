@@ -5,16 +5,23 @@
 #include "triangularSolve/Triangular_BCSC.h"
 
 #include <cassert>
+#include <common/Sym_BLAS.h>
 
+#ifdef OPENBLAS
+#include "blas/cblas.h"
+#include <LAPACKE/include/lapacke.h>
+
+#else
 #include "mkl.h"
+#endif
+
 #include "omp.h"
 
 #include "triangularSolve/BLAS.h"
 
 namespace nasoq {
 
-#define MKL_BLAS
-
+// TODO: enabling SYM_BLAS should be faster than MKL here
  int
  blockedLsolve(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup, int *sup2col, int supNo,
                double *x) {
@@ -76,20 +83,18 @@ namespace nasoq {
    for (int l = 0; l < nSupR - supWdt; ++l) {
     tempVec[l] = x[Li[Li_ptr[curCol] + supWdt + l]];
    }
-#ifdef BLAS1  //FIXME
+#ifdef SYM_BLAS
    dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#endif
-#ifdef MKL_BLAS
+#else
    int tmpRow = nSupR - supWdt;
-   dgemv("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
+   SYM_DGEMV("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
          one, &x[curCol], &ione);
 #endif
    Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
-#ifdef BLAS1//FIXME
+#ifdef SYM_BLAS
    dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
-#endif
-#ifdef MKL_BLAS
-   dtrsm("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
+#else
+   SYM_DTRSM("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
          &nSupR, &x[curCol], &n);
 #endif
 
@@ -144,20 +149,18 @@ namespace nasoq {
      for (int l = 0; l < nSupR - supWdt; ++l) {
       tempVec[l] = x[Li[Li_ptr[curCol] + supWdt + l]];
      }
-#ifdef BLAS1  //FIXME
+#ifdef SYM_BLAS
      dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#endif
-#ifdef MKL_BLAS
+#else
      int tmpRow = nSupR - supWdt;
-     dgemv("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
+     SYM_DGEMV("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
            one, &x[curCol], &ione);
 #endif
      Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
-#ifdef BLAS1//FIXME
+#ifdef SYM_BLAS
      dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
-#endif
-#ifdef MKL_BLAS
-     dtrsm("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
+#else
+     SYM_DTRSM("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
            &nSupR, &x[curCol], &n);
 #endif
      for (int l = 0; l < nSupR - supWdt; ++l) {
@@ -195,24 +198,19 @@ namespace nasoq {
    int nSupR = Li_ptr[nxtCol] - Li_ptr[curCol];//row size of supernode
    double *Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
    //lSolve_dense(nSupR,supWdt,Ltrng,&x[curCol]);
-#ifdef BLAS1
-
+#ifdef SYM_BLAS
    dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);
-
-#endif
-#ifdef BLAS2
-   dtrsm("L", "L", "N", "N", &supWdt,&ione,one,Ltrng,
+#else
+   SYM_DTRSM("L", "L", "N", "N", &supWdt,&ione,one,Ltrng,
                 &nSupR,&x[curCol],&n);
 #endif
    Ltrng = &Lx[Lp[curCol] + supWdt];//first nnz of below diagonal
    //matVector(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#ifdef BLAS1
-
+#ifdef SYM_BLAS
    dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#endif
-#ifdef BLAS2
+#else
    int tmpRow=nSupR - supWdt;
-      dgemv("N",&tmpRow,&supWdt,one,Ltrng,&nSupR,&x[curCol],&ione,
+      SYM_DGEMV("N",&tmpRow,&supWdt,one,Ltrng,&nSupR,&x[curCol],&ione,
                 zero,tempVec,&ione);
 #endif
    for (int l = Li_ptr[curCol] + supWdt, k = 0; l < Li_ptr[nxtCol]; ++l, ++k) {
@@ -366,23 +364,22 @@ namespace nasoq {
       int nSupR = Li_ptr[nxtCol] - Li_ptr[curCol];//row size of supernode
       double *Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
       //lSolve_dense(nSupR,supWdt,Ltrng,&x[curCol]);
-#ifdef MKL_BLAS
-      dtrsm("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
-            &nSupR, &x[curCol], &n);
-#else
+#ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
+#else
+      SYM_DTRSM("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
+            &nSupR, &x[curCol], &n);
 #endif
       Ltrng = &Lx[Lp[curCol] + supWdt];//first nnz of below diagonal
       //matVector(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#ifdef MKL_BLAS
-      int tmpRow = nSupR - supWdt;
-      dgemv("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
-            zero, tempVec, &ione);
-#else
+#ifdef SYM_BLAS
       dmatvec_blas(nSupR, nSupR - supWdt, supWdt, Ltrng, &x[curCol],
                    tempVec);
+#else
+      int tmpRow = nSupR - supWdt;
+      SYM_DGEMV("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
+            zero, tempVec, &ione);
 #endif
-      // #pragma omp critical //FIXME: I don't thnink we need this
       for (int l = Li_ptr[curCol] + supWdt, k = 0;
            l < Li_ptr[nxtCol]; ++l, ++k) {
 #pragma omp atomic
@@ -436,21 +433,21 @@ namespace nasoq {
       int nSupR = Li_ptr[nxtCol] - Li_ptr[curCol];//row size of supernode
       double *Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
       //lSolve_dense(nSupR,supWdt,Ltrng,&x[curCol]);
-#ifdef MKL_BLAS
-      dtrsm("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
-            &nSupR, &x[curCol], &n);
-#else
+#ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
+#else
+      SYM_DTRSM("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
+            &nSupR, &x[curCol], &n);
 #endif
       Ltrng = &Lx[Lp[curCol] + supWdt];//first nnz of below diagonal
       //matVector(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#ifdef MKL_BLAS
-      int tmpRow = nSupR - supWdt;
-      dgemv("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
-            zero, tempVec, &ione);
-#else
+#ifdef SYM_BLAS
       dmatvec_blas(nSupR, nSupR - supWdt, supWdt, Ltrng, &x[curCol],
                    tempVec);
+#else
+      int tmpRow = nSupR - supWdt;
+      SYM_DGEMV("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
+            zero, tempVec, &ione);
 #endif
       // #pragma omp critical
       for (int l = Li_ptr[curCol] + supWdt, k = 0;
@@ -504,20 +501,18 @@ namespace nasoq {
       for (int l = 0; l < nSupR - supWdt; ++l) {
        tempVec[l] = x[Li[Li_ptr[curCol] + supWdt + l]];
       }
-#ifdef BLAS1  //FIXME
+#ifdef SYM_BLAS
       dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#endif
-#ifdef MKL_BLAS
+#else
       int tmpRow = nSupR - supWdt;
-      dgemv("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
+      SYM_DGEMV("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
             one, &x[curCol], &ione);
 #endif
       Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
-#ifdef BLAS1//FIXME
+#ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
-#endif
-#ifdef MKL_BLAS
-      dtrsm("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
+#else
+      SYM_DTRSM("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
             &nSupR, &x[curCol], &n);
 #endif
 
@@ -573,20 +568,18 @@ namespace nasoq {
       for (int l = 0; l < nSupR - supWdt; ++l) {
        tempVec[l] = x[Li[Li_ptr[curCol] + supWdt + l]];
       }
-#ifdef BLAS1  //FIXME
+#ifdef SYM_BLAS
       dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#endif
-#ifdef MKL_BLAS
+#else
       int tmpRow = nSupR - supWdt;
-      dgemv("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
+      SYM_DGEMV("T", &tmpRow, &supWdt, &minus_one, Ltrng, &nSupR, tempVec, &ione,
             one, &x[curCol], &ione);
 #endif
       Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
-#ifdef BLAS1//FIXME
+#ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
-#endif
-#ifdef MKL_BLAS
-      dtrsm("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
+#else
+      SYM_DTRSM("L", "L", "T", "N", &supWdt, &ione, one, Ltrng,
             &nSupR, &x[curCol], &n);
 #endif
       for (int l = 0; l < nSupR - supWdt; ++l) {
@@ -604,8 +597,8 @@ namespace nasoq {
   return (1);
  }
 
-#undef MKL_BLAS
 
+#define SYM_BLAS
  int H2LeveledBlockedLsolve_Peeled(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup,
                                    int *sup2col, int supNo, double *x, int levels, int *levelPtr, int *levelSet,
                                    int parts, int *parPtr, int *partition, int chunk, int threads) {
@@ -636,21 +629,21 @@ namespace nasoq {
       int nSupR = Li_ptr[nxtCol] - Li_ptr[curCol];//row size of supernode
       double *Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
       //lSolve_dense(nSupR,supWdt,Ltrng,&x[curCol]);
-#ifdef MKL_BLAS
-      dtrsm("L", "L", "N", "N", &supWdt,&ione,one,Ltrng,
-            &nSupR,&x[curCol],&n);
-#else
+#ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
+#else
+      SYM_DTRSM("L", "L", "N", "N", &supWdt,&ione,one,Ltrng,
+            &nSupR,&x[curCol],&n);
 #endif
       Ltrng = &Lx[Lp[curCol] + supWdt];//first nnz of below diagonal
       //matVector(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#ifdef MKL_BLAS
-      int tmpRow=nSupR - supWdt;
-      dgemv("N",&tmpRow,&supWdt,one,Ltrng,&nSupR,&x[curCol],&ione,
-            zero,tempVec,&ione);
-#else
+#ifdef SYM_BLAS
       dmatvec_blas(nSupR, nSupR - supWdt, supWdt, Ltrng, &x[curCol],
                    tempVec);
+#else
+      int tmpRow=nSupR - supWdt;
+      SYM_DGEMV("N",&tmpRow,&supWdt,one,Ltrng,&nSupR,&x[curCol],&ione,
+            zero,tempVec,&ione);
 #endif
 #pragma omp critical
       for (int l = Li_ptr[curCol] + supWdt, k = 0;
@@ -665,8 +658,13 @@ namespace nasoq {
    }
 
   }
-#define MKL_BLAS
+#undef SYM_BLAS
+
+#ifdef OPENBLAS
+  openblas_set_num_threads(threads);
+#else
   MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
+#endif
   //for (int i1 = 0; i1 < levels ; ++i1) {
   int i1 = levels - 1;
   int j1 = 0;
@@ -684,21 +682,21 @@ namespace nasoq {
     int nSupR = Li_ptr[nxtCol] - Li_ptr[curCol];//row size of supernode
     double *Ltrng = &Lx[Lp[curCol]];//first nnz of current supernode
     //lSolve_dense(nSupR,supWdt,Ltrng,&x[curCol]);
-#ifdef MKL_BLAS
-    dtrsm("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
-          &nSupR, &x[curCol], &n);
-#else
+#ifdef SYM_BLAS
     dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
+#else
+    SYM_DTRSM("L", "L", "N", "N", &supWdt, &ione, one, Ltrng,
+          &nSupR, &x[curCol], &n);
 #endif
     Ltrng = &Lx[Lp[curCol] + supWdt];//first nnz of below diagonal
     //matVector(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
-#ifdef MKL_BLAS
-    int tmpRow = nSupR - supWdt;
-    dgemv("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
-          zero, tempVec, &ione);
-#else
+#ifdef SYM_BLAS
     dmatvec_blas(nSupR, nSupR - supWdt, supWdt, Ltrng, &x[curCol],
                  tempVec);
+#else
+    int tmpRow = nSupR - supWdt;
+    SYM_DGEMV("N", &tmpRow, &supWdt, one, Ltrng, &nSupR, &x[curCol], &ione,
+          zero, tempVec, &ione);
 #endif
     // #pragma omp critical
     for (int l = Li_ptr[curCol] + supWdt, k = 0;

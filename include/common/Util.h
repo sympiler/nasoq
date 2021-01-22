@@ -13,7 +13,6 @@
 #include <sstream>
 #include <vector>
 
-#include "mkl.h"
 
 #include "common/def.h"
 #include "common/transpose_unsym.h"
@@ -98,7 +97,7 @@ namespace nasoq {
  * For triangular solve
  */
 
- void rhsInit(int n, MKL_INT *Ap, MKL_INT *Ai, double *Ax, double *b);
+ void rhsInit(int n, int *Ap, int *Ai, double *Ax, double *b);
 
 /*
  * RHS initilization for blocked
@@ -161,7 +160,7 @@ namespace nasoq {
    size_t n, size_t nBlocks, size_t *Ap, int *Ai, size_t *AiP,
    int *sup2col, double *Ax,
    //out
-   MKL_INT *Cp, MKL_INT *Ci, double *Cx
+   int *Cp, int *Ci, double *Cx
  );
 
 
