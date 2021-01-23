@@ -147,8 +147,14 @@ namespace nasoq {
     src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
     double *srcL = &lValues[lC[cSN] + ub + 1];
     blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
+#ifdef OPENBLAS
+    cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
+                src, nSNRCur, 0.0, contribs, nSupRs);
+#else
     SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
           src, &nSNRCur, zero, contribs, &nSupRs);
+#endif
+
 
 //   }
     //copying contrib to L
@@ -201,8 +207,15 @@ namespace nasoq {
 //  std::cout<<"\n";
 //  /////
 
+#ifdef OPENBLAS
+   cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasUnit, rowNo, supWdt, 1.0,
+               cur, nSupR, &cur[supWdt], nSupR);
+#else
    SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
          cur, &nSupR, &cur[supWdt], &nSupR);
+
+#endif
+
 
 //  /////
 //  std::cout<<"\n";

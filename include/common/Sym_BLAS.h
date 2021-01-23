@@ -11,10 +11,15 @@
 #include "common/Reach.h"
 
 #ifdef OPENBLAS
-#include "openblas/lapacke.h"
-//#include "f77blas.h"
-#include "openblas/cblas.h"
-//#include "common_interface.h"
+/*    #ifdef OB_INTERNAL
+    #include "lapacke.h"
+    #include "cblas.h"
+    //#include "common_interface.h"
+    #else*/
+    //#include "openblas/f77blas.h"
+    #include "openblas/lapacke.h"
+    #include "openblas/cblas.h"
+   // #endif
 #else
 #include "mkl.h"
 #include <mkl_blas.h>
@@ -32,11 +37,14 @@ namespace nasoq {
 #define SYM_DTRSM dtrsm_
 #define SYM_DGEMV dgemv_
 #define SYM_DSCAL dscal_
+#define SET_BLAS_THREAD(t) (openblas_set_num_threads(t))
 #else
 #define SYM_DGEMM dgemm
 #define SYM_DTRSM dtrsm
 #define SYM_DGEMV dgemv
 #define SYM_DSCAL dscal
+
+#define SET_BLAS_THREAD(t) (MKL_Domain_Set_Num_Threads(t, MKL_DOMAIN_BLAS))
 #endif
 
 

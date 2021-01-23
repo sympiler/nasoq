@@ -6,7 +6,10 @@
 #include <iostream>
 #include <cassert>
 
+#ifdef MKL_BLAS
 #include "mkl.h"
+#endif
+
 #include "nasoq.h"
 
 #include "utils.h"
@@ -85,9 +88,13 @@ int nasoq_demo(int argc, const char **argv) {
   return -1;
  QPFC->smp_to_ie();
  int num_ineq = QPFC->num_ineq_constraints();
+#ifdef MKL_BLAS
  int num_thread = mkl_get_max_threads ();
- omp_set_num_threads(num_thread);
  MKL_Set_Num_Threads(num_thread);
+#else
+ int num_thread = omp_get_max_threads();
+#endif
+ omp_set_num_threads(num_thread);
 //QPFC->ief_->print();
  Nasoq *qm;
  qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,QPFC->ief_->H->x,

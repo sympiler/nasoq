@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <queue>
+#include <common/Sym_BLAS.h>
 
 #include "common/Norm.h"
 #include "common/Transpose.h"
@@ -29,13 +30,7 @@
 #include "linear_solver/solve_phase.h"
 #include "symbolic/symbolic_phase.h"
 
-#ifdef MKL_BLAS
-#include "mkl.h"
-#endif
-#ifdef OPENBLAS
-#include "openblas/cblas.h"
 
-#endif
 
 namespace nasoq {
 
@@ -210,13 +205,12 @@ namespace nasoq {
  void SolverSettings::default_setting() {
   ldl_variant = 4;
   ldl_update_variant = 2;
-#ifdef MKL_BLAS
-  num_thread = mkl_get_max_threads();
-  MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
-#else
+#ifdef OPENBLAS
   num_thread = openblas_get_num_procs();
   openblas_set_num_threads(1);
-
+#else
+  num_thread = mkl_get_max_threads();
+  MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
 #endif
   chunk = 1;
   cost_param = num_thread;
@@ -604,7 +598,8 @@ namespace nasoq {
   //print_csc("\nORdered: ",A_ord->ncol,A_ord->p,A_ord->i,A_ord->x);
   switch (ldl_variant) {
    case 1:
-    MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+//    MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(num_thread);
     psi->start = psi->tic();
     ret_val = ldl_left_sn_01(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                              L->p, L->s, L->i_ptr, valL,
@@ -618,10 +613,12 @@ namespace nasoq {
                              max_sup_wid + 1, max_col + 1, num_pivot);
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
-    MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(1);
     break;
    case 2:
-    MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(num_thread);
     psi->start = psi->tic();
     ret_val = ldl_left_sn_02_v2(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                 L->p, L->s, L->i_ptr, valL,
@@ -637,7 +634,8 @@ namespace nasoq {
     reorder_matrix();
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
-    MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(1);
     break;
    case 3://parallel static
     psi->start = psi->tic();
@@ -1115,7 +1113,8 @@ namespace nasoq {
   //print_csc("\nORdered: ",A_ord->ncol,A_ord->p,A_ord->i,A_ord->x);
   switch (ldl_update_variant) {
    case 1:
-    MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(num_thread);
     psi->start = psi->toc();
     retval = update_ldl_left_sn_01(A_ord->nrow, A_ord->p, A_ord->i, A_ord->x,
                                    L->p, L->s, L->i_ptr, valL,
@@ -1127,10 +1126,12 @@ namespace nasoq {
     a_consistent = 1;
     psi->end = psi->toc();
     psi->update_time += psi->elapsed_time(psi->start, psi->end);
-    MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(1);
     break;
    case 2:
-    MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(num_thread);
     psi->start = psi->toc();
     retval = update_ldl_left_sn_02_v2(A_ord->nrow, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
@@ -1147,7 +1148,8 @@ namespace nasoq {
      reorder_matrix();
     psi->end = psi->toc();
     psi->piv_reord += psi->elapsed_time(psi->start, psi->end);
-    MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    //MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
+    SET_BLAS_THREAD(1);
     break;
    case 3://parallel static
     std::cout << "Not supported!\n";

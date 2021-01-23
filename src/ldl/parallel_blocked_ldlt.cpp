@@ -139,8 +139,13 @@ namespace nasoq {
        }
        /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
              src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
+#ifdef OPENBLAS
+       cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
+             src, nSNRCur, 0.0, contribs, nSupRs);
+#else
        SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
              src, &nSNRCur, zero, contribs, &nSupRs);
+#endif
 
        //copying contrib to L
        for (int i = 0; i < ndrow1; ++i) {//Copy contribs to L
@@ -153,11 +158,7 @@ namespace nasoq {
         }
        }
       }
-#ifdef MKL
-      //dpotrf("L",&supWdt,cur,&nSupR,&info);
       sym_sytrf(cur, supWdt, nSupR, &nbpivot, threshold);
-      //LAPACKE_dsytrf(LAPACK_COL_MAJOR,'L',supWdt,cur,nSupR,ipiv);
-#endif
 
       // Making L*D
       int rowNo = nSupR - supWdt;
@@ -171,8 +172,13 @@ namespace nasoq {
         *(++stCol) = tmp * *(++curCol);
        }
       }
+#ifdef OPENBLAS
+      cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasNonUnit, rowNo, supWdt, 1.0,
+                trn_diag, supWdt, &cur[supWdt], nSupR);
+#else
       SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
             trn_diag, &supWdt, &cur[supWdt], &nSupR);
+#endif
 
       for (int k = 0; k < supWdt; ++k) {
        cur[k * nSupR + k] = 1.0;
@@ -301,8 +307,15 @@ namespace nasoq {
      }
      /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
            src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
+#ifdef OPENBLAS
+     cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
+                 src, nSNRCur, 0.0, contribs, nSupRs);
+#else
      SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
            src, &nSNRCur, zero, contribs, &nSupRs);
+
+#endif
+
 
      //copying contrib to L
      for (int i = 0; i < ndrow1; ++i) {//Copy contribs to L
@@ -315,19 +328,7 @@ namespace nasoq {
       }
      }
     }
-#ifdef MKL
-    //dpotrf("L",&supWdt,cur,&nSupR,&info);
-/*   for (int m = 0; m < supWdt; ++m) {
-    for (int i = m; i < supWdt; ++i) {
-     contribs[m*su]
-    }
-   }
-   dspff*/
-    start = std::chrono::system_clock::now();
     sym_sytrf(cur, supWdt, nSupR, &nbpivot, threshold);
-    //LAPACKE_dsytrf(LAPACK_COL_MAJOR,'L',supWdt,cur,nSupR,ipiv);
-    //dsytrf("L",)
-#endif
 
     // Making L*D
     int rowNo = nSupR - supWdt;
@@ -341,8 +342,14 @@ namespace nasoq {
       *(++stCol) = tmp * *(++curCol);
      }
     }
+#ifdef OPENBLAS
+    cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasNonUnit, rowNo, supWdt, 1.0,
+                trn_diag, supWdt, &cur[supWdt], nSupR);
+#else
     SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
           trn_diag, &supWdt, &cur[supWdt], &nSupR);
+
+#endif
 
     for (int k = 0; k < supWdt; ++k) {
      cur[k * nSupR + k] = 1.0;

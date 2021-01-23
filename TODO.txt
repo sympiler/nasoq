@@ -1,20 +1,10 @@
 
-- Eigen interface --> DONE
-- igl interface --> DONE
-- Build cleanup (Etienne) --> DONE
-- Adding parser to driver --> DONE
-- NASOQ benchmark --> DONE
-- Code clean up (namespace, warnings, ...) --> DONE
-- Fixing return value of NASOQ solve, --> DONE
-- will add infeasible to the return values. --> DONE
 
-
-
-
-- Library build project and adding submodules
-- Matlab interface
-- Fixing NASOQ-Tuned variants and its API
+- Removing OpenBLAS dependency. It downloads Openblas and build it but the install directory is scattered. It creates heqdar conflict.
+- Matlab interface is tested but some features are not accessible from Matlab
+- Fixing NASOQ-Tuned variants and make it accessible through an API
 - Hand optimizing NASOQ code
 - Adding fixed term to the objective
 - Adding CHOLMOD mode inside the solver
-- push igl interface to libigl
+- NASOQ Python interface not tested.
+- igl interface is done but not tested and integrated to igl.

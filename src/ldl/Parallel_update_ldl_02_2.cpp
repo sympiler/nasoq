@@ -146,8 +146,13 @@ namespace nasoq {
        src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
        double *srcL = &lValues[lC[cSN] + ub + 1];
        blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
+#ifdef OPENBLAS
+       cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
+                   src, nSNRCur, 0.0, contribs, nSupRs);
+#else
        SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
              src, &nSNRCur, zero, contribs, &nSupRs);
+#endif
 
 //   }
        //copying contrib to L
@@ -192,8 +197,14 @@ namespace nasoq {
        D[curCol + l] = cur[l + l * nSupR];
        cur[l + l * nSupR] = 1.0;
       }
+
+#ifdef OPENBLAS
+      cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasUnit, rowNo, supWdt, 1.0,
+                  cur, nSupR, &cur[supWdt], nSupR);
+#else
       SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
             cur, &nSupR, &cur[supWdt], &nSupR);
+#endif
       blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
 
      }
@@ -217,12 +228,7 @@ namespace nasoq {
 
 #if 1
   //LAst iteration
-#ifdef OPENBLAS
-  openblas_set_num_threads(threads);
-#else
-  MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
-#endif
-
+SET_BLAS_THREAD(threads);
   map = new int[n]();
   contribs = new double[super_max * col_max]();
   xi = new int[3 * supNo]();
@@ -298,8 +304,14 @@ namespace nasoq {
      src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
      double *srcL = &lValues[lC[cSN] + ub + 1];
      blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
+#ifdef OPENBLAS
+     cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
+                 src, nSNRCur, 0.0, contribs, nSupRs);
+#else
      SYM_DGEMM("N", "C", &nSupRs, &ndrow1, &supWdts, one, trn_diag, &nSupRs,
-           src, &nSNRCur, zero, contribs, &nSupRs);
+             src, &nSNRCur, zero, contribs, &nSupRs);
+#endif
+
 
 //   }
      //copying contrib to L
@@ -340,8 +352,14 @@ namespace nasoq {
      D[curCol + l] = cur[l + l * nSupR];
      cur[l + l * nSupR] = 1.0;
     }
+#ifdef OPENBLAS
+    cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasUnit, rowNo, supWdt, 1.0,
+                cur, nSupR, &cur[supWdt], nSupR);
+#else
     SYM_DTRSM("R", "L", "C", "U", &rowNo, &supWdt, one,
-          cur, &nSupR, &cur[supWdt], &nSupR);
+            cur, &nSupR, &cur[supWdt], &nSupR);
+#endif
+
     blocked_2by2_solver(supWdt, &D[curCol], &cur[supWdt], rowNo, nSupR, n);
    }
 

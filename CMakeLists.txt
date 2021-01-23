@@ -22,24 +22,27 @@ set(OPENBLAS_DYN_LIB  "")
 set(MKL_FOUND FALSE)
 find_package(MKL REQUIRED)
 if(NOT MKL_FOUND)
-    #set(BLA_VENDOR OpenBLAS)
-    set(BLA_STATIC TRUE)
-    find_package(BLAS)
-        message("++++> ${BLAS_LIBRARIES}")
-        if(NOT BLAS_FOUND)
+    set(BLA_VENDOR OpenBLAS)
+#    set(BLA_STATIC TRUE)
+    find_package(BLAS REQUIRED)
+#        message("++++> ${BLAS_LIBRARIES}")
+        if(NOT BLAS_FOUND) # TODO not wokring
             download_project(PROJ openblas
                     GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
                     PREFIX  ${NASOQ_EXTERNAL}/openblas/
                     #BINARY_DIR ${NASOQ_ROOT_DIR}/lib/
-## TODO find a way to set the install directory here. Header files will be there
-                    UPDATE_DISCONNECTED 1
+## TODO find a way to set the install directory here. Header files will be there.
+                   # UPDATE_DISCONNECTED 1
+                   # CONFIGURE_COMMAND /usr/local/bin/cmake -DCMAKE_INSTALL_PREFIX=${NASOQ_EXTERNAL}/ ${NASOQ_EXTERNAL}/openblas/openblas-src/
+                   # BUILD_COMMAND /usr/bin/make install
                     )
             add_subdirectory(${openblas_SOURCE_DIR})
-            set(OPENBLAS_INCLUDE_DIR ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/ )# ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/include/) # ${openblas_SOURCE_DIR}/lapack-netlib/LAPACKE/include/)
-            set(OPENBLAS_LIBRARY_DIR ${openblas_SOURCE_DIR}/lapack-netlib/)
+            set(OPENBLAS_INCLUDE_DIR ${openblas_SOURCE_DIR}/  ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/include/ ${openblas_SOURCE_DIR}/lapack-netlib/LAPACKE/include/ )
+            set(OPENBLAS_LIBRARY_DIR ${CMAKE_BINARY_DIR}/external/openblas/openblas-src/lib/)
             set(OPENBLAS_STAT_LIB openblas)
             set(OPENBLAS_DYN_LIB openblas_d)
-            message("======> ${OPENBLAS_INCLUDE_DIR}")
+            add_definitions(-DOB_INTERNAL)
+            #message("======> ${OPENBLAS_LIBRARY_DIR}")
         else() #
             set(OPENBLAS_STAT_LIB ${BLAS_LIBRARIES})
             message(STATUS "OpenBLAS found")
@@ -48,7 +51,6 @@ if(NOT MKL_FOUND)
     else()
     add_definitions(-DMKL_BLAS)
 endif()
-
 
 # Adding hints for suitesparse
 set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
@@ -122,8 +124,7 @@ set(NASOQ_LIB_INCLUDE_DIR
         ${SUITESPARSE_INCLUDE_DIRS}
         ${METIS_INCLUDE_DIR}
         ${METIS_INCLUDES}
-        "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
-        "${CMAKE_CURRENT_LIST_DIR}/include/")
+        )
 
 #set(NASOQ_INCLUDE_DIR
 #        ${MKL_INCLUDE_DIR}
@@ -138,18 +139,20 @@ set(NASOQ_LIB_INCLUDE_DIR
 #        "${CMAKE_CURRENT_LIST_DIR}/triangularSolve/"
 #        "${CMAKE_CURRENT_LIST_DIR}/smp-format/")
 
+
 set(NASOQ_INCLUDE_DIR
-        ${MKL_INCLUDE_DIR}
         include/
         "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
         "${CMAKE_CURRENT_LIST_DIR}/include/")
 
+
 set(NASOQ_LIB_DIR
-        ${NASOQ_ROOT_DIR}/lib/
         ${MKL_LIBRARIES}
         ${SUITESPARSE_LIBRARIES}
-        ${METIS_LIBRARY}
-        ${METIS_LIBRARIES})
+        )
+link_directories(
+    ${METIS_LIBRARY}
+    ${METIS_LIBRARIES})
 
 set(SOURCE_FILES
         src/nasoq.cpp
@@ -210,7 +213,7 @@ add_dependencies(nasoq_static openblas_static)
 endif ()
 #target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
 #target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
-target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
 target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR}
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB})
@@ -227,7 +230,7 @@ add_dependencies(nasoq metis)
 if (NOT MKL_FOUND AND NOT BLAS_FOUND)
     add_dependencies(nasoq openblas_static)
 endif ()
-target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
 target_link_libraries(nasoq metis ${NASOQ_LIB_DIR} ${OpenMP_CXX_LIBRARIES} ${OPENBLAS_STAT_LIB})
 set_target_properties(nasoq PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/   )
@@ -235,14 +238,16 @@ set_target_properties(nasoq PROPERTIES
 
 project(NASOQ-BIN)
 add_executable(NASOQ-BIN nasoq_driver.cpp)
-target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR})
+target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} ${NASOQ_LIB_INCLUDE_DIR})
 link_directories(NASOQ-BIN PRIVATE
-        ${NASOQ_LIB_DIR}
-        #${NASOQ_ROOT_DIR}/lib
+        #${NASOQ_LIB_DIR}
+        ${NASOQ_ROOT_DIR}/lib
         )
-target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
+target_include_directories(NASOQ-BIN PRIVATE ${OpenMP_CXX_INCLUDE_DIRS})
+
 target_link_libraries(NASOQ-BIN nasoq_static ${OpenMP_CXX_LIBRARIES})
 
+#message("9999999999999999${OPENBLAS_STAT_LIB}   -- ${NASOQ_LIB_DIR} -- ${NASOQ_INCLUDE_DIR}")
 #target_link_libraries(NASOQ-BIN PRIVATE
 #        ${NASOQ_LIB_DIR})
 #target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} )

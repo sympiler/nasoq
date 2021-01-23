@@ -120,8 +120,14 @@ namespace nasoq {
 
     //  if(ndrow3>0) {
 
+#ifdef OPENBLAS
+    cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, ndrow3, ndrow1, supWdts, 1.0, srcL, nSNRCur,
+                src, nSNRCur, 0.0, contribs+ndrow1, nSupRs);
+#else
     SYM_DGEMM("N","C",&ndrow3,&ndrow1,&supWdts,one,srcL,&nSNRCur,
                         src,&nSNRCur,zero,contribs+ndrow1,&nSupRs );
+#endif
+
 
 
 //   }
@@ -155,8 +161,14 @@ namespace nasoq {
      *(++stCol) = tmp * *(++curCol);
     }
    }
+#ifdef OPENBLAS
+   cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasNonUnit, rowNo, supWdt, 1.0,
+               trn_diag, supWdt, &cur[supWdt], nSupR);
+#else
    SYM_DTRSM("R", "L", "C", "N", &rowNo, &supWdt, one,
          trn_diag, &supWdt, &cur[supWdt], &nSupR);
+#endif
+
 
    for (int k = 0; k < supWdt; ++k) {
     cur[k * nSupR + k] = 1.0;
