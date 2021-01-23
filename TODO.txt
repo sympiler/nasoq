@@ -1,10 +1,11 @@
 
 
 - Removing OpenBLAS dependency. It downloads Openblas and build it but the install directory is scattered. It creates heqdar conflict.
-- Matlab interface is tested but some features are not accessible from Matlab
+- Adding AMD ordering: Right now AMD is supported but I should copy the AMD code and enable the option.
 - Fixing NASOQ-Tuned variants and make it accessible through an API
+- Smart scaling based on the problem. 
+- Matlab interface is tested but some features are not accessible from Matlab
 - Hand optimizing NASOQ code
 - Adding fixed term to the objective
 - Adding CHOLMOD mode inside the solver
-- NASOQ Python interface not tested.
 - igl interface is done but not tested and integrated to igl.
