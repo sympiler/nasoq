@@ -10,16 +10,18 @@ obtains solutions for requested accuracies. Visit our website for more details:
 
 ## Installation
 ### Library requirements
-MKL Pardiso (BLAS), OpenMP and METIS.
+MKL Pardiso or OpenBlas (BLAS), OpenMP and METIS.
+Cmake handles METIS.
+If you install OpenBlas in its default location (sudo make install), Cmake will detect it.
 
 
 ### Building the project
-Given that MKL Pardiso and METIS are installed, install NASOQ using
+Given that MKL Pardiso or OpenBlas  are installed, install NASOQ using
 following steps:
 ```
 mkdir build
 cd build
-cmake -DMKL_ROOT_PATH=path/to/intel -DMETIS_ROOT_PATH=path/to//metis-5.1.0/build/Linux-x86_64/  -DCMAKE_BUILD_TYPE=Release ..
+cmake -DMKL_ROOT_PATH=path/to/intel  -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 
@@ -36,7 +38,6 @@ For installing on MAc you might need to use GCC so you need to also set the CMAK
 More details are provided in: https://nasoq.github.io/docs/getting-started-nasoq/
 
 ### Using NASOQ as a Library
-You can use NASOQ as a header file and call it in your application.
 More details: https://nasoq.github.io/docs/getting-started-nasoq/
 
 
