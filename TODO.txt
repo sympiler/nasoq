@@ -2,6 +2,7 @@
 
 - Removing OpenBLAS dependency. It downloads Openblas and build it but the install directory is scattered. It creates heqdar conflict.
 - Return value for LBL
+- Adding repro BLAS for reporoducability: http://bebop.cs.berkeley.edu/reproblas/
 - Fixing the solution memory allocation
 - Reseting factor feature for reusing symbolic object.
 - API for using updown feature.
