@@ -84,3 +84,34 @@ target_link_libraries(LBL_Test PRIVATE
 if(OpenMP_CXX_FOUND)
     target_link_libraries(LBL_Test PRIVATE OpenMP::OpenMP_CXX)
 endif()
+
+
+
+### LBL SOMOD
+project(LBLSOMOD_Test)
+set(CMAKE_CXX_STANDARD 11)
+
+# TODO: remove MKL dependency using OpenBLAS submodule
+find_package(MKL REQUIRED)
+
+set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
+set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
+set(BLA_STATIC TRUE)
+find_package(SuiteSparse OPTIONAL_COMPONENTS)
+
+set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
+set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
+find_package(METIS REQUIRED)
+set(METIS_LIBRARY "")
+set(METIS_INCLUDE_DIR "")
+
+
+set(SOURCE_FILES_NASOM lbl_somod_main.cpp)
+add_executable(LBLSOMOD_Test ${SOURCE_FILES_NASOM} lbl_somod_main.cpp)
+target_link_libraries(LBLSOMOD_Test PRIVATE
+        nasoq
+        ${MKL_LIBRARIES} ${SUITESPARSE_LIBRARIES}
+        ${METIS_LIBRARY} ${METIS_LIBRARIES}        )
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(LBLSOMOD_Test PRIVATE OpenMP::OpenMP_CXX)
+endif()
