@@ -15,7 +15,7 @@ set(NASOQ_EXTERNAL ${CMAKE_CURRENT_LIST_DIR}/external)
 
 project(libnasoq_static)
 
-
+add_definitions(-DSYM_REMOV)
 
 set(OPENBLAS_STAT_LIB "")
 set(OPENBLAS_DYN_LIB  "")
