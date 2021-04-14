@@ -91,11 +91,10 @@ int nasoq_demo(int argc, const char **argv) {
 #ifdef MKL_BLAS
  int num_thread = mkl_get_max_threads ();
  MKL_Set_Num_Threads(num_thread);
-#else
+#elif OPENMP
  int num_thread = omp_get_max_threads();
-#endif
-#ifdef OPENMP
  omp_set_num_threads(num_thread);
+#else
 #endif
 //QPFC->ief_->print();
  Nasoq *qm;
