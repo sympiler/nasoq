@@ -215,7 +215,11 @@ namespace nasoq {
   } else {
    ss = new SolverSettings(H, sKKTrhs_init, B, BT);
   }
+#ifdef OPENMP
   ss->ldl_variant = 4;
+#else
+  ss->ldl_variant = 2;
+#endif
   ss->ldl_update_variant = 2;
   ss->solver_mode = 1;
   ss->req_ref_iter = max_iter;

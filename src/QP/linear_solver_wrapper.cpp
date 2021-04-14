@@ -203,7 +203,11 @@ namespace nasoq {
  }
 
  void SolverSettings::default_setting() {
+#ifdef OPENMP
   ldl_variant = 4;
+#else
+  ldl_variant = 2;
+#endif
   ldl_update_variant = 2;
 #ifdef OPENBLAS
   num_thread = openblas_get_num_procs();
