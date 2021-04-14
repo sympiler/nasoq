@@ -8,8 +8,9 @@
 #include <common/Sym_BLAS.h>
 
 
-
+#ifdef  OPENMP
 #include "omp.h"
+#endif
 
 #include "triangularSolve/BLAS.h"
 

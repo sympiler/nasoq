@@ -643,6 +643,7 @@ namespace nasoq {
     break;
    case 3://parallel static
     psi->start = psi->tic();
+#ifdef OPENMP
     ret_val = ldl_left_sn_parallel_01(A_ord->ncol, A_ord->p, A_ord->i,
                                       A_ord->x, L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -658,12 +659,14 @@ namespace nasoq {
                                       chunk, num_thread,
                                       max_sup_wid + 1, max_col + 1, num_pivot,
                                       reg_diag);
+#endif
 
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     break;
    case 4://Parallel SBK
     psi->start = psi->tic();
+#ifdef OPENMP
     ret_val = ldl_left_sn_parallel_02(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -678,6 +681,7 @@ namespace nasoq {
                                       chunk, num_thread,
                                       max_sup_wid + 1, max_col + 1, num_pivot,
                                       perm_piv);
+#endif
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     reorder_matrix();
@@ -686,6 +690,7 @@ namespace nasoq {
 
    case 5://Parallel mixed static SBK
     psi->start = psi->tic();
+#ifdef OPENMP
     ret_val = ldl_left_sn_parallel_03(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -701,6 +706,7 @@ namespace nasoq {
                                       chunk, num_thread,
                                       max_sup_wid + 1, max_col + 1, num_pivot,
                                       perm_piv);
+#endif
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     reorder_matrix();
@@ -741,11 +747,14 @@ namespace nasoq {
      }
      is_super = 0;
     }
+
+#ifdef OPENMP
     ldl_parallel_left_simplicial_01(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                     AT_ord->p, AT_ord->i,
                                     l_pb, l_i, l_x, d_val, etree_mod,
                                     n_level, level_ptr, n_par_s, par_ptr_s,
                                     par_set_s);
+#endif
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     break;
@@ -1161,6 +1170,8 @@ namespace nasoq {
     break;
    case 4://Parallel SBK
     psi->start = psi->toc();
+
+#ifdef OPENMP
     retval = update_ldl_left_sn_parallel_02(A_ord->nrow, A_ord->p, A_ord->i, A_ord->x,
                                             L->p, L->s, L->i_ptr, valL,
                                             d_val,
@@ -1175,6 +1186,7 @@ namespace nasoq {
                                             chunk, num_thread,
                                             max_sup_wid + 1, max_col + 1, num_pivot,
                                             perm_piv, marked);
+#endif
 
     a_consistent = 0;
     psi->end = psi->toc();
@@ -1199,12 +1211,15 @@ namespace nasoq {
     }
     //print_csc("l before: \n",A_ord->ncol,l_pb,l_i,l_x);
     psi->start = psi->toc();
+
+#ifdef OPENMP
     retval = update_ldl_left_simplicial_01(A_ord->ncol, A_ord->p, A_ord->i,
                                            A_ord->x,
                                            AT_ord->p, AT_ord->i,
                                            l_pb, l_i, l_x, d_val,
                                            etree_mod, modified_sns, ws,
                                            ws_int);
+#endif
     psi->end = psi->toc();
     psi->update_time += psi->elapsed_time(psi->start, psi->end);
     //print_vec("simpl: ",0,A_ord->ncol,d_val);
@@ -1220,6 +1235,8 @@ namespace nasoq {
     //print_vec("mmm : ",0, A_ord->ncol,marked);
     //print_csc("l before: \n",A_ord->ncol,l_pb,l_i,l_x);
     psi->start = psi->toc();
+
+#ifdef OPENMP
     retval = update_ldl_parallel_left_simplicial_01(A_ord->ncol, A_ord->p,
                                                     A_ord->i, A_ord->x,
                                                     AT_ord->p, AT_ord->i,
@@ -1228,6 +1245,7 @@ namespace nasoq {
                                                     n_level, level_ptr, n_par_s,
                                                     par_ptr_s,
                                                     par_set_s);
+#endif
     psi->end = psi->toc();
     psi->update_time += psi->elapsed_time(psi->start, psi->end);
     //print_csc("l after: \n",A_ord->ncol,l_pb,l_i,l_x);

@@ -94,7 +94,9 @@ int nasoq_demo(int argc, const char **argv) {
 #else
  int num_thread = omp_get_max_threads();
 #endif
+#ifdef OPENMP
  omp_set_num_threads(num_thread);
+#endif
 //QPFC->ief_->print();
  Nasoq *qm;
  qm = new nasoq::Nasoq(QPFC->ief_->H->n,QPFC->ief_->H->p,QPFC->ief_->H->i,QPFC->ief_->H->x,
