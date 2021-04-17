@@ -188,7 +188,7 @@ namespace nasoq {
   }
   delete[]extra_cols;
 
-  if (num_thread > thread_thresh) {
+  if (num_thread > thread_thresh && solver_mode == 1) {
    delete[]s_level_ptr;
    delete[]s_level_set;
   }
