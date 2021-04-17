@@ -15,7 +15,7 @@ set(NASOQ_EXTERNAL ${CMAKE_CURRENT_LIST_DIR}/external)
 
 project(libnasoq_static)
 
-
+add_definitions(-DSYM_REMOV)
 
 set(OPENBLAS_STAT_LIB "")
 set(OPENBLAS_DYN_LIB  "")
@@ -95,6 +95,9 @@ endif()
 
 
 find_package(OpenMP)
+if(OpenMP_FOUND)
+    add_definitions(-DOPENMP)
+endif()
 
 find_package (Eigen3 OPTIONAL_COMPONENTS NO_MODULE)
 
@@ -154,6 +157,7 @@ link_directories(
     ${METIS_LIBRARY}
     ${METIS_LIBRARIES})
 
+
 set(SOURCE_FILES
         src/nasoq.cpp
         src/nasoq_step.cpp
@@ -178,18 +182,13 @@ set(SOURCE_FILES
         src/symbolic/performanceModel.cpp
         src/symbolic/symbolic_phase.cpp
         src/common/Sym_BLAS.cpp
-        src/ldl/parallel_blocked_ldlt.cpp
-        src/ldl/parallel_blocked_ldlt_02.cpp
-        src/ldl/parallel_blocked_ldlt_03.cpp
+
         src/ldl/Serial_blocked_ldl.cpp
         src/ldl/Serial_update_ldl.cpp
         src/ldl/Serial_blocked_ldl_02_2.cpp
         src/ldl/Serial_update_ldl_static.cpp
-        src/ldl/Parallel_update_ldl_02_2.cpp
         src/ldl/serial_simplicial_ldl.cpp
         src/ldl/Serial_update_simplicial_ldl.cpp
-        src/ldl/Parallel_simplicial_ldl.cpp
-        src/ldl/Parallel_update_simplicial.cpp
         src/triangularSolve/BLAS.cpp
         src/triangularSolve/Triangular_BCSC.cpp
         src/triangularSolve/Triangular_CSC.cpp
@@ -202,6 +201,19 @@ set(SOURCE_FILES
         src/QP/nasoq_utils.cpp
         src/QP/linear_solver_wrapper.cpp
         )
+
+if(OpenMP_FOUND)
+    set(SOURCE_FILES
+            ${SOURCE_FILES}
+            src/ldl/parallel_blocked_ldlt.cpp
+            src/ldl/parallel_blocked_ldlt_02.cpp
+            src/ldl/parallel_blocked_ldlt_03.cpp
+            src/ldl/Parallel_update_ldl_02_2.cpp
+            src/ldl/Parallel_simplicial_ldl.cpp
+            src/ldl/Parallel_update_simplicial.cpp
+            )
+endif()
+
 
 message("OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
 message("OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})

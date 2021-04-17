@@ -2,7 +2,10 @@
 // Created by kazem on 10/9/19.
 //
 
+#ifdef OPENMP
 #include <omp.h>
+#endif
+
 #include <string>
 #include <cassert>
 #include <cmath>

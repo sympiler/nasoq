@@ -8,8 +8,9 @@
 #include <common/Sym_BLAS.h>
 
 
-
+#ifdef  OPENMP
 #include "omp.h"
+#endif
 
 #include "triangularSolve/BLAS.h"
 
@@ -139,7 +140,11 @@ namespace nasoq {
      tempVec = (double *) calloc(n, sizeof(double));
     } else {//FIXME: the else part is not right
      //std::cout<<"-> "<<omp_get_thread_num()<<"\n";
+#ifdef OPENMP
      tempVec = ws_dbl + omp_get_thread_num() * n;
+#else
+     tempVec = ws_dbl;
+#endif
     }
 #pragma omp for \
             schedule(static)
@@ -330,7 +335,11 @@ namespace nasoq {
      tempVec = (double *) calloc(n, sizeof(double));
     } else {//FIXME: the else part is not right
      //std::cout<<"-> "<<omp_get_thread_num()<<"\n";
+#ifdef OPENMP
      tempVec = ws_dbl + omp_get_thread_num() * n;
+#else
+     tempVec = ws_dbl;
+#endif
     }
 #pragma omp for \
             schedule(static)
@@ -462,7 +471,11 @@ namespace nasoq {
       tempVec = (double *) calloc(n, sizeof(double));
      } else {//FIXME: the else part is not right
       //std::cout<<"-> "<<omp_get_thread_num()<<"\n";
+#ifdef OPENMP
       tempVec = ws_dbl + omp_get_thread_num() * n;
+#else
+      tempVec = ws_dbl;
+#endif
      }
      for (int k1 = parPtr[j1]; k1 < parPtr[j1 + 1]; ++k1) {
       int i = partition[k1];
@@ -613,7 +626,11 @@ namespace nasoq {
       tempVec = (double *) calloc(n, sizeof(double));
      } else {//FIXME: the else part is not right
       //std::cout<<"-> "<<omp_get_thread_num()<<"\n";
+#ifdef OPENMP
       tempVec = ws_dbl + omp_get_thread_num() * n;
+#else
+      tempVec = ws_dbl;
+#endif
      }
      for (int k1 = parPtr[j1 + 1] - 1; k1 >= parPtr[j1]; --k1) {
       int i = partition[k1];
