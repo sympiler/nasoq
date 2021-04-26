@@ -14,7 +14,6 @@
  */
 
 int main(int argc, char *argv[]){
-
  /// Declaring input matrices
  size_t sizeH;
  size_t nnzH;
@@ -35,7 +34,7 @@ int main(int argc, char *argv[]){
  H->p = Hp; H->i = Hi; H->x = Hx; H->stype=-1; H->packed=1;
 /// Solving the linear system
  auto *lbl = new nasoq::SolverSettings(H,q);
- lbl->ldl_variant = 4;
+ lbl->ldl_variant = 2; // set it to 4 if your C++ compiler supports openmp
  lbl->req_ref_iter = 2;
  lbl->solver_mode = 0;
  lbl->reg_diag = pow(10,-9);

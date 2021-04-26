@@ -4,9 +4,9 @@
 
 #include <iostream>
 
-#include <Eigen/Core>
 #include <nasoq.h>
 #include <QP/linear_solver_wrapper.h>
+#include <cmath>
 
 
 int main(int argc, char** argv) {
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 
  /// Solving the linear system
  auto *lbl = new nasoq::SolverSettings(H,q,C,d);
- lbl->ldl_variant = 4;
+ lbl->ldl_variant = 2; // set it 4 if your C++ compiler supports OpenMP
  lbl->req_ref_iter = 2;
  lbl->solver_mode = 1;
  lbl->reg_diag = pow(10,-9);
