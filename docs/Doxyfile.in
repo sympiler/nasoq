@@ -1,0 +1,23 @@
+# =============================================================================
+
+PROJECT_NAME           = "NASOQ"
+
+PROJECT_BRIEF          = "Numerically Accurate Sparsity-Oriented QP solver"
+
+PROJECT_LOGO           =
+
+# =============================================================================
+
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/doc_doxygen/
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/src/  
+INPUT                 += @CMAKE_CURRENT_SOURCE_DIR@/include/
+INPUT                 += @CMAKE_CURRENT_SOURCE_DIR@/smp-format/
+INPUT                 += @CMAKE_CURRENT_SOURCE_DIR@/../docs
+
+RECURSIVE              = YES
+
+EXCLUDE_PATTERNS       = */cxxopts.hpp
+
+# =============================================================================
+
+EXTRACT_ALL            = YES
