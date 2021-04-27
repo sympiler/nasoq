@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.1)
 
 #add_subdirectory(nasoq)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -22,16 +22,7 @@ set(CMAKE_CXX_STANDARD 11)
 # TODO: remove MKL dependency using OpenBLAS submodule
 find_package(MKL REQUIRED)
 
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
 
-set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-find_package(METIS REQUIRED)
-set(METIS_LIBRARY "")
-set(METIS_INCLUDE_DIR "")
 
 set(SOURCE_FILES_NAS nasoq_main.cpp)
 add_executable(NASOQ_Test ${SOURCE_FILES_NAS} nasoq_main.cpp)
@@ -63,16 +54,6 @@ set(CMAKE_CXX_STANDARD 11)
 # TODO: remove MKL dependency using OpenBLAS submodule
 find_package(MKL REQUIRED)
 
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
-
-set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-find_package(METIS REQUIRED)
-set(METIS_LIBRARY "")
-set(METIS_INCLUDE_DIR "")
 
 
 set(SOURCE_FILES_NAS lbl_main.cpp)
@@ -94,16 +75,6 @@ set(CMAKE_CXX_STANDARD 11)
 # TODO: remove MKL dependency using OpenBLAS submodule
 find_package(MKL REQUIRED)
 
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
-
-set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-find_package(METIS REQUIRED)
-set(METIS_LIBRARY "")
-set(METIS_INCLUDE_DIR "")
 
 
 set(SOURCE_FILES_NASOM lbl_somod_main.cpp)
