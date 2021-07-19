@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 
 namespace nasoq {
  double norm_dense
@@ -89,4 +90,5 @@ namespace nasoq {
 
  double cs_norm1(int n, int *Ap, int *Ai, double *Ax);
 }
+
 #endif //PROJECT_NORM_H
