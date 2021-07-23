@@ -276,6 +276,7 @@ target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUD
 target_link_libraries(nasoq
         ${METIS_LIBRARIES}
         ${NASOQ_LIB_DIR}
+        ${OPENBLAS_LIBRARY_DIR}
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB})
 set_target_properties(nasoq PROPERTIES
