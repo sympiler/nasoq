@@ -23,6 +23,12 @@ set(OPENBLAS_LIBRARY_DIR "")
 set(MKL_FOUND FALSE)
 find_package(MKL OPTIONAL_COMPONENTS)
 if(NOT MKL_FOUND)
+    set(BLA_VENDOR OpenBLAS)
+    #    set(BLA_STATIC TRUE)
+    find_package(BLAS OPTIONAL_COMPONENTS)
+    #find_package(LAPACKE OPTIONAL_COMPONENTS)
+    #        message("++++> ${BLAS_LIBRARIES}")
+    if(NOT BLAS_FOUND) # downloads some binaries
         download_project(PROJ lib_binary
                 GIT_REPOSITORY https://github.com/cheshmi/lib_binary.git
                 PREFIX  ${NASOQ_EXTERNAL}/lib_binary/
@@ -40,9 +46,14 @@ if(NOT MKL_FOUND)
                 ${OPENBLAS_DIR}/include/  )
         set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/ )
         set(OPENBLAS_STAT_LIB openblas lapacke)
-        message(STATUS "OpenBLAS Headers: ${OPENBLAS_INCLUDE_DIR}")
         message(STATUS "OpenBLAS LIBs: ${OPENBLAS_LIBRARY_DIR}")
-        add_definitions(-DOPENBLAS)
+    else()
+        set(OPENBLAS_STAT_LIB openblas lapacke)
+        set(OPENBLAS_INCLUDE_DIR "/usr/include/x86_64-linux-gnu/;/usr/include/;/usr/include;/usr/local/include;/opt/OpenBLAS/include/;/usr/OpenBLAS/include/")
+        message(STATUS "OpenBLAS Lib found in: ${OPENBLAS_STAT_LIB}")
+    endif()
+    message(STATUS "OpenBLAS Headers: ${OPENBLAS_INCLUDE_DIR}")
+    add_definitions(-DOPENBLAS)
     #[[
         set(BLA_VENDOR OpenBLAS)
     #    set(BLA_STATIC TRUE)
@@ -71,11 +82,12 @@ if(NOT MKL_FOUND)
             endif()
                 add_definitions(-DOPENBLAS)
     ]]
-    else()
-    add_definitions(-DMKL_BLAS)
-    if(UNIX AND APPLE)
-        set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries/mac/lib/)
-    endif()
+else()
+       add_definitions(-DMKL_BLAS)
+       if(UNIX AND APPLE)
+             set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries
+                     /mac/lib/)
+       endif()
 endif()
 
 # Adding hints for suitesparse
@@ -276,9 +288,9 @@ target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUD
 target_link_libraries(nasoq
         ${METIS_LIBRARIES}
         ${NASOQ_LIB_DIR}
-        ${OPENBLAS_LIBRARY_DIR}
         ${OpenMP_CXX_LIBRARIES}
-        ${OPENBLAS_STAT_LIB})
+        ${OPENBLAS_STAT_LIB}
+        )
 set_target_properties(nasoq PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/   )
 
@@ -293,11 +305,15 @@ link_directories(NASOQ-BIN PRIVATE
         ${NASOQ_ROOT_DIR}/lib
         )
 target_include_directories(NASOQ-BIN PRIVATE
-        ${OpenMP_CXX_INCLUDE_DIRS})
+        ${OpenMP_CXX_INCLUDE_DIRS}
+        )
 
 target_link_libraries(NASOQ-BIN
         nasoq_static
-        ${OpenMP_CXX_LIBRARIES})
+        lapacke
+        ${OpenMP_CXX_LIBRARIES}
+        ${OPENBLAS_STAT_LIB}
+        )
 
 #message("9999999999999999${OPENBLAS_STAT_LIB}   -- ${NASOQ_LIB_DIR} -- ${NASOQ_INCLUDE_DIR}")
 #target_link_libraries(NASOQ-BIN PRIVATE

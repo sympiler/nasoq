@@ -120,7 +120,7 @@ function(download_project)
         message(STATUS "Downloading/updating ${DL_ARGS_PROJ}")
     endif()
 
-    # Set up where we will put our temporary CMakeLists.txt file and also
+    # Set up where we will put our temporary FindLAPACKE.cmake file and also
     # the base point below which the default source and binary dirs will be.
     # The prefix must always be an absolute path.
     if (NOT DL_ARGS_PREFIX)
