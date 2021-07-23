@@ -18,6 +18,8 @@ add_definitions(-DSYM_REMOV)
 
 set(OPENBLAS_STAT_LIB "")
 set(OPENBLAS_DYN_LIB  "")
+set(OPENBLAS_INCLUDE_DIR "")
+set(OPENBLAS_LIBRARY_DIR "")
 set(MKL_FOUND FALSE)
 find_package(MKL OPTIONAL_COMPONENTS)
 if(NOT MKL_FOUND)
@@ -30,6 +32,9 @@ if(NOT MKL_FOUND)
         set(BIN_LIBS "${NASOQ_EXTERNAL}/lib_binary/lib_binary-src/")
         if(UNIX AND NOT APPLE)
             set(OPENBLAS_DIR ${BIN_LIBS}/openblas/linux/)
+        endif()
+        if(UNIX AND APPLE)
+            set(OPENBLAS_DIR ${BIN_LIBS}/openblas/mac/)
         endif()
         set(OPENBLAS_INCLUDE_DIR
                 ${OPENBLAS_DIR}/include/  )
@@ -68,6 +73,9 @@ if(NOT MKL_FOUND)
     ]]
     else()
     add_definitions(-DMKL_BLAS)
+    if(UNIX AND APPLE)
+        set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries/mac/lib/)
+    endif()
 endif()
 
 # Adding hints for suitesparse
@@ -170,9 +178,12 @@ set(NASOQ_LIB_DIR
         ${MKL_LIBRARIES}
         ${SUITESPARSE_LIBRARIES}
         )
+
 link_directories(
-    ${METIS_LIBRARY}
-    ${METIS_LIBRARY_DIRS})
+    ${IOMP_DIR_MAC}
+    ${METIS_LIBRARY_DIRS}
+        ${OPENBLAS_LIBRARY_DIR}
+)
 
 
 set(SOURCE_FILES
@@ -232,8 +243,8 @@ if(OpenMP_FOUND)
 endif()
 
 
-message("OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
-message("OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})
+message(STATUS "OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
+message(STATUS "OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})
 
 add_library(nasoq_static STATIC ${SOURCE_FILES})
 #add_dependencies(nasoq_static metis)
@@ -273,14 +284,19 @@ set_target_properties(nasoq PROPERTIES
 
 project(NASOQ-BIN)
 add_executable(NASOQ-BIN nasoq_driver.cpp)
-target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} ${NASOQ_LIB_INCLUDE_DIR})
+target_include_directories(NASOQ-BIN PRIVATE
+        ${NASOQ_INCLUDE_DIR}
+        ${NASOQ_LIB_INCLUDE_DIR})
 link_directories(NASOQ-BIN PRIVATE
         #${NASOQ_LIB_DIR}
         ${NASOQ_ROOT_DIR}/lib
         )
-target_include_directories(NASOQ-BIN PRIVATE ${OpenMP_CXX_INCLUDE_DIRS})
+target_include_directories(NASOQ-BIN PRIVATE
+        ${OpenMP_CXX_INCLUDE_DIRS})
 
-target_link_libraries(NASOQ-BIN nasoq_static ${OpenMP_CXX_LIBRARIES})
+target_link_libraries(NASOQ-BIN
+        nasoq_static
+        ${OpenMP_CXX_LIBRARIES})
 
 #message("9999999999999999${OPENBLAS_STAT_LIB}   -- ${NASOQ_LIB_DIR} -- ${NASOQ_INCLUDE_DIR}")
 #target_link_libraries(NASOQ-BIN PRIVATE
