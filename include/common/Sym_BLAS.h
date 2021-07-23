@@ -17,8 +17,8 @@
     //#include "common_interface.h"
     #else*/
     //#include "openblas/f77blas.h"
-    #include "openblas/lapacke.h"
-    #include "openblas/cblas.h"
+    #include "lapacke.h"
+    #include "cblas.h"
    // #endif
 #else
 #include "mkl.h"

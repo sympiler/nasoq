@@ -12,7 +12,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 set(NASOQ_EXTERNAL ${CMAKE_CURRENT_LIST_DIR}/external)
 
-
 project(libnasoq_static)
 
 add_definitions(-DSYM_REMOV)
@@ -20,34 +19,53 @@ add_definitions(-DSYM_REMOV)
 set(OPENBLAS_STAT_LIB "")
 set(OPENBLAS_DYN_LIB  "")
 set(MKL_FOUND FALSE)
-find_package(MKL REQUIRED)
+find_package(MKL OPTIONAL_COMPONENTS)
 if(NOT MKL_FOUND)
-    set(BLA_VENDOR OpenBLAS)
-#    set(BLA_STATIC TRUE)
-    find_package(BLAS REQUIRED)
-#        message("++++> ${BLAS_LIBRARIES}")
-        if(NOT BLAS_FOUND) # TODO not wokring
-            download_project(PROJ openblas
-                    GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
-                    PREFIX  ${NASOQ_EXTERNAL}/openblas/
-                    #BINARY_DIR ${NASOQ_ROOT_DIR}/lib/
-## TODO find a way to set the install directory here. Header files will be there.
-                   # UPDATE_DISCONNECTED 1
-                   # CONFIGURE_COMMAND /usr/local/bin/cmake -DCMAKE_INSTALL_PREFIX=${NASOQ_EXTERNAL}/ ${NASOQ_EXTERNAL}/openblas/openblas-src/
-                   # BUILD_COMMAND /usr/bin/make install
-                    )
-            add_subdirectory(${openblas_SOURCE_DIR})
-            set(OPENBLAS_INCLUDE_DIR ${openblas_SOURCE_DIR}/  ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/include/ ${openblas_SOURCE_DIR}/lapack-netlib/LAPACKE/include/ )
-            set(OPENBLAS_LIBRARY_DIR ${CMAKE_BINARY_DIR}/external/openblas/openblas-src/lib/)
-            set(OPENBLAS_STAT_LIB openblas)
-            set(OPENBLAS_DYN_LIB openblas_d)
-            add_definitions(-DOB_INTERNAL)
-            #message("======> ${OPENBLAS_LIBRARY_DIR}")
-        else() #
-            set(OPENBLAS_STAT_LIB ${BLAS_LIBRARIES})
-            message(STATUS "OpenBLAS found")
+        download_project(PROJ lib_binary
+                GIT_REPOSITORY https://github.com/cheshmi/lib_binary.git
+                PREFIX  ${NASOQ_EXTERNAL}/lib_binary/
+                BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib_binary/
+                 UPDATE_DISCONNECTED 1
+                )
+        set(BIN_LIBS "${NASOQ_EXTERNAL}/lib_binary/lib_binary-src/")
+        if(UNIX AND NOT APPLE)
+            set(OPENBLAS_DIR ${BIN_LIBS}/openblas/linux/)
         endif()
-            add_definitions(-DOPENBLAS)
+        set(OPENBLAS_INCLUDE_DIR
+                ${OPENBLAS_DIR}/include/  )
+        set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/ )
+        set(OPENBLAS_STAT_LIB openblas lapacke)
+        message(STATUS "OpenBLAS Headers: ${OPENBLAS_INCLUDE_DIR}")
+        message(STATUS "OpenBLAS LIBs: ${OPENBLAS_LIBRARY_DIR}")
+        add_definitions(-DOPENBLAS)
+    #[[
+        set(BLA_VENDOR OpenBLAS)
+    #    set(BLA_STATIC TRUE)
+        find_package(BLAS REQUIRED)
+    #        message("++++> ${BLAS_LIBRARIES}")
+            if(NOT BLAS_FOUND) # TODO not wokring
+                download_project(PROJ openblas
+                        GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
+                        PREFIX  ${NASOQ_EXTERNAL}/openblas/
+                        #BINARY_DIR ${NASOQ_ROOT_DIR}/lib/
+    ## TODO find a way to set the install directory here. Header files will be there.
+                       # UPDATE_DISCONNECTED 1
+                       # CONFIGURE_COMMAND /usr/local/bin/cmake -DCMAKE_INSTALL_PREFIX=${NASOQ_EXTERNAL}/ ${NASOQ_EXTERNAL}/openblas/openblas-src/
+                       # BUILD_COMMAND /usr/bin/make install
+                        )
+                add_subdirectory(${openblas_SOURCE_DIR})
+                set(OPENBLAS_INCLUDE_DIR ${openblas_SOURCE_DIR}/  ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/include/ ${openblas_SOURCE_DIR}/lapack-netlib/LAPACKE/include/ )
+                set(OPENBLAS_LIBRARY_DIR ${CMAKE_BINARY_DIR}/external/openblas/openblas-src/lib/)
+                set(OPENBLAS_STAT_LIB openblas)
+                set(OPENBLAS_DYN_LIB openblas_d)
+                add_definitions(-DOB_INTERNAL)
+                #message("======> ${OPENBLAS_LIBRARY_DIR}")
+            else() #
+                set(OPENBLAS_STAT_LIB ${BLAS_LIBRARIES})
+                message(STATUS "OpenBLAS found")
+            endif()
+                add_definitions(-DOPENBLAS)
+    ]]
     else()
     add_definitions(-DMKL_BLAS)
 endif()
@@ -68,12 +86,8 @@ find_package(SuiteSparse OPTIONAL_COMPONENTS)
 #ELSE()
 #    set(ignoreMe "${METIS_ROOT_PATH}")
 #ENDIF()
-if(METIS_VERSION_OK)
-#    find_program(MAKE_EXE NAMES gmake nmake make)
-#    set(metis_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/metis")
-#    set(metis_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${metis_INSTALL_DIR})
-#set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_LIST_DIR}/external)
-   # set(GKLIB_PATH ${NASOQ_EXTERNAL}/metis/metis-src/GKLIB/ CACHE PATH "d")
+if(NOT METIS_FOUND)
+    message(STATUS  "METIS not detected, downloading it..." )
    download_project(PROJ metis
       GIT_REPOSITORY https://github.com/cheshmi/METIS.git  # https://github.com/KarypisLab/METIS.git
           # BUILD_IN_SOURCE 1
@@ -88,9 +102,13 @@ if(METIS_VERSION_OK)
       )
     add_subdirectory(${metis_SOURCE_DIR})
     set(METIS_INCLUDE_DIR ${metis_SOURCE_DIR}/include)
+    set(OPTIONAL_COMPONENTS ${metis_SOURCE_DIR}/include)
     set(METIS_INCLUDES ${metis_SOURCE_DIR}/include/)
+    set(METIS_LIBRARY_DIRS ${metis_SOURCE_DIR}/lib/)
     set(METIS_LIBRARY ${NASOQ_ROOT_DIR}/lib/)
-    set(METIS_LIBRARIES ${NASOQ_ROOT_DIR}/lib/)
+    set(METIS_LIBRARIES ${NASOQ_ROOT_DIR}/lib/libmetis.so)
+    set(METIS_FOUND TRUE)
+    message(STATUS "METIS library is found at ${METIS_LIBRARY}")
 endif()
 
 
@@ -120,7 +138,6 @@ endif()
 #        "${CMAKE_CURRENT_LIST_DIR}/QP/"
 #        "${CMAKE_CURRENT_LIST_DIR}/triangularSolve/"
 #        "${CMAKE_CURRENT_LIST_DIR}/smp-format/")
-
 set(NASOQ_LIB_INCLUDE_DIR
         ${OPENBLAS_INCLUDE_DIR}
         ${MKL_INCLUDE_DIR}
@@ -155,7 +172,7 @@ set(NASOQ_LIB_DIR
         )
 link_directories(
     ${METIS_LIBRARY}
-    ${METIS_LIBRARIES})
+    ${METIS_LIBRARY_DIRS})
 
 
 set(SOURCE_FILES
@@ -219,14 +236,16 @@ message("OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
 message("OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})
 
 add_library(nasoq_static STATIC ${SOURCE_FILES})
-add_dependencies(nasoq_static metis)
+#add_dependencies(nasoq_static metis)
 if (NOT MKL_FOUND AND NOT BLAS_FOUND)
 add_dependencies(nasoq_static openblas_static)
 endif ()
 #target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
 #target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
 target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
-target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR}
+target_link_libraries(nasoq_static
+        ${METIS_LIBRARIES}
+        ${NASOQ_LIB_DIR}
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB})
 #set_target_properties(nasoq_static PROPERTIES
@@ -236,14 +255,18 @@ target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR}
 
 project(libnasoq_shared)
 add_library(nasoq SHARED ${SOURCE_FILES})
-add_dependencies(nasoq metis)
+#add_dependencies(nasoq metis)
 #target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
 #target_link_libraries(nasoq ${NASOQ_LIB_DIR})
 if (NOT MKL_FOUND AND NOT BLAS_FOUND)
     add_dependencies(nasoq openblas_static)
 endif ()
 target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
-target_link_libraries(nasoq metis ${NASOQ_LIB_DIR} ${OpenMP_CXX_LIBRARIES} ${OPENBLAS_STAT_LIB})
+target_link_libraries(nasoq
+        ${METIS_LIBRARIES}
+        ${NASOQ_LIB_DIR}
+        ${OpenMP_CXX_LIBRARIES}
+        ${OPENBLAS_STAT_LIB})
 set_target_properties(nasoq PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/   )
 
