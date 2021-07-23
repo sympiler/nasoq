@@ -191,11 +191,11 @@
     if(n != in_c->n || m != in_c->m || nnz != in_c->nnz)
      return false;
     for (int j = 0; j < n+1; ++j) {
-     if(!is_equal(p[j], in_c->p[j]))
+     if(p[j] != in_c->p[j])
       return false;
     }
     for (int j = 0; j < nnz; ++j) {
-     if(!is_equal(i[j], in_c->i[j]) || !is_equal(x[j], in_c->x[j]))
+     if((i[j] != in_c->i[j]) || (x[j] != in_c->x[j]))
       return false;
     }
     return true;
