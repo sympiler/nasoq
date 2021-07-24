@@ -28,28 +28,28 @@ if(NOT MKL_FOUND)
     find_package(BLAS OPTIONAL_COMPONENTS)
     #find_package(LAPACKE OPTIONAL_COMPONENTS)
     #        message("++++> ${BLAS_LIBRARIES}")
+    download_project(PROJ lib_binary
+            GIT_REPOSITORY https://github.com/cheshmi/lib_binary.git
+            PREFIX  ${NASOQ_EXTERNAL}/lib_binary/
+            BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib_binary/
+            UPDATE_DISCONNECTED 1
+            )
+    set(BIN_LIBS "${NASOQ_EXTERNAL}/lib_binary/lib_binary-src/")
+    if(UNIX AND NOT APPLE)
+        set(OPENBLAS_DIR ${BIN_LIBS}/openblas/linux/)
+    endif()
+    if(UNIX AND APPLE)
+        set(OPENBLAS_DIR ${BIN_LIBS}/openblas/mac/)
+    endif()
+    set(OPENBLAS_INCLUDE_DIR
+            ${OPENBLAS_DIR}/include/  )
     if(NOT BLAS_FOUND) # downloads some binaries
-        download_project(PROJ lib_binary
-                GIT_REPOSITORY https://github.com/cheshmi/lib_binary.git
-                PREFIX  ${NASOQ_EXTERNAL}/lib_binary/
-                BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib_binary/
-                 UPDATE_DISCONNECTED 1
-                )
-        set(BIN_LIBS "${NASOQ_EXTERNAL}/lib_binary/lib_binary-src/")
-        if(UNIX AND NOT APPLE)
-            set(OPENBLAS_DIR ${BIN_LIBS}/openblas/linux/)
-        endif()
-        if(UNIX AND APPLE)
-            set(OPENBLAS_DIR ${BIN_LIBS}/openblas/mac/)
-        endif()
-        set(OPENBLAS_INCLUDE_DIR
-                ${OPENBLAS_DIR}/include/  )
         set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/ )
         set(OPENBLAS_STAT_LIB openblas lapacke)
         message(STATUS "OpenBLAS LIBs: ${OPENBLAS_LIBRARY_DIR}")
     else()
-        set(OPENBLAS_STAT_LIB openblas lapacke)
-        set(OPENBLAS_INCLUDE_DIR "/usr/include/x86_64-linux-gnu/;/usr/include/;/usr/include;/usr/local/include;/opt/OpenBLAS/include/;/usr/OpenBLAS/include/;/usr/include/x86_64-linux-gnu/openblas-pthread/")
+        set(OPENBLAS_STAT_LIB ${BLAS_LIBRARIES})
+        #set(OPENBLAS_INCLUDE_DIR "/usr/include/x86_64-linux-gnu/;/usr/include/;/usr/include;/usr/local/include;/opt/OpenBLAS/include/;/usr/OpenBLAS/include/;/usr/include/x86_64-linux-gnu/openblas-pthread/")
         message(STATUS "OpenBLAS Lib found in: ${OPENBLAS_STAT_LIB}")
     endif()
     message(STATUS "OpenBLAS Headers: ${OPENBLAS_INCLUDE_DIR}")
@@ -85,8 +85,7 @@ if(NOT MKL_FOUND)
 else()
        add_definitions(-DMKL_BLAS)
        if(UNIX AND APPLE)
-             set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries
-                     /mac/lib/)
+             set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries/mac/lib/)
        endif()
 endif()
 
@@ -310,7 +309,6 @@ target_include_directories(NASOQ-BIN PRIVATE
 
 target_link_libraries(NASOQ-BIN
         nasoq_static
-        lapacke
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB}
         )
