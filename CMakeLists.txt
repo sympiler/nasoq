@@ -23,9 +23,13 @@ set(OPENBLAS_LIBRARY_DIR "")
 set(MKL_FOUND FALSE)
 find_package(MKL OPTIONAL_COMPONENTS)
 if(NOT MKL_FOUND)
+    if(WIN32)
+        find_package(OpenBLAS CONFIG REQUIRED)
+    else()
     set(BLA_VENDOR OpenBLAS)
     #    set(BLA_STATIC TRUE)
     find_package(BLAS OPTIONAL_COMPONENTS)
+    endif()
     #find_package(LAPACKE OPTIONAL_COMPONENTS)
     #        message("++++> ${BLAS_LIBRARIES}")
     download_project(PROJ lib_binary
@@ -41,11 +45,23 @@ if(NOT MKL_FOUND)
     if(UNIX AND APPLE)
         set(OPENBLAS_DIR ${BIN_LIBS}/openblas/mac/)
     endif()
+    if(WIN32)
+        set(OPENBLAS_DIR ${BIN_LIBS}/openblas/windows/)
+    endif()
+
     set(OPENBLAS_INCLUDE_DIR
             ${OPENBLAS_DIR}/include/  )
+
     if(NOT BLAS_FOUND) # downloads some binaries
         set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/ )
         set(OPENBLAS_STAT_LIB openblas lapacke)
+        if(WIN32 AND "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
+            set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/x64/ )
+            set(OPENBLAS_STAT_LIB openblas)
+        else()
+            set(OPENBLAS_LIBRARY_DIR  ${OPENBLAS_DIR}/lib/win32/ )
+            set(OPENBLAS_STAT_LIB openblas)
+        endif()
         message(STATUS "OpenBLAS LIBs: ${OPENBLAS_LIBRARY_DIR}")
     else()
         if(UNIX AND NOT APPLE)
@@ -90,15 +106,17 @@ if(NOT MKL_FOUND)
 else()
        add_definitions(-DMKL_BLAS)
        if(UNIX AND APPLE)
+           if(EXISTS "${INTEL_COMPILER_DIR}/compilers_and_libraries/mac/lib/")
              set(IOMP_DIR_MAC ${INTEL_COMPILER_DIR}/compilers_and_libraries/mac/lib/)
+           endif()
        endif()
 endif()
 
 # Adding hints for suitesparse
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
+#set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
+#set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
+#set(BLA_STATIC TRUE)
+#find_package(SuiteSparse OPTIONAL_COMPONENTS)
 
 
 #IF(NOT SUITESPARSE_FOUND)
@@ -165,7 +183,7 @@ endif()
 set(NASOQ_LIB_INCLUDE_DIR
         ${OPENBLAS_INCLUDE_DIR}
         ${MKL_INCLUDE_DIR}
-        ${SUITESPARSE_INCLUDE_DIRS}
+#        ${SUITESPARSE_INCLUDE_DIRS}
         ${METIS_INCLUDE_DIR}
         ${METIS_INCLUDES}
         )
@@ -192,7 +210,7 @@ set(NASOQ_INCLUDE_DIR
 
 set(NASOQ_LIB_DIR
         ${MKL_LIBRARIES}
-        ${SUITESPARSE_LIBRARIES}
+#        ${SUITESPARSE_LIBRARIES}
         )
 
 link_directories(
