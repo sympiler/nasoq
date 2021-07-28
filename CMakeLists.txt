@@ -23,13 +23,16 @@ set(OPENBLAS_LIBRARY_DIR "")
 set(MKL_FOUND FALSE)
 find_package(MKL OPTIONAL_COMPONENTS)
 if(NOT MKL_FOUND)
-    #if(WIN32) #TODO using cpkg
-    #    find_package(OpenBLAS CONFIG REQUIRED)
-    #else()
+    if(WIN32) #TODO using cpkg
+        find_package(OpenBLAS CONFIG REQUIRED)
+        set(BLAS_FOUND TRUE)
+        set(WINBLAS OpenBLAS::OpenBLAS)
+    else()
     set(BLA_VENDOR OpenBLAS)
+    set(WINBLAS "")
     #    set(BLA_STATIC TRUE)
     find_package(BLAS OPTIONAL_COMPONENTS)
-    #endif()
+    endif()
     #find_package(LAPACKE OPTIONAL_COMPONENTS)
     #        message("++++> ${BLAS_LIBRARIES}")
     download_project(PROJ lib_binary
@@ -45,9 +48,9 @@ if(NOT MKL_FOUND)
     if(UNIX AND APPLE)
         set(OPENBLAS_DIR ${BIN_LIBS}/openblas/mac/)
     endif()
-    if(WIN32)
-        set(OPENBLAS_DIR ${BIN_LIBS}/openblas/windows/)
-    endif()
+#    if(WIN32)
+#        set(OPENBLAS_DIR ${BIN_LIBS}/openblas/windows/)
+#    endif()
 
     set(OPENBLAS_INCLUDE_DIR
             ${OPENBLAS_DIR}/include/  )
@@ -292,7 +295,8 @@ target_link_libraries(nasoq_static
         ${METIS_LIBRARIES}
         ${NASOQ_LIB_DIR}
         ${OpenMP_CXX_LIBRARIES}
-        ${OPENBLAS_STAT_LIB})
+        ${OPENBLAS_STAT_LIB}
+        ${WINBLAS})
 #set_target_properties(nasoq_static PROPERTIES
 #        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
 #set_target_properties(nasoq_static PROPERTIES
@@ -312,6 +316,7 @@ target_link_libraries(nasoq
         ${NASOQ_LIB_DIR}
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB}
+        ${WINBLAS}
         )
 set_target_properties(nasoq PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/   )
@@ -334,6 +339,7 @@ target_link_libraries(NASOQ-BIN
         nasoq_static
         ${OpenMP_CXX_LIBRARIES}
         ${OPENBLAS_STAT_LIB}
+        ${WINBLAS}
         )
 
 #message("9999999999999999${OPENBLAS_STAT_LIB}   -- ${NASOQ_LIB_DIR} -- ${NASOQ_INCLUDE_DIR}")
