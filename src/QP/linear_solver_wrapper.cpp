@@ -614,7 +614,7 @@ namespace nasoq {
 #else
       prune_ptr,prune_set,
 #endif
-                             max_sup_wid + 1, max_col + 1, num_pivot);
+                             max_sup_wid + 1, max_col + 1, num_pivot, reg_diag);
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     //MKL_Domain_Set_Num_Threads(1, MKL_DOMAIN_BLAS);
@@ -624,6 +624,7 @@ namespace nasoq {
     //MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
     SET_BLAS_THREAD(num_thread);
     psi->start = psi->tic();
+#ifdef LAPACKE
     ret_val = ldl_left_sn_02_v2(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                 L->p, L->s, L->i_ptr, valL,
                                 d_val,
@@ -635,6 +636,7 @@ namespace nasoq {
 #endif
                                 max_sup_wid + 1, max_col + 1, num_pivot, perm_piv,
                                 L->sParent);
+#endif
     reorder_matrix();
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
@@ -667,6 +669,7 @@ namespace nasoq {
    case 4://Parallel SBK
     psi->start = psi->tic();
 #ifdef OPENMP
+#ifdef LAPACKE
     ret_val = ldl_left_sn_parallel_02(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -682,6 +685,7 @@ namespace nasoq {
                                       max_sup_wid + 1, max_col + 1, num_pivot,
                                       perm_piv);
 #endif
+#endif
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
     reorder_matrix();
@@ -691,6 +695,7 @@ namespace nasoq {
    case 5://Parallel mixed static SBK
     psi->start = psi->tic();
 #ifdef OPENMP
+#ifdef LAPACKE
     ret_val = ldl_left_sn_parallel_03(A_ord->ncol, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -706,6 +711,7 @@ namespace nasoq {
                                       chunk, num_thread,
                                       max_sup_wid + 1, max_col + 1, num_pivot,
                                       perm_piv);
+#endif
 #endif
     psi->end = psi->toc();
     psi->fact_time += psi->elapsed_time(psi->start, psi->end);
@@ -1135,7 +1141,7 @@ namespace nasoq {
                                    L->super, L->nsuper, psi->timing_chol,
                                    atree, AT_ord->p, AT_ord->i, L->col2Sup,
                                    modified_sns, max_sup_wid + 1, max_col + 1,
-                                   num_pivot);
+                                   num_pivot, reg_diag);
     a_consistent = 1;
     psi->end = psi->toc();
     psi->update_time += psi->elapsed_time(psi->start, psi->end);
@@ -1146,6 +1152,7 @@ namespace nasoq {
     //MKL_Domain_Set_Num_Threads(num_thread, MKL_DOMAIN_BLAS);
     SET_BLAS_THREAD(num_thread);
     psi->start = psi->toc();
+#ifdef LAPACKE
     retval = update_ldl_left_sn_02_v2(A_ord->nrow, A_ord->p, A_ord->i, A_ord->x,
                                       L->p, L->s, L->i_ptr, valL,
                                       d_val,
@@ -1153,6 +1160,7 @@ namespace nasoq {
                                       atree, AT_ord->p, AT_ord->i, L->col2Sup,
                                       modified_sns, max_sup_wid + 1, max_col + 1,
                                       num_pivot, perm_piv, L->sParent, ws_int, ws);
+#endif
     a_consistent = 0;
     psi->end = psi->toc();
     psi->update_time += psi->elapsed_time(psi->start, psi->end);
@@ -1172,6 +1180,7 @@ namespace nasoq {
     psi->start = psi->toc();
 
 #ifdef OPENMP
+#ifdef LAPACKE
     retval = update_ldl_left_sn_parallel_02(A_ord->nrow, A_ord->p, A_ord->i, A_ord->x,
                                             L->p, L->s, L->i_ptr, valL,
                                             d_val,
@@ -1186,6 +1195,7 @@ namespace nasoq {
                                             chunk, num_thread,
                                             max_sup_wid + 1, max_col + 1, num_pivot,
                                             perm_piv, marked);
+#endif
 #endif
 
     a_consistent = 0;

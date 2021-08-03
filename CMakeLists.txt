@@ -146,7 +146,7 @@ if(NOT METIS_FOUND)
           # BUILD_COMMAND ${MAKE_EXE}
       )
     add_subdirectory(${metis_SOURCE_DIR})
-    set(METIS_INCLUDE_DIR ${metis_SOURCE_DIR}/include)
+    set(METIS_INCLUDE_DIRS ${metis_SOURCE_DIR}/include)
     set(OPTIONAL_COMPONENTS ${metis_SOURCE_DIR}/include)
     set(METIS_INCLUDES ${metis_SOURCE_DIR}/include/)
     set(METIS_LIBRARY_DIRS ${metis_SOURCE_DIR}/lib/)
@@ -187,10 +187,9 @@ set(NASOQ_LIB_INCLUDE_DIR
         ${OPENBLAS_INCLUDE_DIR}
         ${MKL_INCLUDE_DIR}
 #        ${SUITESPARSE_INCLUDE_DIRS}
-        ${METIS_INCLUDE_DIR}
+        ${METIS_INCLUDE_DIRS}
         ${METIS_INCLUDES}
         )
-
 #set(NASOQ_INCLUDE_DIR
 #        ${MKL_INCLUDE_DIR}
 #        "${CMAKE_CURRENT_LIST_DIR}/symbolic/"
@@ -250,7 +249,7 @@ set(SOURCE_FILES
 
         src/ldl/Serial_blocked_ldl.cpp
         src/ldl/Serial_update_ldl.cpp
-        src/ldl/Serial_blocked_ldl_02_2.cpp
+        #src/ldl/Serial_blocked_ldl_02_2.cpp
         src/ldl/Serial_update_ldl_static.cpp
         src/ldl/serial_simplicial_ldl.cpp
         src/ldl/Serial_update_simplicial_ldl.cpp
@@ -266,14 +265,31 @@ set(SOURCE_FILES
         src/QP/nasoq_utils.cpp
         src/QP/linear_solver_wrapper.cpp
         )
+set(LAPACKE_FOUND TRUE)
+add_definitions(-DLAPACKE)
+if (LAPACKE_FOUND)
+    set(SOURCE_FILES
+            ${SOURCE_FILES}
+            src/ldl/Serial_blocked_ldl_02_2.cpp
+            #src/ldl/Serial_blocked_ldl.cpp
+            )
+endif ()
+if (LAPACKE_FOUND)
+    set(SOURCE_FILES
+            ${SOURCE_FILES}
+            src/ldl/parallel_blocked_ldlt_02.cpp
+            src/ldl/Parallel_update_ldl_02_2.cpp
+            src/ldl/parallel_blocked_ldlt_03.cpp
+            )
+endif ()
 
 if(OpenMP_FOUND)
     set(SOURCE_FILES
             ${SOURCE_FILES}
             src/ldl/parallel_blocked_ldlt.cpp
-            src/ldl/parallel_blocked_ldlt_02.cpp
-            src/ldl/parallel_blocked_ldlt_03.cpp
-            src/ldl/Parallel_update_ldl_02_2.cpp
+#            src/ldl/parallel_blocked_ldlt_02.cpp
+#            src/ldl/parallel_blocked_ldlt_03.cpp
+#            src/ldl/Parallel_update_ldl_02_2.cpp
             src/ldl/Parallel_simplicial_ldl.cpp
             src/ldl/Parallel_update_simplicial.cpp
             )
