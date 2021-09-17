@@ -22,7 +22,7 @@ following steps:
 mkdir build
 cd build
 cmake -DMKL_ROOT_PATH=path/to/intel  -DCMAKE_BUILD_TYPE=Release ..
-make
+cmake ..
 ```
 
 A quick script for building and running NASOQ is provided in `buildALL.sh`. 
