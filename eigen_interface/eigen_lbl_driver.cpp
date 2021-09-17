@@ -3,7 +3,7 @@
 //
 
 #include <unsupported/Eigen/SparseExtra>
-#include <Util.h>
+#include <nasoq/common/Util.h>
 #include "lbl_eigen.h"
 
 using namespace nasoq;

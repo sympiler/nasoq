@@ -3,7 +3,7 @@
 //
 
 #include <unsupported/Eigen/SparseExtra>
-#include <Util.h>
+#include <nasoq/common/Util.h>
 #include "nasoq_eigen.h"
 
 using namespace nasoq;

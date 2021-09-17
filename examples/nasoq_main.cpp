@@ -1,7 +1,7 @@
 
 #include <cmath>
 #include <iostream>
-#include "../include/nasoq.h"
+#include <nasoq/nasoq.h>
 
 /*
  * Minimizing 1/2 x^THx + q^Tx + C; Cx <= d

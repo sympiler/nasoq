@@ -95,6 +95,7 @@ int nasoq_demo(int argc, const char **argv) {
  int num_thread = omp_get_max_threads();
  omp_set_num_threads(num_thread);
 #else
+#error could not determine BLAS library used in nasoq_driver.cpp
 #endif
 //QPFC->ief_->print();
  Nasoq *qm;

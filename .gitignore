@@ -31,8 +31,9 @@
 *.out
 *.app
 
-# build directory
+# build directories
 /build
 /_build
+/lib
 
 # data
