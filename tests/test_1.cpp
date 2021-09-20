@@ -1,9 +1,7 @@
 #include <catch2/catch.hpp>
 
-//#include <nasoq/nasoq.h>
-//#include <nasoq/eigen_interface/nasoq_eigen.h>
 #include <nasoq/nasoq.h>
-#include <nasoq_eigen.h>
+#include <nasoq/nasoq_eigen.h>
 
 #include <fstream>
 #include <nlohmann/json.hpp>

@@ -1,6 +1,6 @@
 
 add_library(nasoq_eigen INTERFACE)
-target_include_directories(nasoq_eigen INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(nasoq_eigen INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(nasoq_eigen INTERFACE
 	nasoq::nasoq
 	Eigen3::Eigen

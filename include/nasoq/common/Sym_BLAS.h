@@ -18,7 +18,7 @@
     #else*/
     //#include "openblas/f77blas.h"
 #ifdef NASOQ_USE_EIGEN_LAPACK_SHIM
-    #include "eigen_lapack.h"
+    #include "nasoq/eigen_shim/eigen_lapack.h"
 #else
     #include "openblas/lapacke.h"
 #endif
