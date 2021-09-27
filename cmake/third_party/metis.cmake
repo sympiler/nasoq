@@ -18,8 +18,8 @@ message(STATUS "Third-party (internal): creating target 'metis::metis'")
 include(FetchContent)
 FetchContent_Declare(
     metis
-    GIT_REPOSITORY git@git.corp.adobe.com:CTL-third-party/metis
-    GIT_TAG        f00b3e39dd362e423a8930334576d4cf2385a30f
+    GIT_REPOSITORY https://github.com/cheshmi/METIS.git# git@git.corp.adobe.com:CTL-third-party/metis
+    GIT_TAG        e4d61cfe84ca5dcf40b6be814ef477e80ba112dd
 )
 
 FetchContent_GetProperties(metis)

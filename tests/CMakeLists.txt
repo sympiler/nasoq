@@ -1,8 +1,10 @@
-include(Catch2)
+include(catch2)
 include(nlohmann_json)
 
 file(GLOB SRC_FILES "*.cpp" "*.h")
 add_executable(NASOQ_Catch2_Tests ${SRC_FILES})
+target_include_directories(NASOQ_Catch2_Tests PRIVATE
+        "${PROJECT_SOURCE_DIR}/include/nasoq/")
 target_link_libraries(NASOQ_Catch2_Tests PRIVATE
     nasoq::eigen_interface
     Catch2::Catch2
