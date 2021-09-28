@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include <nasoq.h>
-#include <QP/linear_solver_wrapper.h>
+#include <nasoq/nasoq.h>
+#include <nasoq/QP/linear_solver_wrapper.h>
 #include <cmath>
 
 

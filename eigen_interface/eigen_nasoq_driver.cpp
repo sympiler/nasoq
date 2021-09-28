@@ -3,8 +3,8 @@
 //
 
 #include <unsupported/Eigen/SparseExtra>
-#include <Util.h>
-#include "nasoq_eigen.h"
+#include <nasoq/common/Util.h>
+#include <nasoq/nasoq_eigen.h>
 
 using namespace nasoq;
 int main(int argc, const char *argv[]){

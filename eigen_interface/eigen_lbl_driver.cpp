@@ -3,8 +3,8 @@
 //
 
 #include <unsupported/Eigen/SparseExtra>
-#include <Util.h>
-#include "lbl_eigen.h"
+#include <nasoq/common/Util.h>
+#include <nasoq/lbl_eigen.h>
 
 using namespace nasoq;
 

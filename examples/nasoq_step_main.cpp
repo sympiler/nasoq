@@ -3,7 +3,7 @@
 //
 
 
-#include <nasoq_step.h>
+#include <nasoq/nasoq_step.h>
 #include <iostream>
 #include <cmath>
 

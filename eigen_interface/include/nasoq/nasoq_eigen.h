@@ -6,7 +6,7 @@
 #define NASOQ_NASOQ_EIGEN_H
 #include <Eigen/Core>
 #include <Eigen/SparseCore>
-#include "../include/nasoq.h"
+#include "nasoq/nasoq.h"
 
 
 

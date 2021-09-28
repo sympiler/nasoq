@@ -14,8 +14,8 @@
 #include <vector>
 
 
-#include "common/def.h"
-#include "common/transpose_unsym.h"
+#include "nasoq/common/def.h"
+#include "nasoq/common/transpose_unsym.h"
 
 namespace nasoq {
 /*

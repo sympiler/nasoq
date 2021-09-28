@@ -5,7 +5,7 @@
 #ifndef NASOQ_LBL_EIGEN_H
 #define NASOQ_LBL_EIGEN_H
 
-#include "linear_solver_wrapper.h"
+#include <nasoq/QP/linear_solver_wrapper.h>
 
 
  namespace nasoq

@@ -1,285 +1,204 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.16)
 
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
+project(nasoq CXX C)
 
-#include(ExternalProject)
-include(DownloadProject)
+#----------------------------[ global configuration ]--------------------------#
 
 set(CMAKE_CXX_STANDARD 11)
-set(NASOQ_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
-set(NASOQ_EXTERNAL ${CMAKE_CURRENT_LIST_DIR}/external)
 
-
-project(libnasoq_static)
-
-add_definitions(-DSYM_REMOV)
-
-set(OPENBLAS_STAT_LIB "")
-set(OPENBLAS_DYN_LIB  "")
-set(MKL_FOUND FALSE)
-find_package(MKL REQUIRED)
-if(NOT MKL_FOUND)
-    set(BLA_VENDOR OpenBLAS)
-#    set(BLA_STATIC TRUE)
-    find_package(BLAS REQUIRED)
-#        message("++++> ${BLAS_LIBRARIES}")
-        if(NOT BLAS_FOUND) # TODO not wokring
-            download_project(PROJ openblas
-                    GIT_REPOSITORY https://github.com/xianyi/OpenBLAS.git
-                    PREFIX  ${NASOQ_EXTERNAL}/openblas/
-                    #BINARY_DIR ${NASOQ_ROOT_DIR}/lib/
-## TODO find a way to set the install directory here. Header files will be there.
-                   # UPDATE_DISCONNECTED 1
-                   # CONFIGURE_COMMAND /usr/local/bin/cmake -DCMAKE_INSTALL_PREFIX=${NASOQ_EXTERNAL}/ ${NASOQ_EXTERNAL}/openblas/openblas-src/
-                   # BUILD_COMMAND /usr/bin/make install
-                    )
-            add_subdirectory(${openblas_SOURCE_DIR})
-            set(OPENBLAS_INCLUDE_DIR ${openblas_SOURCE_DIR}/  ${openblas_SOURCE_DIR}/lapack-netlib/CBLAS/include/ ${openblas_SOURCE_DIR}/lapack-netlib/LAPACKE/include/ )
-            set(OPENBLAS_LIBRARY_DIR ${CMAKE_BINARY_DIR}/external/openblas/openblas-src/lib/)
-            set(OPENBLAS_STAT_LIB openblas)
-            set(OPENBLAS_DYN_LIB openblas_d)
-            add_definitions(-DOB_INTERNAL)
-            #message("======> ${OPENBLAS_LIBRARY_DIR}")
-        else() #
-            set(OPENBLAS_STAT_LIB ${BLAS_LIBRARIES})
-            message(STATUS "OpenBLAS found")
-        endif()
-            add_definitions(-DOPENBLAS)
-    else()
-    add_definitions(-DMKL_BLAS)
+get_directory_property(HAS_PARENT PARENT_DIRECTORY)
+if(HAS_PARENT)
+    set(NASOQ_IS_TOPLEVEL OFF)
+else()
+    set(NASOQ_IS_TOPLEVEL ON)
 endif()
-
-# Adding hints for suitesparse
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
-
-
-#IF(NOT SUITESPARSE_FOUND)
-   # set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-   # set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-    find_package(METIS OPTIONAL_COMPONENTS)
-   # set(METIS_LIBRARY "")
-   # set(METIS_INCLUDE_DIR "")
-#ELSE()
-#    set(ignoreMe "${METIS_ROOT_PATH}")
-#ENDIF()
-if(METIS_VERSION_OK)
-#    find_program(MAKE_EXE NAMES gmake nmake make)
-#    set(metis_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/metis")
-#    set(metis_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${metis_INSTALL_DIR})
-#set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_LIST_DIR}/external)
-   # set(GKLIB_PATH ${NASOQ_EXTERNAL}/metis/metis-src/GKLIB/ CACHE PATH "d")
-   download_project(PROJ metis
-      GIT_REPOSITORY https://github.com/cheshmi/METIS.git  # https://github.com/KarypisLab/METIS.git
-          # BUILD_IN_SOURCE 1
-          #PREFIX  ${metis_BINARY_DIR}
-      #     URL http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
-           PREFIX  ${NASOQ_EXTERNAL}/metis/
-           #SOURCE_DIR ${NASOQ_EXTERNAL}/metis/metis-src/
-           BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis/
-          UPDATE_DISCONNECTED 1
-          #CMAKE_ARGS  -DGKLIB_PATH=${metis_SOURCE_DIR}/GKlib/
-          # BUILD_COMMAND ${MAKE_EXE}
-      )
-    add_subdirectory(${metis_SOURCE_DIR})
-    set(METIS_INCLUDE_DIR ${metis_SOURCE_DIR}/include)
-    set(METIS_INCLUDES ${metis_SOURCE_DIR}/include/)
-    set(METIS_LIBRARY ${NASOQ_ROOT_DIR}/lib/)
-    set(METIS_LIBRARIES ${NASOQ_ROOT_DIR}/lib/)
-endif()
-
-
-find_package(OpenMP)
-if(OpenMP_FOUND)
-    add_definitions(-DOPENMP)
-endif()
-
-find_package (Eigen3 OPTIONAL_COMPONENTS NO_MODULE)
 
 if(UNIX )
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
 endif()
 
-#set(NASOQ_LIB_INCLUDE_DIR
-#        ${MKL_INCLUDE_DIR}
-#        ${SUITESPARSE_INCLUDE_DIRS}
-#        ${METIS_INCLUDE_DIR}
-#        ${METIS_INCLUDES}
-#        "${CMAKE_CURRENT_LIST_DIR}/symbolic/"
-#        "${CMAKE_CURRENT_LIST_DIR}/common/"
-#        "${CMAKE_CURRENT_LIST_DIR}/ldl/"
-#        "${CMAKE_CURRENT_LIST_DIR}/matrixMatrix/"
-#        "${CMAKE_CURRENT_LIST_DIR}/matrixVector/"
-#        "${CMAKE_CURRENT_LIST_DIR}/linear_solver/"
-#        "${CMAKE_CURRENT_LIST_DIR}/gmres/"
-#        "${CMAKE_CURRENT_LIST_DIR}/QP/"
-#        "${CMAKE_CURRENT_LIST_DIR}/triangularSolve/"
-#        "${CMAKE_CURRENT_LIST_DIR}/smp-format/")
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(NASOQ_LIB_INCLUDE_DIR
-        ${OPENBLAS_INCLUDE_DIR}
-        ${MKL_INCLUDE_DIR}
-        ${SUITESPARSE_INCLUDE_DIRS}
-        ${METIS_INCLUDE_DIR}
-        ${METIS_INCLUDES}
-        )
+set(NASOQ_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-#set(NASOQ_INCLUDE_DIR
-#        ${MKL_INCLUDE_DIR}
-#        "${CMAKE_CURRENT_LIST_DIR}/symbolic/"
-#        "${CMAKE_CURRENT_LIST_DIR}/common/"
-#        "${CMAKE_CURRENT_LIST_DIR}/ldl/"
-#        "${CMAKE_CURRENT_LIST_DIR}/matrixMatrix/"
-#        "${CMAKE_CURRENT_LIST_DIR}/matrixVector/"
-#        "${CMAKE_CURRENT_LIST_DIR}/linear_solver/"
-#        "${CMAKE_CURRENT_LIST_DIR}/gmres/"
-#        "${CMAKE_CURRENT_LIST_DIR}/QP/"
-#        "${CMAKE_CURRENT_LIST_DIR}/triangularSolve/"
-#        "${CMAKE_CURRENT_LIST_DIR}/smp-format/")
+# TODO: maybe install rules could be a more idiomatic way of doing this?
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/lib/")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/lib/")
 
+#----------------------------------[ options ]---------------------------------#
 
-set(NASOQ_INCLUDE_DIR
-        include/
-        "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
-        "${CMAKE_CURRENT_LIST_DIR}/include/")
+option(NASOQ_BUILD_EXAMPLES "Build NASOQ Examples" ${NASOQ_IS_TOPLEVEL})
+option(NASOQ_BUILD_TESTS "Build NASOQ Tests" ${NASOQ_IS_TOPLEVEL})
+option(NASOQ_WITH_EIGEN "Build NASOQ Eigen interface" ON)
+option(NASOQ_WITH_EIGEN_LAPACK_SHIM "Build NASOQ with an Eigen-based substitute for OpenBLAS LAPACK" OFF)
 
+set(NASOQ_BLAS_BACKEND "MKL" CACHE STRING "BLAS implementation for NASOQ to use")
+set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS)
 
-set(NASOQ_LIB_DIR
-        ${MKL_LIBRARIES}
-        ${SUITESPARSE_LIBRARIES}
-        )
-link_directories(
-    ${METIS_LIBRARY}
-    ${METIS_LIBRARIES})
+if(${NASOQ_BLAS_BACKEND} STREQUAL "MKL")
+    set(NASOQ_USE_BLAS_MKL      ON)
+    set(NASOQ_USE_BLAS_OpenBLAS OFF)
+elseif(${NASOQ_BLAS_BACKEND} STREQUAL "OpenBLAS")
+    set(NASOQ_USE_BLAS_MKL      OFF)
+    set(NASOQ_USE_BLAS_OpenBLAS ON)
+else()
+    message(FATAL_ERROR "unrecognized value for `NASOQ_BLAS_BACKEND` option: '${NASOQ_BLAS_BACKEND}'")
+endif()
+
+if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
+    if(NOT NASOQ_USE_BLAS_OpenBLAS)
+        message(FATAL_ERROR "You can only set `NASOQ_WITH_EIGEN_LAPACK_SHIM` to `ON` when `NASOQ_BLAS_BACKEND` is `OpenBLAS`")
+    endif()
+    if(NOT NASOQ_WITH_EIGEN)
+        message(FATAL_ERROR "You must set `NASOQ_WITH_EIGEN` to `ON` to use the Eigen-based LAPACK shim")
+    endif()
+endif()
+
+#--------------------------------[ third party ]-------------------------------#
+
+list(PREPEND CMAKE_MODULE_PATH
+    "${CMAKE_CURRENT_LIST_DIR}/cmake"
+    "${CMAKE_CURRENT_LIST_DIR}/cmake/third_party"
+)
 
 
-set(SOURCE_FILES
-        src/nasoq.cpp
-        src/nasoq_step.cpp
-        src/common/def.cpp
-        src/common/transpose_unsym.cpp
-        src/common/Util.cpp
-        src/matrixVector/spmv_CSC.cpp
-        src/common/Norm.cpp
-        src/QP/qp_utils.cpp
-        src/common/SparseUtils.cpp
-        src/common/DFS.cpp
-        src/common/PostOrder.cpp
-        src/common/Etree.cpp
-        src/common/Transpose.cpp
-        src/symbolic/ColumnCount.cpp
-        src/symbolic/supernode_detection.cpp
-        src/symbolic/Partitioning.cpp
-        src/common/TreeUtils.cpp
-        src/symbolic/PostOrderSpliting.cpp
-        src/symbolic/InspectionLevel_06.cpp
-        src/common/Reach.cpp
-        src/symbolic/performanceModel.cpp
-        src/symbolic/symbolic_phase.cpp
-        src/common/Sym_BLAS.cpp
+if(NASOQ_WITH_EIGEN)
+    include(eigen)
+endif()
 
-        src/ldl/Serial_blocked_ldl.cpp
-        src/ldl/Serial_update_ldl.cpp
-        src/ldl/Serial_blocked_ldl_02_2.cpp
-        src/ldl/Serial_update_ldl_static.cpp
-        src/ldl/serial_simplicial_ldl.cpp
-        src/ldl/Serial_update_simplicial_ldl.cpp
-        src/triangularSolve/BLAS.cpp
-        src/triangularSolve/Triangular_BCSC.cpp
-        src/triangularSolve/Triangular_CSC.cpp
-        src/linear_solver/solve_phase.cpp
-        src/gmres/mgmres.cpp
-        src/matrixMatrix/spmm.cpp
-        src/ldl/ldlt_check.cpp
-        src/QP/osqp_utils.cpp
-        src/QP/updown_test.cpp
-        src/QP/nasoq_utils.cpp
-        src/QP/linear_solver_wrapper.cpp
-        )
+if(NASOQ_USE_BLAS_MKL)
+    include(mkl)
+elseif(NASOQ_USE_BLAS_OpenBLAS)
+    if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
+        set(openblas_WITHOUT_LAPACK ON)
+    endif()
+
+    include(openblas)
+
+    if(openblas_WITHOUT_LAPACK AND NOT NASOQ_WITH_EIGEN_LAPACK_SHIM)
+        message(FATAL_ERROR "cannot build LAPACKE for use with OpenBLAS (maybe you don't have a Fortran compiler?) try setting `NASOQ_WITH_EIGEN_LAPACK_SHIM` to `ON` to use an Eigen-based alternative.")
+    endif()
+endif()
+
+include(metis)
+
+# TODO: SuiteSparse
+
+#-----------------------------------[ nasoq ]----------------------------------#
+
+find_package(OpenMP)
+
+set(NASOQ_INTERNAL_INCLUDE_DIRS
+    "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
+    "${CMAKE_CURRENT_LIST_DIR}/include/nasoq"
+)
+
+add_library(nasoq "")
+
+target_sources(nasoq PRIVATE
+    "src/nasoq.cpp"
+    "src/nasoq_step.cpp"
+    "src/common/def.cpp"
+    "src/common/transpose_unsym.cpp"
+    "src/common/Util.cpp"
+    "src/matrixVector/spmv_CSC.cpp"
+    "src/common/Norm.cpp"
+    "src/QP/qp_utils.cpp"
+    "src/common/SparseUtils.cpp"
+    "src/common/DFS.cpp"
+    "src/common/PostOrder.cpp"
+    "src/common/Etree.cpp"
+    "src/common/Transpose.cpp"
+    "src/symbolic/ColumnCount.cpp"
+    "src/symbolic/supernode_detection.cpp"
+    "src/symbolic/Partitioning.cpp"
+    "src/common/TreeUtils.cpp"
+    "src/symbolic/PostOrderSpliting.cpp"
+    "src/symbolic/InspectionLevel_06.cpp"
+    "src/common/Reach.cpp"
+    "src/symbolic/performanceModel.cpp"
+    "src/symbolic/symbolic_phase.cpp"
+    "src/common/Sym_BLAS.cpp"
+
+    "src/ldl/Serial_blocked_ldl.cpp"
+    "src/ldl/Serial_update_ldl.cpp"
+    "src/ldl/Serial_blocked_ldl_02_2.cpp"
+    "src/ldl/Serial_update_ldl_static.cpp"
+    "src/ldl/serial_simplicial_ldl.cpp"
+    "src/ldl/Serial_update_simplicial_ldl.cpp"
+    "src/triangularSolve/BLAS.cpp"
+    "src/triangularSolve/Triangular_BCSC.cpp"
+    "src/triangularSolve/Triangular_CSC.cpp"
+    "src/linear_solver/solve_phase.cpp"
+    "src/gmres/mgmres.cpp"
+    "src/matrixMatrix/spmm.cpp"
+    "src/ldl/ldlt_check.cpp"
+    "src/QP/osqp_utils.cpp"
+    "src/QP/updown_test.cpp"
+    "src/QP/nasoq_utils.cpp"
+    "src/QP/linear_solver_wrapper.cpp"
+)
 
 if(OpenMP_FOUND)
-    set(SOURCE_FILES
-            ${SOURCE_FILES}
-            src/ldl/parallel_blocked_ldlt.cpp
-            src/ldl/parallel_blocked_ldlt_02.cpp
-            src/ldl/parallel_blocked_ldlt_03.cpp
-            src/ldl/Parallel_update_ldl_02_2.cpp
-            src/ldl/Parallel_simplicial_ldl.cpp
-            src/ldl/Parallel_update_simplicial.cpp
-            )
+    target_sources(nasoq PRIVATE
+        "src/ldl/parallel_blocked_ldlt.cpp"
+        "src/ldl/parallel_blocked_ldlt_02.cpp"
+        "src/ldl/parallel_blocked_ldlt_03.cpp"
+        "src/ldl/Parallel_update_ldl_02_2.cpp"
+        "src/ldl/Parallel_simplicial_ldl.cpp"
+        "src/ldl/Parallel_update_simplicial.cpp"
+    )
+    target_compile_definitions(nasoq PRIVATE "OPENMP")
+    target_link_libraries(nasoq PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
+if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
+    target_compile_definitions(nasoq PUBLIC "NASOQ_USE_EIGEN_LAPACK_SHIM")
 endif()
 
 
-message("OpenMP_CXX_LIBRARIES = " ${OpenMP_CXX_LIBRARIES})
-message("OpenMP_CXX_INCLUDE_DIRS = " ${OpenMP_CXX_INCLUDE_DIRS})
+target_include_directories(nasoq PUBLIC "${PROJECT_SOURCE_DIR}/include")
+target_include_directories(nasoq PRIVATE ${NASOQ_INTERNAL_INCLUDE_DIRS})
+target_compile_definitions(nasoq PRIVATE "SYM_REMOV")
+target_link_libraries(nasoq PRIVATE metis::metis)
 
-add_library(nasoq_static STATIC ${SOURCE_FILES})
-add_dependencies(nasoq_static metis)
-if (NOT MKL_FOUND AND NOT BLAS_FOUND)
-add_dependencies(nasoq_static openblas_static)
-endif ()
-#target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-#target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR})
-target_include_directories(nasoq_static PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
-target_link_libraries(nasoq_static metis ${NASOQ_LIB_DIR}
-        ${OpenMP_CXX_LIBRARIES}
-        ${OPENBLAS_STAT_LIB})
-#set_target_properties(nasoq_static PROPERTIES
-#        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
-#set_target_properties(nasoq_static PROPERTIES
-#        CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/)
+if(NASOQ_USE_BLAS_MKL)
+    target_link_libraries(nasoq PRIVATE mkl::mkl)
+    target_compile_definitions(nasoq PRIVATE "MKL_BLAS")
+elseif(NASOQ_USE_BLAS_OpenBLAS)
+    target_link_libraries(nasoq PRIVATE OpenBLAS::OpenBLAS)
+    target_compile_definitions(nasoq PRIVATE "OPENBLAS")
+endif()
 
-project(libnasoq_shared)
-add_library(nasoq SHARED ${SOURCE_FILES})
-add_dependencies(nasoq metis)
-#target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR})
-#target_link_libraries(nasoq ${NASOQ_LIB_DIR})
-if (NOT MKL_FOUND AND NOT BLAS_FOUND)
-    add_dependencies(nasoq openblas_static)
-endif ()
-target_include_directories(nasoq PRIVATE ${NASOQ_LIB_INCLUDE_DIR} ${NASOQ_INCLUDE_DIR} ${OpenMP_CXX_INCLUDE_DIRS})
-target_link_libraries(nasoq metis ${NASOQ_LIB_DIR} ${OpenMP_CXX_LIBRARIES} ${OPENBLAS_STAT_LIB})
-set_target_properties(nasoq PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/   )
+if(NASOQ_WITH_EIGEN)
+    add_subdirectory(eigen_interface)
+    target_link_libraries(nasoq PUBLIC Eigen3::Eigen)
+endif()
+
+add_library(nasoq::nasoq ALIAS nasoq)
+
+#------------------------------------[ exes ]----------------------------------#
+
+add_executable(NASOQ-BIN "nasoq_driver.cpp")
+target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INTERNAL_INCLUDE_DIRS})
+target_link_libraries(NASOQ-BIN PRIVATE nasoq::nasoq)
+if(NASOQ_USE_BLAS_MKL)
+    target_link_libraries(NASOQ-BIN PRIVATE mkl::mkl)
+    target_compile_definitions(NASOQ-BIN PRIVATE "MKL_BLAS")
+elseif(NASOQ_USE_BLAS_OpenBLAS)
+    target_link_libraries(NASOQ-BIN PRIVATE OpenBLAS::OpenBLAS)
+    target_compile_definitions(NASOQ-BIN PRIVATE "OPENBLAS")
+endif()
+set_target_properties(NASOQ-BIN PROPERTIES FOLDER exes)
 
 
-project(NASOQ-BIN)
-add_executable(NASOQ-BIN nasoq_driver.cpp)
-target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} ${NASOQ_LIB_INCLUDE_DIR})
-link_directories(NASOQ-BIN PRIVATE
-        #${NASOQ_LIB_DIR}
-        ${NASOQ_ROOT_DIR}/lib
-        )
-target_include_directories(NASOQ-BIN PRIVATE ${OpenMP_CXX_INCLUDE_DIRS})
+if(NASOQ_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
-target_link_libraries(NASOQ-BIN nasoq_static ${OpenMP_CXX_LIBRARIES})
-
-#message("9999999999999999${OPENBLAS_STAT_LIB}   -- ${NASOQ_LIB_DIR} -- ${NASOQ_INCLUDE_DIR}")
-#target_link_libraries(NASOQ-BIN PRIVATE
-#        ${NASOQ_LIB_DIR})
-#target_include_directories(NASOQ-BIN PRIVATE ${NASOQ_INCLUDE_DIR} )
-#if(OpenMP_CXX_FOUND)
-#    target_link_libraries(NASOQ-BIN PRIVATE OpenMP::OpenMP_CXX)
-#endif()
-#
-#### Building the interface library
-#project(NASOQ)
-##file(GLOB_RECURSE SRC_FILES ${NASOQ_INCLUDE_DIR} "*.h" )
-#add_library (NASOQ  INTERFACE )
-#target_include_directories(NASOQ INTERFACE  ${NASOQ_INCLUDE_DIR} )
-##target_sources(NASOQ ${SRC_FILES})
-#target_link_libraries(NASOQ INTERFACE
-#        ${NASOQ_LIB_DIR}
-#        )
-#
-#if(TARGET Eigen3::Eigen)
-#    add_subdirectory(eigen_interface)
-#endif()
+if(NASOQ_BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
 
 # =============================================================================
 #   Add custom target dox_doxygen to generate doxygen documentation for the 
