@@ -1,0 +1,57 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CIMac
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-11
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+
+      - name: Installing pre-reqs
+        shell: bash
+        run: |
+          brew install gfortran
+          brew install openblas
+          brew install metis
+
+      - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ${{github.workspace}}/build -DNASOQ_BLAS_BACKEND=OpenBLAS -DCMAKE_BUILD_TYPE=Release
+
+
+
+      - name: Build
+      # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/build --target LBL_Test NASOQ_Test NASOQ_Step_Test LBLSOMOD_Test
+
+      - name: run test 1
+        run: |
+          ${{github.workspace}}/build/examples/LBL_Test 
+          ${{github.workspace}}/build/examples/NASOQ_Test 
+          ${{github.workspace}}/build/examples/NASOQ_Step_Test 
+          ${{github.workspace}}/build/examples/LBLSOMOD_Test 
