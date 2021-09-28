@@ -88,6 +88,7 @@ include(metis)
 
 find_package(OpenMP)
 
+
 set(NASOQ_INTERNAL_INCLUDE_DIRS
     "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
     "${CMAKE_CURRENT_LIST_DIR}/include/nasoq"
@@ -188,6 +189,10 @@ if(NASOQ_USE_BLAS_MKL)
 elseif(NASOQ_USE_BLAS_OpenBLAS)
     target_link_libraries(NASOQ-BIN PRIVATE OpenBLAS::OpenBLAS)
     target_compile_definitions(NASOQ-BIN PRIVATE "OPENBLAS")
+endif()
+if(OpenMP_FOUND)
+    target_compile_definitions(NASOQ-BIN PRIVATE "OPENMP")
+    target_link_libraries(NASOQ-BIN  PRIVATE OpenMP::OpenMP_CXX)
 endif()
 set_target_properties(NASOQ-BIN PROPERTIES FOLDER exes)
 

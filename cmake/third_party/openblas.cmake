@@ -3,7 +3,18 @@ if(TARGET OpenBLAS::OpenBLAS)
 endif()
 
 
+set(BLA_VENDOR OpenBLAS)
+set(WINBLAS "")
+#    set(BLA_STATIC TRUE)
+find_package(BLAS OPTIONAL_COMPONENTS)
+
 message(STATUS "Third-party (external): creating target 'OpenBLAS::OpenBLAS'")
+if(BLAS_FOUND)
+
+    add_library(OpenBLAS INTERFACE)
+    target_link_libraries(OpenBLAS INTERFACE ${BLAS_LIBRARIES})
+    add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
+else()
 
 
 if(NOT DEFINED openblas_WITHOUT_LAPACK)
@@ -84,3 +95,5 @@ foreach(CONFIG_NAME IN LISTS CMAKE_CONFIGURATION_TYPES)
 endforeach()
 
 add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
+
+endif()
