@@ -1,4 +1,7 @@
 
+![example workflow](https://github.com/sympiler/nasoq/actions/workflows/cmakeUbuntu.yml/badge.svg)
+![example workflow](https://github.com/sympiler/nasoq/actions/workflows/cmakeMac.yml/badge.svg)
+
 # NASOQ: Numerically Accurate Sparsity Oriented QP Solver
 
 NASOQ is a scalable and efficient Quadratic Programming solver that 
