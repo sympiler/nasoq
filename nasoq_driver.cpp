@@ -88,14 +88,12 @@ int nasoq_demo(int argc, const char **argv) {
   return -1;
  QPFC->smp_to_ie();
  int num_ineq = QPFC->num_ineq_constraints();
-#ifdef MKL_BLAS
+#if defined(MKL_BLAS)
  int num_thread = mkl_get_max_threads ();
  MKL_Set_Num_Threads(num_thread);
-#elif OPENMP
+#elif defined(OPENBLAS)
  int num_thread = omp_get_max_threads();
  omp_set_num_threads(num_thread);
-#else
-#error could not determine threading library used in nasoq_driver.cpp
 #endif
 //QPFC->ief_->print();
  Nasoq *qm;

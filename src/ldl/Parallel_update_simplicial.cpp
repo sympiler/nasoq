@@ -6,7 +6,10 @@
 
 #include <cassert>
 
+#ifdef OPENMP
 #include "omp.h"
+#endif
+
 
 #include "common/Reach.h"
 
@@ -29,7 +32,9 @@ namespace nasoq {
   double *f;
   int *xi;
 
+#ifdef OPENMP
   omp_set_nested(1);
+#endif
   for (int i1 = 0; i1 < nLevels; ++i1) {
 #pragma omp parallel private(f, xi)
    {

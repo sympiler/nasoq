@@ -18,7 +18,6 @@ namespace nasoq {
 #include "cholmod_utils.h"
  //using namespace nasoq_cholmod;
 #endif
-#define SYM_REMOV
 
 /*
  * Class for passing setting to a QP solver. It is a superset of all

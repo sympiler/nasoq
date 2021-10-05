@@ -57,7 +57,7 @@ namespace nasoq {
 //                    std::cout<<"The children of: "<<k<<"\n";
       for (int i = inChildPtr[k]; i < inChildPtr[k + 1]; ++i) {
        int tmpChild = inChildNo[i];
-       if (!visited[tmpChild])
+       if (!visited[tmpChild]) {
         if (nChild[tmpChild] == 0) {//First add leaves
          //    stack.insert(stack.begin(),tmpChild);
          //    tmpFront++;
@@ -78,6 +78,7 @@ namespace nasoq {
         } else {
          stack.insert(stack.begin(), tmpChild);
         }
+	   }
       }
      }//End else
 /*    if(outCost[curPart]>Threshold){
