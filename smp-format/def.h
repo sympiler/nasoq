@@ -377,8 +377,8 @@
     }
     if(all_infinite)
      return false;
+    return true;
    }
-
   };
 
 

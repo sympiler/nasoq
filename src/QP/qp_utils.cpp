@@ -8,6 +8,9 @@
 #include "common/Util.h"
 #include "matrixVector/spmv_CSC.h"
 
+#include <algorithm>
+
+
 namespace nasoq {
 
  double dot1(int n, double *a, double *b) {

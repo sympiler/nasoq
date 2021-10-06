@@ -6,6 +6,10 @@
 
 #include "matrixVector/spmv_CSC.h"
 
+#include <cmath>
+#include <algorithm>
+
+
 namespace nasoq {
 
  double norm_dense(int nrow, int ncol, double *X, int norm) {

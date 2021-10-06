@@ -11,8 +11,8 @@ namespace nasoq {
   int k;
   double x0, x1, x2, x3, x4, x5, x6, x7;
   double *M0;
-  register double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-  register int firstcol = 0;
+  double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
+  int firstcol = 0;
 
   M0 = &M[0];
 
@@ -120,8 +120,8 @@ namespace nasoq {
  void dmatvec_blas(int ldm, int nrow, int ncol, double *M, double *vec, double *Mxvec) {
   double vi0, vi1, vi2, vi3, vi4, vi5, vi6, vi7;
   double *M0;
-  register double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-  register int firstcol = 0;
+  double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
+  int firstcol = 0;
   int k;
 
   M0 = &M[0];

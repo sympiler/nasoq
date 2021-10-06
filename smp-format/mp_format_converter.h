@@ -283,7 +283,7 @@ namespace format {
   int n_const = A->m;
   int *col_cnt_A_eq = new int[h_dim]();
   int *col_cnt_A_ineq = new int[h_dim]();
-  double *a_eq, *a_ineq;
+  double *a_ineq;
   double *l = ld ? ld->a : new double[n_const];
   double *u = ud ? ud->a : new double[n_const];
   if(!ld)
@@ -305,7 +305,6 @@ namespace format {
     continue;
    }
    if (is_equal(l[i], u[i])) {//eq
-    a_eq[num_eq] = l[i];
     num_eq++;
     nnz_eq += (AT->p[i + 1] - AT->p[i]);
     eq_idx.push_back(i);
@@ -836,12 +835,11 @@ namespace format {
   }
 
   void print_log() {
-   std::setprecision(20);
    if (ief_) {
-    std::cout << ief_->desc.name_ << "," << ief_->get_num_var() << "," << ief_->H->nnz << ",";
-    std::cout << ief_->get_num_eqc() << "," << (ief_->A ? ief_->A->nnz : 0) <<
+    std::cout << std::setprecision(20) << ief_->desc.name_ << "," << ief_->get_num_var() << "," << ief_->H->nnz << ",";
+    std::cout << std::setprecision(20) << ief_->get_num_eqc() << "," << (ief_->A ? ief_->A->nnz : 0) <<
     "," << ief_->get_num_ineqc() << ",";
-    std::cout << (ief_->C ? ief_->C->nnz : 0) << ",";
+    std::cout << std::setprecision(20) << (ief_->C ? ief_->C->nnz : 0) << ",";
    }
   }
 

@@ -154,6 +154,7 @@ if(OpenMP_FOUND)
 endif()
 
 if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
+    target_sources(nasoq PRIVATE "src/eigen_shim/eigen_lapack.cpp")
     target_compile_definitions(nasoq PUBLIC "NASOQ_USE_EIGEN_LAPACK_SHIM")
 endif()
 

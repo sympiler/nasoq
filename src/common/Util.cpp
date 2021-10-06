@@ -832,9 +832,7 @@ namespace nasoq {
  }
 
  void print_csc_l(std::string beg, size_t n, long *Ap, int *Ai, double *Ax) {
-  std::setprecision(48);
-  std::cout << beg;
-  std::cout << n << " " << n << " " << Ap[n] << "\n";
+  std::cout <<  std::setprecision(48) << beg << n << " " << n << " " << Ap[n] << "\n";
   for (int i = 0; i < n; ++i) {
    for (long int j = Ap[i]; j < Ap[i + 1]; ++j) {
     std::cout << Ai[j] + 1 << " " << i + 1 << " " << Ax[j];
