@@ -1,5 +1,8 @@
 #pragma once
 
+namespace nasoq {
+namespace clapacke {
+
 
 #ifndef LAPACK_ROW_MAJOR
 #define LAPACK_ROW_MAJOR 101
@@ -8,6 +11,9 @@
 #ifndef LAPACK_COL_MAJOR
 #define LAPACK_COL_MAJOR 102
 #endif
+
+using clapack_int = long int;
+using clapack_logical = long int;
 
 
 /**
@@ -23,6 +29,15 @@
  *
  * This is the blocked version of the algorithm, calling Level 3 BLAS.
  */
+int LAPACKE_dsytrf(
+	int matrix_layout,
+	char uplo,
+	clapack_int n,
+	double* a,
+	clapack_int lda,
+	clapack_int* ipiv 
+);
+
 int LAPACKE_dsytrf(
 	int matrix_layout,
 	char uplo,
@@ -46,10 +61,23 @@ int LAPACKE_dsytrf(
  */
 int LAPACKE_dlapmt(
 	int matrix_layout,
-	int forwrd, // lapack_logical
+	clapack_logical forwrd,
+	clapack_int m,
+	clapack_int n,
+	double* x,
+	clapack_int ldx,
+	clapack_int* k
+);
+
+int LAPACKE_dlapmt(
+	int matrix_layout,
+	int forwrd,
 	int m,
 	int n,
 	double* x,
 	int ldx,
 	int* k
 );
+
+} // namespace clapacke
+} // namespace nasoq

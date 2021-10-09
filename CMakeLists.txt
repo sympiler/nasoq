@@ -31,7 +31,7 @@ option(NASOQ_BUILD_CLI "Build NASOQ Command-Line Interface EXEs" ${NASOQ_IS_TOPL
 option(NASOQ_BUILD_EXAMPLES "Build NASOQ Examples" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_BUILD_TESTS "Build NASOQ Tests" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_WITH_EIGEN "Build NASOQ Eigen interface" ON)
-option(NASOQ_WITH_EIGEN_LAPACK_SHIM "Build NASOQ with an Eigen-based substitute for OpenBLAS LAPACK" OFF)
+option(NASOQ_USE_CLAPACK "Use CLAPACK as the LAPACK implementaiton" OFF)
 
 set(NASOQ_BLAS_BACKEND "MKL" CACHE STRING "BLAS implementation for NASOQ to use")
 set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS)
@@ -46,12 +46,9 @@ else()
     message(FATAL_ERROR "unrecognized value for `NASOQ_BLAS_BACKEND` option: '${NASOQ_BLAS_BACKEND}'")
 endif()
 
-if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
-    if(NOT NASOQ_USE_BLAS_OpenBLAS)
-        message(FATAL_ERROR "You can only set `NASOQ_WITH_EIGEN_LAPACK_SHIM` to `ON` when `NASOQ_BLAS_BACKEND` is `OpenBLAS`")
-    endif()
-    if(NOT NASOQ_WITH_EIGEN)
-        message(FATAL_ERROR "You must set `NASOQ_WITH_EIGEN` to `ON` to use the Eigen-based LAPACK shim")
+if(NASOQ_USE_CLAPACK)
+    if((NOT NASOQ_USE_BLAS_OpenBLAS) AND (NOT NASOQ_IS_TOPLEVEL))
+        message(FATAL_ERROR "You can only set `NASOQ_USE_CLAPACK` to `ON` when `NASOQ_BLAS_BACKEND` is `OpenBLAS`")
     endif()
 endif()
 
@@ -70,15 +67,22 @@ endif()
 if(NASOQ_USE_BLAS_MKL)
     include(mkl)
 elseif(NASOQ_USE_BLAS_OpenBLAS)
-    if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
+    if(NASOQ_USE_CLAPACK)
         set(openblas_WITHOUT_LAPACK ON)
     endif()
 
     include(openblas)
 
-    if(openblas_WITHOUT_LAPACK AND NOT NASOQ_WITH_EIGEN_LAPACK_SHIM)
-        message(FATAL_ERROR "cannot build LAPACKE for use with OpenBLAS (maybe you don't have a Fortran compiler?) try setting `NASOQ_WITH_EIGEN_LAPACK_SHIM` to `ON` to use an Eigen-based alternative.")
+    if(openblas_WITHOUT_LAPACK AND NOT NASOQ_USE_CLAPACK)
+        message(FATAL_ERROR "cannot build LAPACKE for use with OpenBLAS (maybe you don't have a Fortran compiler?) try setting `NASOQ_USE_CLAPACK` to `ON` to use a C-language alternative.")
     endif()
+endif()
+
+if(NASOQ_USE_CLAPACK)
+    # This is outside of the `NASOQ_USE_BLAS_OpenBLAS` block since there is
+    # unit test that compares MLK-LAPACKE to NASOQ's LAPACKE-style wrappers
+    # around a couple of LAPACKE functions.
+    include(clapack)
 endif()
 
 include(metis)
@@ -154,9 +158,12 @@ if(OpenMP_FOUND)
     target_link_libraries(nasoq PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
-if(NASOQ_WITH_EIGEN_LAPACK_SHIM)
-    target_sources(nasoq PRIVATE "src/eigen_shim/eigen_lapack.cpp")
-    target_compile_definitions(nasoq PUBLIC "NASOQ_USE_EIGEN_LAPACK_SHIM")
+if(NASOQ_USE_CLAPACK)
+    target_sources(nasoq PRIVATE
+        "src/clapacke/clapacke_dlapmt.cpp"
+        "src/clapacke/clapacke_dsytrf.cpp"
+    )
+    target_compile_definitions(nasoq PUBLIC "NASOQ_USE_CLAPACK")
 endif()
 
 
@@ -177,6 +184,8 @@ if(NASOQ_WITH_EIGEN)
     add_subdirectory(eigen_interface)
     target_link_libraries(nasoq PUBLIC Eigen3::Eigen)
 endif()
+
+target_link_libraries(nasoq PRIVATE clapack::clapack)
 
 add_library(nasoq::nasoq ALIAS nasoq)
 
