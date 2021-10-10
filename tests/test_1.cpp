@@ -74,7 +74,7 @@ void load_json(TestData& out_data, const Json& json) {
 }
 
 
-TEST_CASE("1") {
+TEST_CASE("nasoq::quadprog test 1") {
     constexpr int n = 41;
 
     std::ifstream i(TEST_DIR "/1.json");

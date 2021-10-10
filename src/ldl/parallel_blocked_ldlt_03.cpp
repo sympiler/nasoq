@@ -19,6 +19,11 @@ namespace nasoq {
                               const int *levelPtr, const int *levelSet, const int nPar, const int *parPtr,
                               const int *partition, const int chunk, const int threads, const int super_max,
                               const int col_max, int &nbpivot, int *perm_piv, double threshold) {
+#if defined(OPENBLAS) && defined(NASOQ_USE_CLAPACK)
+  using nasoq::clapacke::LAPACKE_dlapmt;
+  using nasoq::clapacke::LAPACKE_dsytrf;
+#endif
+
   /*
    * For timing using BLAS
    */
