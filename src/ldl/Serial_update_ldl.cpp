@@ -19,6 +19,10 @@ namespace nasoq {
                           double *D, int *blockSet, int supNo, double *timing, int *aTree, int *cT, int *rT,
                           int *col2Sup, std::vector<int> mod_indices, int super_max, int col_max, int &nbpivot,
                           int *perm_piv, int *atree_sm, int *ws_int, double *ws_dbl, double threshold) {
+#if defined(OPENBLAS) && defined(NASOQ_USE_CLAPACK)
+  using nasoq::clapacke::LAPACKE_dlapmt;
+  using nasoq::clapacke::LAPACKE_dsytrf;
+#endif
   /*
    * For timing using BLAS
    */

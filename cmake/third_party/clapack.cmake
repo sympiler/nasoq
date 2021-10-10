@@ -27,7 +27,15 @@ if(NOT clapack_POPULATED)
 
     file(GLOB clapack_SOURCE_FILES "${clapack_SOURCE_DIR}/SRC/*.c")
     add_library(clapack ${clapack_SOURCE_FILES})
+    target_compile_definitions(clapack PRIVATE "NO_BLAS_WRAP")
     target_include_directories(clapack PUBLIC "${clapack_SOURCE_DIR}/INCLUDE")
+
+    # just add in the f2c files needed for NASOQ's use of CLAPACK
+    target_sources(clapack PRIVATE
+        "${clapack_SOURCE_DIR}/F2CLIBS/libf2c/i_nint.c"
+        "${clapack_SOURCE_DIR}/F2CLIBS/libf2c/s_cmp.c"
+        "${clapack_SOURCE_DIR}/F2CLIBS/libf2c/s_copy.c"
+    )
 endif()
 
 add_library(clapack::clapack ALIAS clapack)

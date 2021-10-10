@@ -164,6 +164,7 @@ if(NASOQ_USE_CLAPACK)
         "src/clapacke/clapacke_dsytrf.cpp"
     )
     target_compile_definitions(nasoq PUBLIC "NASOQ_USE_CLAPACK")
+    target_link_libraries(nasoq PRIVATE clapack::clapack)
 endif()
 
 
@@ -184,8 +185,6 @@ if(NASOQ_WITH_EIGEN)
     add_subdirectory(eigen_interface)
     target_link_libraries(nasoq PUBLIC Eigen3::Eigen)
 endif()
-
-target_link_libraries(nasoq PRIVATE clapack::clapack)
 
 add_library(nasoq::nasoq ALIAS nasoq)
 

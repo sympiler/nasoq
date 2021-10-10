@@ -18,6 +18,11 @@ namespace nasoq {
  bool ldl_left_sn_02_v2(int n, int *c, int *r, double *values, size_t *lC, int *lR, size_t *Li_ptr, double *lValues,
                         double *D, int *blockSet, int supNo, double *timing, int *aTree, int *cT, int *rT, int *col2Sup,
                         int super_max, int col_max, int &nbpivot, int *perm_piv, int *atree_sm, double threshold) {
+#if defined(OPENBLAS) && defined(NASOQ_USE_CLAPACK)
+  using nasoq::clapacke::LAPACKE_dlapmt;
+  using nasoq::clapacke::LAPACKE_dsytrf;
+#endif
+
   /*
    * For timing using BLAS
    */
