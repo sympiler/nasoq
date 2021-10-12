@@ -39,7 +39,6 @@ if(BLAS_FOUND)
     endif()
     add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
 else()
-
     if(NOT DEFINED openblas_WITHOUT_LAPACK)
         include(CheckLanguage)
         check_language(Fortran)
@@ -49,21 +48,36 @@ else()
             set(openblas_WITHOUT_LAPACK OFF)
         endif()
     endif()
-
+    set(OPENBLAS_MOCK_SOURCES "") # overriden later in certain cases
 
     include(FetchContent)
     FetchContent_Declare(
         openblas
         GIT_REPOSITORY https://github.com/xianyi/OpenBLAS
-        GIT_TAG v0.3.13
+        GIT_TAG v0.3.18
         GIT_SHALLOW TRUE
     )
 
     FetchContent_GetProperties(openblas)
     if(NOT openblas_POPULATED)
         FetchContent_Populate(openblas)
-    endif()
 
+        if(openblas_WITHOUT_LAPACK)
+            if(CMAKE_GENERATOR STREQUAL "Xcode")
+                # This hack deserves an explanation.  When compiling OpenBLAS
+                # without LAPACK, the `add_library(openblas ...)` call will
+                # list only target object files and no sources, which causes
+                # Xcode not to generate `ibopenblas.a`.  To fix, we create
+                # an empty source file to include in the `add_library(openblas ...)`
+                # call, which is enough to satisfy Xcode.  To actually *get* this
+                # source file name to the `add_library` call, we use another hack
+                # and set it (otherwise empty) `LAPACKE_SOURCES` variable in
+                # OpenBLAS, which happens to be included where we need it.
+                file(TOUCH "${openblas_SOURCE_DIR}/openblas_mock_source_file.c")
+                set(OPENBLAS_MOCK_SOURCES "openblas_mock_source_file.c")
+            endif()
+        endif()
+    endif()
 
     if(NOT EXISTS "${openblas_BINARY_DIR}/CMakeCache.txt")
         # run cmake to create the project files
@@ -75,11 +89,14 @@ else()
                 "-DCMAKE_CXX_FLAGS_RELEASE=\"${CMAKE_CXX_FLAGS_RELEASE}\""
                 "-DUSE_THREAD=OFF"
                 "-DUSE_LOCKING=ON"
+                "-DBUILD_DOUBLE=ON"
                 "-DBUILD_WITHOUT_LAPACK=${openblas_WITHOUT_LAPACK}"
+                "-DNOFORTRAN=${openblas_WITHOUT_LAPACK}"
+                "-DNO_LAPACK=${openblas_WITHOUT_LAPACK}"
+                "-DLAPACKE_SOURCES=${OPENBLAS_MOCK_SOURCES}" # hack needed to make Xcode happy
             WORKING_DIRECTORY "${openblas_BINARY_DIR}"
         )
     endif()
-
 
     add_library(OpenBLAS IMPORTED INTERFACE GLOBAL)
 
@@ -107,11 +124,17 @@ else()
             )
         endif()
 
+        if(MSVC)
+            set(OPENBLAS_LIB_PATH "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/openblas.lib")
+        else()
+            set(OPENBLAS_LIB_PATH "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/libopenblas.a")
+        endif()
+
         add_library(OpenBLAS_${CONFIG_NAME} STATIC IMPORTED GLOBAL)
         set_property(
             TARGET OpenBLAS_${CONFIG_NAME}
             PROPERTY IMPORTED_LOCATION
-            "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/openblas.lib"
+            ${OPENBLAS_LIB_PATH}
         )
         target_include_directories(OpenBLAS_${CONFIG_NAME} INTERFACE "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/include")
         target_link_libraries(OpenBLAS INTERFACE $<$<CONFIG:${CONFIG_NAME}>:OpenBLAS_${CONFIG_NAME}>)
