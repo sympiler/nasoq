@@ -5,7 +5,6 @@
 #include "triangularSolve/Triangular_CSC.h"
 
 #include <chrono>
-#include <immintrin.h>
 
 #include "common/Reach.h"
 
