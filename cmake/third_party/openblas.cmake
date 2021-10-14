@@ -98,16 +98,45 @@ else()
         )
     endif()
 
-    add_library(OpenBLAS IMPORTED INTERFACE GLOBAL)
+    # We need to handle this whether or not the Cmake generator supports
+    # multiple configurations.
+    if(DEFINED CMAKE_CONFIGURATION_TYPES)
+        set(NASOQ_OPENBLAS_CONFIG_TYPES ${CMAKE_CONFIGURATION_TYPES})
+        set(NASOQ_OPENBLAS_USE_CONFIG_TYPES ON)
+    else()
+        set(NASOQ_OPENBLAS_CONFIG_TYPES "none")
+        set(NASOQ_OPENBLAS_USE_CONFIG_TYPES OFF)
+    endif()
 
-    foreach(CONFIG_NAME IN LISTS CMAKE_CONFIGURATION_TYPES)
-        string(TOUPPER "${CONFIG_NAME}" CONFIG_NAME_TOUPPER)
-        set(OPENBLAS_OUTPUT_FILE "${openblas_BINARY_DIR}/lib/${CONFIG_NAME_TOUPPER}")
-        set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}")
+    if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+        add_library(OpenBLAS IMPORTED INTERFACE GLOBAL)
+    endif()
 
-        if(NOT EXISTS "${OPENBLAS_OUTPUT_FILE}")
+    foreach(CONFIG_NAME IN LISTS NASOQ_OPENBLAS_CONFIG_TYPES)
+        if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+            string(TOUPPER "${CONFIG_NAME}" CONFIG_NAME_TOUPPER)
+            set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}")
+            set(OPENBLAS_LIB_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib")
+            set(OPENBLAS_INCLUDE_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/include")
+            set(OPENBLAS_TARGET_NAME OpenBLAS_${CONFIG_NAME})
+            set(OPENBLAS_CMAKE_CONFIG_CMD "--config" "${CONFIG_NAME}")
+        else()
+            set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst")
+            set(OPENBLAS_LIB_DIR "${openblas_BINARY_DIR}/inst/lib")
+            set(OPENBLAS_INCLUDE_DIR "${openblas_BINARY_DIR}/inst/include")
+            set(OPENBLAS_TARGET_NAME OpenBLAS)
+            set(OPENBLAS_CMAKE_CONFIG_CMD "")
+        endif()
+
+        if(MSVC)
+            set(OPENBLAS_LIB_PATH "${OPENBLAS_LIB_DIR}/openblas.lib")
+        else()
+            set(OPENBLAS_LIB_PATH "${OPENBLAS_LIB_DIR}/libopenblas.a")
+        endif()
+
+        if(NOT EXISTS "${OPENBLAS_LIB_PATH}")
             execute_process(
-                COMMAND ${CMAKE_COMMAND} "--build" "." "--config" "${CONFIG_NAME}"
+                COMMAND ${CMAKE_COMMAND} "--build" "." ${OPENBLAS_CMAKE_CONFIG_CMD}
                 WORKING_DIRECTORY "${openblas_BINARY_DIR}"
             )
         endif()
@@ -118,26 +147,23 @@ else()
 
         if(NOT EXISTS "${OPENBLAS_INSTALL_DIR}/include/openblas/openblas_config.h")
             execute_process(
-                COMMAND ${CMAKE_COMMAND} "--install" "." "--config" "${CONFIG_NAME}"
+                COMMAND ${CMAKE_COMMAND} "--install" "." ${OPENBLAS_CMAKE_CONFIG_CMD}
                     "--prefix" "${OPENBLAS_INSTALL_DIR}"
                     WORKING_DIRECTORY "${openblas_BINARY_DIR}"
             )
         endif()
 
-        if(MSVC)
-            set(OPENBLAS_LIB_PATH "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/openblas.lib")
-        else()
-            set(OPENBLAS_LIB_PATH "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/libopenblas.a")
-        endif()
-
-        add_library(OpenBLAS_${CONFIG_NAME} STATIC IMPORTED GLOBAL)
+        add_library(${OPENBLAS_TARGET_NAME} STATIC IMPORTED GLOBAL)
         set_property(
-            TARGET OpenBLAS_${CONFIG_NAME}
+            TARGET ${OPENBLAS_TARGET_NAME}
             PROPERTY IMPORTED_LOCATION
             ${OPENBLAS_LIB_PATH}
         )
-        target_include_directories(OpenBLAS_${CONFIG_NAME} INTERFACE "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/include")
-        target_link_libraries(OpenBLAS INTERFACE $<$<CONFIG:${CONFIG_NAME}>:OpenBLAS_${CONFIG_NAME}>)
+        target_include_directories(${OPENBLAS_TARGET_NAME} INTERFACE "${OPENBLAS_INCLUDE_DIR}")
+        
+        if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+            target_link_libraries(OpenBLAS INTERFACE $<$<CONFIG:${CONFIG_NAME}>:OpenBLAS_${CONFIG_NAME}>)
+        endif()
     endforeach()
 
     add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
