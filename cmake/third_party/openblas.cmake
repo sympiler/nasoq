@@ -6,7 +6,7 @@ endif()
 set(BLA_VENDOR OpenBLAS)
 set(WINBLAS "")
 #    set(BLA_STATIC TRUE)
-find_package(BLAS OPTIONAL_COMPONENTS)
+find_package(BLAS QUIET)
 
 message(STATUS "Third-party (external): creating target 'OpenBLAS::OpenBLAS'")
 if(BLAS_FOUND)
