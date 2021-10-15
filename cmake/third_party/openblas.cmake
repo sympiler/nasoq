@@ -6,7 +6,7 @@ endif()
 set(BLA_VENDOR OpenBLAS)
 set(WINBLAS "")
 #    set(BLA_STATIC TRUE)
-find_package(BLAS OPTIONAL_COMPONENTS)
+find_package(BLAS QUIET)
 
 message(STATUS "Third-party (external): creating target 'OpenBLAS::OpenBLAS'")
 if(BLAS_FOUND)
@@ -39,7 +39,6 @@ if(BLAS_FOUND)
     endif()
     add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
 else()
-
     if(NOT DEFINED openblas_WITHOUT_LAPACK)
         include(CheckLanguage)
         check_language(Fortran)
@@ -49,21 +48,36 @@ else()
             set(openblas_WITHOUT_LAPACK OFF)
         endif()
     endif()
-
+    set(OPENBLAS_MOCK_SOURCES "") # overriden later in certain cases
 
     include(FetchContent)
     FetchContent_Declare(
         openblas
         GIT_REPOSITORY https://github.com/xianyi/OpenBLAS
-        GIT_TAG v0.3.13
+        GIT_TAG v0.3.18
         GIT_SHALLOW TRUE
     )
 
     FetchContent_GetProperties(openblas)
     if(NOT openblas_POPULATED)
         FetchContent_Populate(openblas)
-    endif()
 
+        if(openblas_WITHOUT_LAPACK)
+            if(CMAKE_GENERATOR STREQUAL "Xcode")
+                # This hack deserves an explanation.  When compiling OpenBLAS
+                # without LAPACK, the `add_library(openblas ...)` call will
+                # list only target object files and no sources, which causes
+                # Xcode not to generate `ibopenblas.a`.  To fix, we create
+                # an empty source file to include in the `add_library(openblas ...)`
+                # call, which is enough to satisfy Xcode.  To actually *get* this
+                # source file name to the `add_library` call, we use another hack
+                # and set it (otherwise empty) `LAPACKE_SOURCES` variable in
+                # OpenBLAS, which happens to be included where we need it.
+                file(TOUCH "${openblas_SOURCE_DIR}/openblas_mock_source_file.c")
+                set(OPENBLAS_MOCK_SOURCES "openblas_mock_source_file.c")
+            endif()
+        endif()
+    endif()
 
     if(NOT EXISTS "${openblas_BINARY_DIR}/CMakeCache.txt")
         # run cmake to create the project files
@@ -75,22 +89,54 @@ else()
                 "-DCMAKE_CXX_FLAGS_RELEASE=\"${CMAKE_CXX_FLAGS_RELEASE}\""
                 "-DUSE_THREAD=OFF"
                 "-DUSE_LOCKING=ON"
+                "-DBUILD_DOUBLE=ON"
                 "-DBUILD_WITHOUT_LAPACK=${openblas_WITHOUT_LAPACK}"
+                "-DNOFORTRAN=${openblas_WITHOUT_LAPACK}"
+                "-DNO_LAPACK=${openblas_WITHOUT_LAPACK}"
+                "-DLAPACKE_SOURCES=${OPENBLAS_MOCK_SOURCES}" # hack needed to make Xcode happy
             WORKING_DIRECTORY "${openblas_BINARY_DIR}"
         )
     endif()
 
+    # We need to handle this whether or not the Cmake generator supports
+    # multiple configurations.
+    if(DEFINED CMAKE_CONFIGURATION_TYPES)
+        set(NASOQ_OPENBLAS_CONFIG_TYPES ${CMAKE_CONFIGURATION_TYPES})
+        set(NASOQ_OPENBLAS_USE_CONFIG_TYPES ON)
+    else()
+        set(NASOQ_OPENBLAS_CONFIG_TYPES "none")
+        set(NASOQ_OPENBLAS_USE_CONFIG_TYPES OFF)
+    endif()
 
-    add_library(OpenBLAS IMPORTED INTERFACE GLOBAL)
+    if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+        add_library(OpenBLAS IMPORTED INTERFACE GLOBAL)
+    endif()
 
-    foreach(CONFIG_NAME IN LISTS CMAKE_CONFIGURATION_TYPES)
-        string(TOUPPER "${CONFIG_NAME}" CONFIG_NAME_TOUPPER)
-        set(OPENBLAS_OUTPUT_FILE "${openblas_BINARY_DIR}/lib/${CONFIG_NAME_TOUPPER}")
-        set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}")
+    foreach(CONFIG_NAME IN LISTS NASOQ_OPENBLAS_CONFIG_TYPES)
+        if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+            string(TOUPPER "${CONFIG_NAME}" CONFIG_NAME_TOUPPER)
+            set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}")
+            set(OPENBLAS_LIB_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib")
+            set(OPENBLAS_INCLUDE_DIR "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/include")
+            set(OPENBLAS_TARGET_NAME OpenBLAS_${CONFIG_NAME})
+            set(OPENBLAS_CMAKE_CONFIG_CMD "--config" "${CONFIG_NAME}")
+        else()
+            set(OPENBLAS_INSTALL_DIR "${openblas_BINARY_DIR}/inst")
+            set(OPENBLAS_LIB_DIR "${openblas_BINARY_DIR}/inst/lib")
+            set(OPENBLAS_INCLUDE_DIR "${openblas_BINARY_DIR}/inst/include")
+            set(OPENBLAS_TARGET_NAME OpenBLAS)
+            set(OPENBLAS_CMAKE_CONFIG_CMD "")
+        endif()
 
-        if(NOT EXISTS "${OPENBLAS_OUTPUT_FILE}")
+        if(MSVC)
+            set(OPENBLAS_LIB_PATH "${OPENBLAS_LIB_DIR}/openblas.lib")
+        else()
+            set(OPENBLAS_LIB_PATH "${OPENBLAS_LIB_DIR}/libopenblas.a")
+        endif()
+
+        if(NOT EXISTS "${OPENBLAS_LIB_PATH}")
             execute_process(
-                COMMAND ${CMAKE_COMMAND} "--build" "." "--config" "${CONFIG_NAME}"
+                COMMAND ${CMAKE_COMMAND} "--build" "." ${OPENBLAS_CMAKE_CONFIG_CMD}
                 WORKING_DIRECTORY "${openblas_BINARY_DIR}"
             )
         endif()
@@ -101,20 +147,23 @@ else()
 
         if(NOT EXISTS "${OPENBLAS_INSTALL_DIR}/include/openblas/openblas_config.h")
             execute_process(
-                COMMAND ${CMAKE_COMMAND} "--install" "." "--config" "${CONFIG_NAME}"
+                COMMAND ${CMAKE_COMMAND} "--install" "." ${OPENBLAS_CMAKE_CONFIG_CMD}
                     "--prefix" "${OPENBLAS_INSTALL_DIR}"
                     WORKING_DIRECTORY "${openblas_BINARY_DIR}"
             )
         endif()
 
-        add_library(OpenBLAS_${CONFIG_NAME} STATIC IMPORTED GLOBAL)
+        add_library(${OPENBLAS_TARGET_NAME} STATIC IMPORTED GLOBAL)
         set_property(
-            TARGET OpenBLAS_${CONFIG_NAME}
+            TARGET ${OPENBLAS_TARGET_NAME}
             PROPERTY IMPORTED_LOCATION
-            "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/lib/openblas.lib"
+            ${OPENBLAS_LIB_PATH}
         )
-        target_include_directories(OpenBLAS_${CONFIG_NAME} INTERFACE "${openblas_BINARY_DIR}/inst/${CONFIG_NAME}/include")
-        target_link_libraries(OpenBLAS INTERFACE $<$<CONFIG:${CONFIG_NAME}>:OpenBLAS_${CONFIG_NAME}>)
+        target_include_directories(${OPENBLAS_TARGET_NAME} INTERFACE "${OPENBLAS_INCLUDE_DIR}")
+        
+        if(NASOQ_OPENBLAS_USE_CONFIG_TYPES)
+            target_link_libraries(OpenBLAS INTERFACE $<$<CONFIG:${CONFIG_NAME}>:OpenBLAS_${CONFIG_NAME}>)
+        endif()
     endforeach()
 
     add_library(OpenBLAS::OpenBLAS ALIAS OpenBLAS)
