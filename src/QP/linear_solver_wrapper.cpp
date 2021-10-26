@@ -992,6 +992,13 @@ namespace nasoq {
   return 1;
  }
 
+ int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const, std::vector<double> rhs_values) {
+  for (int i = 0; i < rhs_values.size(); ++i) {
+   rhs[add_drp_const[i]] = rhs_values[i];
+  }
+  add_del_matrix_qp(add_del, add_drp_const);
+ }
+
  int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const) {
   int ret_val = 0;
   int *tree;
@@ -1270,6 +1277,11 @@ namespace nasoq {
 
  double *SolverSettings::update_solve() {
   return NULL;
+ }
+
+ double *SolverSettings::solve_only(double *rhs_in) {
+  std::copy(rhs_in, rhs_in+A_ord->ncol, rhs);
+  solve_only();
  }
 
  double *SolverSettings::solve_only() {
