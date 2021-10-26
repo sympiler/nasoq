@@ -30,6 +30,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/lib/")
 option(NASOQ_BUILD_CLI "Build NASOQ Command-Line Interface EXEs" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_BUILD_EXAMPLES "Build NASOQ Examples" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_BUILD_TESTS "Build NASOQ Tests" ${NASOQ_IS_TOPLEVEL})
+option(NASOQ_BUILD_DOCS "Build NASOQ Documentation" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_WITH_EIGEN "Build NASOQ Eigen interface" ON)
 option(NASOQ_USE_CLAPACK "Use CLAPACK as the LAPACK implementaiton" OFF)
 
@@ -223,19 +224,21 @@ endif()
 #
 #   Dependencies: doxygen, graphviz.
 # =============================================================================
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+if(NASOQ_BUILD_DOCS)
+    find_package(Doxygen)
+    if (DOXYGEN_FOUND)
+        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-    message("Doxygen build started")
+        configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+        message("Doxygen build started")
 
-    add_custom_target( doc_doxygen ALL
-        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen"
-        VERBATIM )
-else (DOXYGEN_FOUND)
-  message("Doxygen need to be installed to generate the doxygen documentation")
-endif (DOXYGEN_FOUND)
+        add_custom_target( doc_doxygen ALL
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM )
+    else (DOXYGEN_FOUND)
+    message("Doxygen need to be installed to generate the doxygen documentation")
+    endif (DOXYGEN_FOUND)
+endif(NASOQ_BUILD_DOCS)
