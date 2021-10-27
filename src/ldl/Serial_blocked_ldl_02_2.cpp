@@ -178,6 +178,7 @@ namespace nasoq {
   delete[]map;
   delete[]ws;
   delete[]swap_full;
+  delete []ipiv;
   return true;
  }
 }

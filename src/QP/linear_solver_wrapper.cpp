@@ -992,17 +992,29 @@ namespace nasoq {
   return 1;
  }
 
- int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const, const int n_rhs,
-                                       const double *new_rhs) {
+ int SolverSettings::update_somod(std::vector<int> add_drp_const, const
+ int n_rhs, const double *new_rhs) {
   assert(n_rhs==1); // multiple rhs is not supported yet
   int dim = A_ord->nrow;
   for (int i = 0; i < add_drp_const.size(); ++i) {
    int k = add_drp_const[i];
    for (int j = 0; j < n_rhs; ++j) {
-    rhs[k + j*dim] = new_rhs[k + j*dim];
+    rhs[(k+base) + j*dim] = new_rhs[k + j*dim];
    }
   }
-  add_del_matrix_qp(add_del, add_drp_const);
+  add_del_matrix_qp(1, add_drp_const);
+ }
+
+ int SolverSettings::downdate_somod(std::vector<int> add_drp_const, int n_rhs) {
+  assert(n_rhs==1); // multiple rhs is not supported yet
+  int dim = A_ord->nrow;
+  for (int i = 0; i < add_drp_const.size(); ++i) {
+   int k = add_drp_const[i];
+   for (int j = 0; j < n_rhs; ++j) {
+    rhs[(k+base) + j*dim] = 0;
+   }
+  }
+  add_del_matrix_qp(0, add_drp_const);
  }
 
  int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const) {

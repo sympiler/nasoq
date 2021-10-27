@@ -42,9 +42,19 @@ int main(int argc, char *argv[]){
  lbl->numerical_factorization();
  double *x = lbl->solve_only();
 
-
  /// Printing results
  // expected x={-2,-2};
+ std::cout<<"Solution: ";
+ for (int i = 0; i < sizeH; ++i) {
+  std::cout<<x[i]<<",";
+ }
+
+ /// Solving new RHS for the same factor
+ auto *new_q = new double[sizeH];
+ new_q[0] = 8; new_q[1] = 8;
+ lbl->solve_only(1, new_q);
+ /// Printing results
+ // expected x={4,4};
  std::cout<<"Solution: ";
  for (int i = 0; i < sizeH; ++i) {
   std::cout<<x[i]<<",";
@@ -56,6 +66,7 @@ int main(int argc, char *argv[]){
  delete []Hx;
  delete []q;
  delete []x;
+ delete []new_q;
  delete H;
  return 0;
 }
