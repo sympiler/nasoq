@@ -223,7 +223,8 @@ namespace nasoq {
  * rhs_values will change the corresponding values of the RHS
  */
   int add_del_matrix_qp(int add_del, std::vector<int> add_drp_const);
-  int add_del_matrix_qp(int add_del, std::vector<int> add_drp_const, std::vector<double> rhs_values);
+  int add_del_matrix_qp(int add_del, std::vector<int> add_drp_const,  const int n_rhs,
+                                       const double *new_rhs);
 
   /*
    * Editing an existing row
@@ -258,7 +259,7 @@ namespace nasoq {
    * Use the computed factors and solve the system for an internal RHS for a given rhs_in
    */
   double *solve_only();
-  double *solve_only(double *rhs_in);
+  double *solve_only(const int n_rhs, double *rhs_in);
 
   double *iterative_ref_only();
 

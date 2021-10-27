@@ -992,9 +992,15 @@ namespace nasoq {
   return 1;
  }
 
- int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const, std::vector<double> rhs_values) {
-  for (int i = 0; i < rhs_values.size(); ++i) {
-   rhs[add_drp_const[i]] = rhs_values[i];
+ int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const, const int n_rhs,
+                                       const double *new_rhs) {
+  assert(n_rhs==1); // multiple rhs is not supported yet
+  int dim = A_ord->nrow;
+  for (int i = 0; i < add_drp_const.size(); ++i) {
+   int k = add_drp_const[i];
+   for (int j = 0; j < n_rhs; ++j) {
+    rhs[k + j*dim] = new_rhs[k + j*dim];
+   }
   }
   add_del_matrix_qp(add_del, add_drp_const);
  }
@@ -1279,7 +1285,7 @@ namespace nasoq {
   return NULL;
  }
 
- double *SolverSettings::solve_only(double *rhs_in) {
+ double *SolverSettings::solve_only(const int n_rhs, double *rhs_in) {
   std::copy(rhs_in, rhs_in+A_ord->ncol, rhs);
   solve_only();
  }
