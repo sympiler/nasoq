@@ -1002,7 +1002,7 @@ namespace nasoq {
     rhs[(k+base) + j*dim] = new_rhs[k + j*dim];
    }
   }
-  add_del_matrix_qp(1, add_drp_const);
+  return add_del_matrix_qp(1, add_drp_const);
  }
 
  int SolverSettings::downdate_somod(std::vector<int> add_drp_const, int n_rhs) {
@@ -1014,7 +1014,7 @@ namespace nasoq {
     rhs[(k+base) + j*dim] = 0;
    }
   }
-  add_del_matrix_qp(0, add_drp_const);
+  return add_del_matrix_qp(0, add_drp_const);
  }
 
  int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const) {
@@ -1299,7 +1299,7 @@ namespace nasoq {
 
  double *SolverSettings::solve_only(const int n_rhs, double *rhs_in) {
   std::copy(rhs_in, rhs_in+A_ord->ncol, rhs);
-  solve_only();
+  return solve_only();
  }
 
  double *SolverSettings::solve_only() {
