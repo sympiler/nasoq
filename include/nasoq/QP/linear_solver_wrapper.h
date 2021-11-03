@@ -220,9 +220,21 @@ namespace nasoq {
  * This is an expert routine, used for QP
  * Edit the list of col/rows of matrix B
  * in add_drop_const.
+ * rhs_values will change the corresponding values of the RHS
  */
   int add_del_matrix_qp(int add_del, std::vector<int> add_drp_const);
 
+  /*
+   * Updates the linear system by add rows/cols in add_drp_const vector
+   * And also udpate corresponding location by the given input rhs
+   */
+  int update_somod(std::vector<int> add_drp_const, const int n_rhs, const
+  double *new_rhs);
+
+  /*
+   * Removes (makes zero) rows/cols in add_drp_const
+   */
+  int downdate_somod(std::vector<int> add_drp_const, int n_rhs);
 
   /*
    * Editing an existing row
@@ -253,7 +265,11 @@ namespace nasoq {
   double *update_solve();
 
 
+  /*
+   * Use the computed factors and solve the system for an internal RHS for a given rhs_in
+   */
   double *solve_only();
+  double *solve_only(const int n_rhs, double *rhs_in);
 
   double *iterative_ref_only();
 

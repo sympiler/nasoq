@@ -992,6 +992,31 @@ namespace nasoq {
   return 1;
  }
 
+ int SolverSettings::update_somod(std::vector<int> add_drp_const, const
+ int n_rhs, const double *new_rhs) {
+  assert(n_rhs==1); // multiple rhs is not supported yet
+  int dim = A_ord->nrow;
+  for (int i = 0; i < add_drp_const.size(); ++i) {
+   int k = add_drp_const[i];
+   for (int j = 0; j < n_rhs; ++j) {
+    rhs[(k+base) + j*dim] = new_rhs[k + j*dim];
+   }
+  }
+  return add_del_matrix_qp(1, add_drp_const);
+ }
+
+ int SolverSettings::downdate_somod(std::vector<int> add_drp_const, int n_rhs) {
+  assert(n_rhs==1); // multiple rhs is not supported yet
+  int dim = A_ord->nrow;
+  for (int i = 0; i < add_drp_const.size(); ++i) {
+   int k = add_drp_const[i];
+   for (int j = 0; j < n_rhs; ++j) {
+    rhs[(k+base) + j*dim] = 0;
+   }
+  }
+  return add_del_matrix_qp(0, add_drp_const);
+ }
+
  int SolverSettings::add_del_matrix_qp(int add_del, std::vector<int> add_drp_const) {
   int ret_val = 0;
   int *tree;
@@ -1270,6 +1295,11 @@ namespace nasoq {
 
  double *SolverSettings::update_solve() {
   return NULL;
+ }
+
+ double *SolverSettings::solve_only(const int n_rhs, double *rhs_in) {
+  std::copy(rhs_in, rhs_in+A_ord->ncol, rhs);
+  return solve_only();
  }
 
  double *SolverSettings::solve_only() {

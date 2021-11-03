@@ -68,7 +68,8 @@ int main(int argc, char** argv) {
  /// Updating with constraint 0
  std::vector<int> constraint_inds;
  constraint_inds.push_back(0);
- lbl->add_del_matrix_qp(1, constraint_inds);
+ d[0] = 2; d[1] = 1;
+ lbl->update_somod(constraint_inds, 1, d);
  lbl->update_factorization();
  x = lbl->solve_only();
  /// Printing results
@@ -80,7 +81,7 @@ int main(int argc, char** argv) {
 
  /// Updating with constraint 1
  constraint_inds.clear(); constraint_inds.push_back(1);
- lbl->add_del_matrix_qp(1, constraint_inds);
+ lbl->update_somod(constraint_inds, 1, d);
  lbl->update_factorization();
  x = lbl->solve_only();
  /// Printing results
@@ -92,7 +93,7 @@ int main(int argc, char** argv) {
 
  /// Downdating constraint 0
  constraint_inds.clear(); constraint_inds.push_back(0);
- lbl->add_del_matrix_qp(0, constraint_inds);
+ lbl->downdate_somod(constraint_inds, 1);
  lbl->update_factorization();
  x = lbl->solve_only();
  /// Printing results
