@@ -79,6 +79,7 @@ namespace nasoq {
  }
 
  SolverSettings::SolverSettings(CSC *Amat, double *rhs_in) {
+  init_to_null();
   default_setting();
   A = Amat;
   rhs = rhs_in;
@@ -194,12 +195,70 @@ namespace nasoq {
   }
 
   // deleting matrices
-  delete[]L->ColCount;
-  delete L;
-  if (solver_mode != 0)
-   allocateAC(SM, 0, 0, 0, FALSE);
-  else
-   delete SM;
+  if(NULL != L) {
+   delete[]L->ColCount;
+   delete L;
+  }
+  if(NULL != SM) {
+   if(solver_mode != 0)
+    allocateAC(SM, 0, 0, 0, FALSE);
+   else
+    delete SM;
+  }
+ }
+
+ void SolverSettings::init_to_null() {
+  L = NULL;
+  valL = NULL;
+  d_val = NULL;
+  x = NULL;
+  rhs = NULL;
+  A = NULL;
+  SM = NULL;
+  AorSM = NULL;
+  A_ord = NULL;
+  AT_ord = NULL;
+  B = NULL;
+  BT = NULL;
+  C = NULL;
+  CT = NULL;
+  perm_piv = NULL;
+  pinv = NULL;
+  sm_rhs = NULL;
+  sm_solution = NULL;
+  l_pb = NULL;
+  l_pe = NULL;
+  l_i = NULL;
+  l_x = NULL;
+  level_ptr = NULL;
+  level_set = NULL;
+  par_ptr = NULL;
+  par_set = NULL;
+  level_ptr_s = NULL;
+  par_ptr_s = NULL;
+  par_set_s = NULL;
+  s_level_ptr = NULL;
+  s_level_set = NULL;
+  prune_ptr = NULL;
+  prune_set = NULL;
+  extra_cols = NULL;
+  atree = NULL;
+  etree = NULL;
+  etree_mod = NULL;
+  visible_cnt = NULL;
+  child_ptr = NULL;
+  child_no = NULL;
+  num_child = NULL;
+  child_sn_ptr = NULL;
+  child_sn_no = NULL;
+  num_sn_child = NULL;
+  psi = NULL;
+  marked = NULL;
+  visible_sn = NULL;
+  ws = NULL;
+  ws_zeroed = NULL;
+  ws_int = NULL;
+  extra_rhs = NULL;
  }
 
  void SolverSettings::default_setting() {

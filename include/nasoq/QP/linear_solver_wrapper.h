@@ -138,6 +138,8 @@ namespace nasoq {
 
   ~SolverSettings();
 
+  void init_to_null(); // helps avoid a crash when destructing
+
   /*
    * Default setting of solver
    */
