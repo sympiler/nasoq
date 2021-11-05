@@ -18,7 +18,7 @@ namespace nasoq {
    A->x = new double[nnz]();
    A->nz = NULL;
 
-  } else {
+  } else if(NULL != A) {
    delete[]A->p;
    delete[]A->i;
    delete[]A->x;
