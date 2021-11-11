@@ -36,6 +36,8 @@ if(NOT clapack_POPULATED)
         "${clapack_SOURCE_DIR}/F2CLIBS/libf2c/s_cmp.c"
         "${clapack_SOURCE_DIR}/F2CLIBS/libf2c/s_copy.c"
     )
+
+    set_target_properties(clapack PROPERTIES FOLDER third_party)
 endif()
 
 add_library(clapack::clapack ALIAS clapack)
