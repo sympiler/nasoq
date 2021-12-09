@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "QP/qp_utils.h"
+#include "nasoq/QP/qp_utils.h"
 
-#include "common/Norm.h"
-#include "common/Util.h"
-#include "matrixVector/spmv_CSC.h"
+#include "nasoq/common/Norm.h"
+#include "nasoq/common/Util.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
 
 #include <algorithm>
 

@@ -7,10 +7,10 @@
 
 
 
-#include "solve_phase.h"
-#include "Norm.h"
-#include "SparseUtils.h"
-#include "spmv_CSC.h"
+#include "nasoq/linear_solver/solve_phase.h"
+#include "nasoq/common/Norm.h"
+#include "nasoq/common/SparseUtils.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
 
 namespace nasoq {
  int iterative_refinement(int n, size_t *Ap, int *Ai, double *Ax,

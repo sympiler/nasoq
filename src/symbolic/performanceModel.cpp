@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/performanceModel.h"
+#include "nasoq/symbolic/performanceModel.h"
 
 #include <cassert>
 
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 namespace nasoq {
 

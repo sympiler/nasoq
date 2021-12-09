@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/Partitioning.h"
+#include "nasoq/symbolic/Partitioning.h"
 
 namespace nasoq {
 

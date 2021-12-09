@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "matrixMatrix/spmm.h"
+#include "nasoq/matrixMatrix/spmm.h"
 
 namespace nasoq {
 

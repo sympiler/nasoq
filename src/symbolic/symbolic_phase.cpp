@@ -2,16 +2,16 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/symbolic_phase.h"
+#include "nasoq/symbolic/symbolic_phase.h"
 
 #include <chrono>
 #include <iostream>
 
-#include "common/Etree.h"
-#include "common/PostOrder.h"
-#include "common/Transpose.h"
-#include "symbolic/ColumnCount.h"
-#include "symbolic/supernode_detection.h"
+#include "nasoq/common/Etree.h"
+#include "nasoq/common/PostOrder.h"
+#include "nasoq/common/Transpose.h"
+#include "nasoq/symbolic/ColumnCount.h"
+#include "nasoq/symbolic/supernode_detection.h"
 
 namespace nasoq {
 

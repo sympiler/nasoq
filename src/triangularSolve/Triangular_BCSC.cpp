@@ -2,17 +2,17 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "triangularSolve/Triangular_BCSC.h"
+#include "nasoq/triangularSolve/Triangular_BCSC.h"
 
 #include <cassert>
-#include <common/Sym_BLAS.h>
+#include <nasoq/common/Sym_BLAS.h>
 
 
 #ifdef  OPENMP
 #include "omp.h"
 #endif
 
-#include "triangularSolve/BLAS.h"
+#include "nasoq/triangularSolve/BLAS.h"
 
 namespace nasoq {
 

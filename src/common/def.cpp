@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 

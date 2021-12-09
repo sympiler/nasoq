@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/ldlt_check.h"
+#include "nasoq/ldl/ldlt_check.h"
 
-#include "common/def.h"
-#include "common/Transpose.h"
-#include "matrixMatrix/spmm.h"
+#include "nasoq/common/def.h"
+#include "nasoq/common/Transpose.h"
+#include "nasoq/matrixMatrix/spmm.h"
 
 namespace nasoq {
 

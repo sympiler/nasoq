@@ -5,7 +5,7 @@
 #ifndef PROJECT_SOLVER_GENERATION_H
 #define PROJECT_SOLVER_GENERATION_H
 
-#include "Util.h"
+#include "nasoq/common/Util.h"
 
 namespace nasoq {
  int build_linear_solve_from_file(std::string matrix_in,

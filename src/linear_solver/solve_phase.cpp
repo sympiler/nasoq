@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "linear_solver/solve_phase.h"
+#include "nasoq/linear_solver/solve_phase.h"
 
-#include "common/Sym_BLAS.h"
-#include "triangularSolve/Triangular_BCSC.h"
-#include "triangularSolve/Triangular_CSC.h"
+#include "nasoq/common/Sym_BLAS.h"
+#include "nasoq/triangularSolve/Triangular_BCSC.h"
+#include "nasoq/triangularSolve/Triangular_CSC.h"
 
 namespace nasoq {
 

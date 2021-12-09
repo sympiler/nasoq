@@ -2,9 +2,9 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/supernode_detection.h"
+#include "nasoq/symbolic/supernode_detection.h"
 
-#include "common/SparseUtils.h"
+#include "nasoq/common/SparseUtils.h"
 
 namespace nasoq {
 

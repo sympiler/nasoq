@@ -1,4 +1,4 @@
-#include "clapacke/clapacke.h"
+#include "nasoq/clapacke/clapacke.h"
 
 #include <vector>
 

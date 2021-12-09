@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/transpose_unsym.h"
+#include "nasoq/common/transpose_unsym.h"
 
 #include <algorithm>
 

@@ -2,12 +2,12 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/Serial_update_simplicial_ldl.h"
+#include "nasoq/ldl/Serial_update_simplicial_ldl.h"
 
 #include <algorithm>
 #include <cassert>
 
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 namespace nasoq {
 

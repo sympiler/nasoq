@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "triangularSolve/Triangular_CSC.h"
+#include "nasoq/triangularSolve/Triangular_CSC.h"
 
 #include <chrono>
 
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 namespace nasoq {
 

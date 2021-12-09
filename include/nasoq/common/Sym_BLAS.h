@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 #include <cstdlib>
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 #ifdef OPENBLAS
 /*    #ifdef OB_INTERNAL

@@ -6,7 +6,7 @@
 
 #include <cstddef>
 
-#include "matrixVector/spmv_CSC.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
 
 namespace nasoq {
 /*

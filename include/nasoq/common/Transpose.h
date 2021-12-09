@@ -8,8 +8,8 @@
 #include <cstdint>
 #include <cstdio>
 
-#include "common/def.h"
-#include "common/SparseUtils.h"
+#include "nasoq/common/def.h"
+#include "nasoq/common/SparseUtils.h"
 
 namespace nasoq {
 /* ========================================================================== */

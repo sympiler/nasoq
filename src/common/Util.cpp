@@ -2,13 +2,13 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/Util.h"
+#include "nasoq/common/Util.h"
 
 #include <algorithm>
 #include <cassert>
 #include <cmath>
 
-#include "common/cxxopts.hpp"
+#include "nasoq/common/cxxopts.hpp"
 
 namespace nasoq {
 

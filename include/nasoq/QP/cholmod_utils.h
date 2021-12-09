@@ -11,8 +11,8 @@
 #include <cholmod.h>
 #include <cholmod_function.h>
 #include <omp.h>
-#include "def.h"
-#include "updown_test.h"
+#include "nasoq/common/def.h"
+#include "nasoq/QP/updown_test.h"
 
 namespace nasoq {
  void print_sparse_l(cholmod_factor *L) {

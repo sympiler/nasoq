@@ -5,7 +5,7 @@
 #ifndef NASOQ_NASOQ_STEP_H
 #define NASOQ_NASOQ_STEP_H
 
-#include "nasoq.h"
+#include "nasoq/nasoq.h"
 
 namespace nasoq {
  struct NasoqStep : Nasoq {

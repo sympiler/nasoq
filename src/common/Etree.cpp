@@ -2,9 +2,9 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/Etree.h"
+#include "nasoq/common/Etree.h"
 
-#include "common/SparseUtils.h"
+#include "nasoq/common/SparseUtils.h"
 
 namespace nasoq {
 

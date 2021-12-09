@@ -2,14 +2,14 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/Serial_blocked_ldl.h"
+#include "nasoq/ldl/Serial_blocked_ldl.h"
 
 #include <cassert>
-#include <common/Sym_BLAS.h>
+#include <nasoq/common/Sym_BLAS.h>
 
 
 
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 namespace nasoq {
 

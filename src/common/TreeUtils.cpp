@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/TreeUtils.h"
+#include "nasoq/common/TreeUtils.h"
 
 #include <algorithm>
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 

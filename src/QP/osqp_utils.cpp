@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "QP/osqp_utils.h"
+#include "nasoq/QP/osqp_utils.h"
 
 #include <algorithm>
 #include <cmath>

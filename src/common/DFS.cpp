@@ -2,9 +2,9 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/DFS.h"
+#include "nasoq/common/DFS.h"
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 

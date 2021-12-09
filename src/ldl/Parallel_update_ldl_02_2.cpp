@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/Parallel_update_ldl_02_2.h"
+#include "nasoq/ldl/Parallel_update_ldl_02_2.h"
 
 #include <cassert>
 #include <chrono>
@@ -10,8 +10,8 @@
 
 
 
-#include "common/Reach.h"
-#include "common/Sym_BLAS.h"
+#include "nasoq/common/Reach.h"
+#include "nasoq/common/Sym_BLAS.h"
 
 namespace nasoq {
 

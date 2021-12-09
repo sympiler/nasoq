@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "matrixVector/spmv_CSC.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
 
 #include <algorithm>
 #include <cassert>

@@ -5,7 +5,7 @@
 #ifndef PROJECT_OSQP_UTILS_H
 #define PROJECT_OSQP_UTILS_H
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 
