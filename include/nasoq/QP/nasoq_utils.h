@@ -5,7 +5,7 @@
 #ifndef PARS_NASOQ_UTILS_H
 #define PARS_NASOQ_UTILS_H
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
  int max_min_sparse_matrix(const CSC *M, double &max_v,

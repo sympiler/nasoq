@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "ldl/Parallel_update_simplicial.h"
+#include "nasoq/ldl/Parallel_update_simplicial.h"
 
 #include <cassert>
 
@@ -11,7 +11,7 @@
 #endif
 
 
-#include "common/Reach.h"
+#include "nasoq/common/Reach.h"
 
 namespace nasoq {
 

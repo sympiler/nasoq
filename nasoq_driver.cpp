@@ -10,7 +10,7 @@
 #include "mkl.h"
 #endif
 
-#include "nasoq.h"
+#include "nasoq/nasoq.h"
 
 #include "utils.h"
 #include <mp_format_converter.h>

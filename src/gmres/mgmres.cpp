@@ -2,15 +2,15 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "gmres/mgmres.hpp"
+#include "nasoq/gmres/mgmres.hpp"
 
 # include <cstdio>
 # include <cstdlib>
 # include <ctime>
 
-#include "common/Norm.h"
-#include "linear_solver/solve_phase.h"
-#include "matrixVector/spmv_CSC.h"
+#include "nasoq/common/Norm.h"
+#include "nasoq/linear_solver/solve_phase.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
 
 namespace nasoq {
  /******************************************************************************/

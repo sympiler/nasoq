@@ -2,9 +2,9 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/ColumnCount.h"
+#include "nasoq/symbolic/ColumnCount.h"
 
-#include "common/Transpose.h"
+#include "nasoq/common/Transpose.h"
 
 namespace nasoq {
 

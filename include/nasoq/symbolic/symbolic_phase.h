@@ -7,7 +7,7 @@
 
 #include <cstddef>
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 #ifdef SCOTCH
 #include "scotch.h"

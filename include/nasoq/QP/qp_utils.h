@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
  double dot1(int n, double *a, double *b);

@@ -7,10 +7,10 @@
 #include <chrono>
 
 
-#include "ldl/Serial_update_ldl.h"
+#include "nasoq/ldl/Serial_update_ldl.h"
 
-#include "common/Reach.h"
-#include "common/Sym_BLAS.h"
+#include "nasoq/common/Reach.h"
+#include "nasoq/common/Sym_BLAS.h"
 
 namespace nasoq {
 

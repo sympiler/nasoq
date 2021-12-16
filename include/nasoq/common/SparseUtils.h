@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 /* Return the number of entries in a sparse matrix.

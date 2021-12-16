@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "triangularSolve/BLAS.h"
+#include "nasoq/triangularSolve/BLAS.h"
 
 namespace nasoq {
 

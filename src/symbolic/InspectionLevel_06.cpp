@@ -2,13 +2,13 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "symbolic/InspectionLevel_06.h"
+#include "nasoq/symbolic/InspectionLevel_06.h"
 
 #include <cassert>
 #include <vector>
 
-#include "common/TreeUtils.h"
-#include "symbolic/PostOrderSpliting.h"
+#include "nasoq/common/TreeUtils.h"
+#include "nasoq/symbolic/PostOrderSpliting.h"
 
 namespace nasoq {
 

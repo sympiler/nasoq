@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <cstdio>
 
-#include "common/def.h"
+#include "nasoq/common/def.h"
 
 namespace nasoq {
 /* ========================================================================== */

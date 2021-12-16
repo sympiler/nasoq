@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/Transpose.h"
+#include "nasoq/common/Transpose.h"
 
 #include <cstdlib>
 

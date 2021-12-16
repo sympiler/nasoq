@@ -2,7 +2,7 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "QP/nasoq_utils.h"
+#include "nasoq/QP/nasoq_utils.h"
 
 #include <limits>
 #include <iostream>

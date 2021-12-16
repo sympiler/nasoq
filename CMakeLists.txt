@@ -97,7 +97,6 @@ find_package(OpenMP)
 
 set(NASOQ_INTERNAL_INCLUDE_DIRS
     "${CMAKE_CURRENT_LIST_DIR}/smp-format/"
-    "${CMAKE_CURRENT_LIST_DIR}/include/nasoq"
 )
 
 add_library(nasoq "")

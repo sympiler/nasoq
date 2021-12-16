@@ -2,33 +2,33 @@
 // Created by Shujian Qian on 2020-10-30.
 //
 
-#include "QP/linear_solver_wrapper.h"
+#include "nasoq/QP/linear_solver_wrapper.h"
 
 #include <algorithm>
 #include <iostream>
 #include <queue>
-#include <common/Sym_BLAS.h>
+#include <nasoq/common/Sym_BLAS.h>
 
-#include "common/Norm.h"
-#include "common/Transpose.h"
-#include "common/TreeUtils.h"
-#include "common/Util.h"
-#include "gmres/mgmres.hpp"
-#include "ldl/ldlt_check.h"
-#include "ldl/parallel_blocked_ldlt.h"
-#include "ldl/parallel_blocked_ldlt_02.h"
-#include "ldl/parallel_blocked_ldlt_03.h"
-#include "ldl/Parallel_simplicial_ldl.h"
-#include "ldl/Parallel_update_ldl_02_2.h"
-#include "ldl/Parallel_update_simplicial.h"
-#include "ldl/Serial_blocked_ldl.h"
-#include "ldl/Serial_blocked_ldl_02_2.h"
-#include "ldl/serial_simplicial_ldl.h"
-#include "ldl/Serial_update_ldl.h"
-#include "ldl/Serial_update_ldl_static.h"
-#include "ldl/Serial_update_simplicial_ldl.h"
-#include "linear_solver/solve_phase.h"
-#include "symbolic/symbolic_phase.h"
+#include "nasoq/common/Norm.h"
+#include "nasoq/common/Transpose.h"
+#include "nasoq/common/TreeUtils.h"
+#include "nasoq/common/Util.h"
+#include "nasoq/gmres/mgmres.hpp"
+#include "nasoq/ldl/ldlt_check.h"
+#include "nasoq/ldl/parallel_blocked_ldlt.h"
+#include "nasoq/ldl/parallel_blocked_ldlt_02.h"
+#include "nasoq/ldl/parallel_blocked_ldlt_03.h"
+#include "nasoq/ldl/Parallel_simplicial_ldl.h"
+#include "nasoq/ldl/Parallel_update_ldl_02_2.h"
+#include "nasoq/ldl/Parallel_update_simplicial.h"
+#include "nasoq/ldl/Serial_blocked_ldl.h"
+#include "nasoq/ldl/Serial_blocked_ldl_02_2.h"
+#include "nasoq/ldl/serial_simplicial_ldl.h"
+#include "nasoq/ldl/Serial_update_ldl.h"
+#include "nasoq/ldl/Serial_update_ldl_static.h"
+#include "nasoq/ldl/Serial_update_simplicial_ldl.h"
+#include "nasoq/linear_solver/solve_phase.h"
+#include "nasoq/symbolic/symbolic_phase.h"
 
 
 

@@ -2,11 +2,11 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "common/PostOrder.h"
+#include "nasoq/common/PostOrder.h"
 
-#include "common/def.h"
-#include "common/DFS.h"
-#include "common/SparseUtils.h"
+#include "nasoq/common/def.h"
+#include "nasoq/common/DFS.h"
+#include "nasoq/common/SparseUtils.h"
 
 namespace nasoq {
 

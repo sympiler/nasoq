@@ -9,9 +9,9 @@
 #include <string>
 #include <vector>
 
-#include "common/def.h"
-#include "QP/qp_utils.h"
-#include "QP/linear_solver_wrapper.h"
+#include "nasoq/common/def.h"
+#include "nasoq/QP/qp_utils.h"
+#include "nasoq/QP/linear_solver_wrapper.h"
 
 namespace nasoq {
 #ifdef CHOLROWMOD

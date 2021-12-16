@@ -2,20 +2,20 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "nasoq.h"
+#include "nasoq/nasoq.h"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
-#include "common/Norm.h"
-#include "common/transpose_unsym.h"
-#include "common/Util.h"
-#include "matrixVector/spmv_CSC.h"
-#include "QP/nasoq_utils.h"
-#include "QP/osqp_utils.h"
-#include "QP/updown_test.h"
-#include <common/Sym_BLAS.h>
+#include "nasoq/common/Norm.h"
+#include "nasoq/common/transpose_unsym.h"
+#include "nasoq/common/Util.h"
+#include "nasoq/matrixVector/spmv_CSC.h"
+#include "nasoq/QP/nasoq_utils.h"
+#include "nasoq/QP/osqp_utils.h"
+#include "nasoq/QP/updown_test.h"
+#include "nasoq/common/Sym_BLAS.h"
 
 namespace nasoq {
  QPSettings::QPSettings() {

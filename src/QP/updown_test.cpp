@@ -2,14 +2,14 @@
 // Created by Shujian Qian on 2020-10-29.
 //
 
-#include "QP/updown_test.h"
+#include "nasoq/QP/updown_test.h"
 
 #ifdef MKL_BLAS
 #include "mkl.h"
 #endif
-#include "common/Util.h"
-#include "common/Transpose.h"
-#include "QP/linear_solver_wrapper.h"
+#include "nasoq/common/Util.h"
+#include "nasoq/common/Transpose.h"
+#include "nasoq/QP/linear_solver_wrapper.h"
 
 namespace nasoq {
 
