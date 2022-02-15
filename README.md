@@ -22,6 +22,8 @@ If you install OpenBlas in its default location (sudo make install), Cmake will 
 Given that MKL Pardiso or OpenBlas  are installed, install NASOQ using
 following steps:
 ```
+git clone https://github.com/sympiler/nasoq.git
+cd nasoq
 mkdir build
 cd build
 cmake -DMKL_ROOT_PATH=path/to/intel  -DCMAKE_BUILD_TYPE=Release ..
