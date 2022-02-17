@@ -6,7 +6,7 @@
 
 NASOQ is a scalable and efficient Quadratic Programming solver that
 obtains solutions for requested accuracies.
-LBL is a parallel multi-threaded sparse indefinite linear solver.
+LBL is a parallel sparse symmetric indefinite linear solver.
 
 ## Quick Build Guide for Impatient Users
 
