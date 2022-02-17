@@ -1,5 +1,6 @@
 ![example workflow](https://github.com/sympiler/nasoq/actions/workflows/cmakeUbuntu.yml/badge.svg)
 ![example workflow](https://github.com/sympiler/nasoq/actions/workflows/cmakeMac.yml/badge.svg)
+![example workflow](https://github.com/sympiler/nasoq/actions/workflows/WindowsBuild.yml/badge.svg)
 
 # NASOQ: Numerically Accurate Sparsity Oriented QP Solver
 
@@ -18,7 +19,7 @@ cmake -DNASOQ_BLAS_BACKEND=OpenBLAS -DNASOQ_USE_CLAPACK=ON -DCMAKE_BUILD_TYPE=Re
 cmake --build build --config Release -j 6 
 ```
 
-For details, please see the below table.
+For details, please see the table below.
 
 # Table of Contents:
 
