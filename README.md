@@ -9,14 +9,16 @@ LBL is a parallel multi-threaded sparse indefinite linear solver.
 
 ## Quick Build Guide for Impatient Users
 
+If you have CMake 3.16 or higher and a C++11 compiler, then:
+
 ```
 git clone https://github.com/sympiler/nasoq.git
 cd nasoq
-mkdir build
-cd build
-cmake -DNASOQ_BLAS_BACKEND=OpenBLAS -DNASOQ_USE_CLAPACK=ON -DCMAKE_BUILD_TYPE=Release ..
-make 
+cmake -DNASOQ_BLAS_BACKEND=OpenBLAS -DNASOQ_USE_CLAPACK=ON -DCMAKE_BUILD_TYPE=Release  -S . -B build
+cmake --build build --config Release -j 6 
 ```
+
+For details, please see the below table.
 
 # Table of Contents:
 
