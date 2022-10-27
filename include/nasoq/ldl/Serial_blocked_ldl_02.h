@@ -69,11 +69,6 @@ bool ldl_left_sn_02(int n, int* c, int* r, double* values,
      //      printf("dddd\n");
     }
    }
-#if DEBUG
-   top = ereach_sn(supNo,c,r,curCol,nxtCol,col2sup, eTree,xi,xi+supNo);
-         if(supNo-top != prunePtr[s]-prunePtr[s-1])
-             printf("sss");
-#endif
    double *src, *cur = &lValues[lC[curCol]];//pointing to first element of the current supernode
 
 /*  if(curCol == 36)

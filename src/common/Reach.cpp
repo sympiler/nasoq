@@ -53,12 +53,6 @@ namespace nasoq {
     PBset[PBsize++] = col2sup[xi[i]];
    }
   }
-#if DEBUG > 0
-  for(int i=0; i<PBsize; i++){
-         std::cout<<PBset[i]<<",";
-     }
-     std::cout<<"\n";
-#endif
   delete[]checked;
   delete[]xi;
   return (PBsize);
