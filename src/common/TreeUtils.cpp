@@ -121,16 +121,6 @@ namespace nasoq {
      nChild[inTree[cc]]--;
    }
   }
-#if DEBUG >= 2
-  std::cout<<"FinalSet\n";
-  for (int l = 0; l < curLevel; ++l) {
-   for (int lp = levelPtr[l]; lp < levelPtr[l+1]; ++lp) {
-    std::cout<<levelSet[lp]<<",";
-   }
-   std::cout<<"\n\n";
-  }
-  std::cout<<"\n";
-#endif
   delete[]nChild;
   delete[]visited;
   return curLevel;
@@ -141,12 +131,6 @@ namespace nasoq {
                     std::vector<std::vector<int>> &mergedLeveledParList, int *outCost, int costThreshold) {
   int lClusterCnt = 0;
   int partNo = newLeveledParList.size();
-#ifdef DEBUG
-  for (int j = 0; j < partNo; ++j) {
-         std::cout<<inCost[j]<<",";
-     }
-     std::cout<<"\n";
-#endif
   for (int i = 0; i < partNo;) {
    int curCost = 0;
    while (curCost < (1 * costThreshold) && i < partNo) {

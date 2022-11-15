@@ -92,11 +92,6 @@ namespace nasoq {
         //      printf("dddd\n");
        }
       }
-#if DEBUG
-      top = ereach_sn(supNo,c,r,curCol,nxtCol,col2sup, eTree,xi,xi+supNo);
-            if(supNo-top != prunePtr[s]-prunePtr[s-1])
-                printf("sss");
-#endif
       double *src, *cur = &lValues[lC[curCol]];//pointing to first element of the current supernode
 
 //#ifndef PRUNE
@@ -110,10 +105,6 @@ namespace nasoq {
          int lSN = pruneSet[i];
 #endif*/
        int nSupRs = 0;
-#if DEBUG
-       if(xi[top++] != lSN)
-                    printf("fail");
-#endif
        int cSN = blockSet[lSN];//first col of current SN
        int cNSN = blockSet[lSN + 1];//first col of Next SN
        int Li_ptr_cNSN = Li_ptr[cNSN];
@@ -407,11 +398,6 @@ namespace nasoq {
       //      printf("dddd\n");
      }
     }
-#if DEBUG
-    top = ereach_sn(supNo,c,r,curCol,nxtCol,col2sup, eTree,xi,xi+supNo);
-            if(supNo-top != prunePtr[s]-prunePtr[s-1])
-                printf("sss");
-#endif
     double *src, *cur = &lValues[lC[curCol]];//pointing to first element of the current supernode
 
  //#ifndef PRUNE
@@ -425,10 +411,6 @@ namespace nasoq {
           int lSN = pruneSet[i];
  #endif*/
      int nSupRs = 0;
-#if DEBUG
-     if(xi[top++] != lSN)
-                    printf("fail");
-#endif
      int cSN = blockSet[lSN];//first col of current SN
      int cNSN = blockSet[lSN + 1];//first col of Next SN
      int Li_ptr_cNSN = Li_ptr[cNSN];
