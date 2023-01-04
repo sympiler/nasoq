@@ -33,6 +33,7 @@ option(NASOQ_BUILD_TESTS "Build NASOQ Tests" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_BUILD_DOCS "Build NASOQ Documentation" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_WITH_EIGEN "Build NASOQ Eigen interface" ON)
 option(NASOQ_USE_CLAPACK "Use CLAPACK as the LAPACK implementaiton" OFF)
+option(NASOQ_WITH_MATLAB "Build NASOQ Matlab interface" OFF)
 
 set(NASOQ_BLAS_BACKEND "MKL" CACHE STRING "BLAS implementation for NASOQ to use")
 set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS)
@@ -64,6 +65,7 @@ list(PREPEND CMAKE_MODULE_PATH
 if(NASOQ_WITH_EIGEN)
     include(eigen)
 endif()
+
 
 if(NASOQ_USE_BLAS_MKL)
     include(mkl)
@@ -187,6 +189,10 @@ if(NASOQ_WITH_EIGEN)
 endif()
 
 add_library(nasoq::nasoq ALIAS nasoq)
+
+if(NASOQ_WITH_MALTLAB)
+    add_subdirectory(matlab)
+endif()
 
 #------------------------------------[ exes ]----------------------------------#
 

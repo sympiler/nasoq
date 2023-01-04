@@ -14,7 +14,7 @@
 #
 
 # Set the minimum required CMake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.9)
 
 # See cmake --help-policy CMP0011 for details on this one
 IF(POLICY CMP0011)
