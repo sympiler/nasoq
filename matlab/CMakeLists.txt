@@ -43,34 +43,16 @@ set(GPTOOLBOX_MEX_EXTERNAL "${GPTOOLBOX_MEX_ROOT}/external")
 option(LIBIGL_RESTRICTED_MATLAB "Use Matlab" ON)
 include(libigl)
 
-
 set( CMAKE_SHARED_LIBRARY_SUFFIX ".${Matlab_MEX_EXTENSION}" )  # set suffix to .mexa64
 set( CMAKE_SHARED_LIBRARY_PREFIX )      # remove the "lib" prefix
 set( CMAKE_SHARED_LIBRARY_CXX_FLAGS )       # remove the -fPIC option. mex does not accept the "-fPIC" option
 set( CMAKE_POSITION_INDEPENDENT_CODE ON)
 set( CMAKE_INSTALL_RPATH "\$ORIGIN" )
 
-# TODO: remove MKL dependency using OpenBLAS submodule
-find_package(MKL REQUIRED)
-
 if(UNIX )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ")
 endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DMKL  ")
-
-# Adding hints for suitesparse
-set(SUITESPARSE_INCLUDE_DIR_HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS} ${SUITE_ROOT_PATH}/include)
-set(SUITESPARSE_LIBRARY_DIR_HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS} ${SUITE_ROOT_PATH}/lib)
-set(BLA_STATIC TRUE)
-find_package(SuiteSparse OPTIONAL_COMPONENTS)
-
-#TODO needs a fix
-set( INCLUDE_INSTALL_DIR ${METIS_ROOT_PATH}/include)
-set( LIB_INSTALL_DIR ${METIS_ROOT_PATH}/libmetis)
-find_package(METIS REQUIRED)
-set(METIS_LIBRARY "")
-set(METIS_INCLUDE_DIR "")
-
 
 function(compile_each I_MEX_SOURCES I_LIBS )
   foreach(MEX_SOURCE ${I_MEX_SOURCES})
@@ -85,16 +67,9 @@ function(compile_each I_MEX_SOURCES I_LIBS )
       # https://stackoverflow.com/a/11095194/148668
       set_target_properties(${MEX_TARGET} PROPERTIES LINK_FLAGS "/export:mexFunction")
     endif()
-    target_link_libraries(${MEX_TARGET} ${I_LIBS} ${METIS_LIBRARIES}
-      ${SUITESPARSE_LIBRARIES} ${MKL_LIBRARIES})
-    target_include_directories(${MEX_TARGET} PUBLIC ${Matlab_INCLUDE_DIRS}
-      ${METIS_INCLUDE_DIR} ${METIS_INCLUDES} ${MKL_INCLUDE_DIR}
-      ${SUITESPARSE_INCLUDE_DIRS}) 
+    target_link_libraries(${MEX_TARGET} ${I_LIBS})
+    target_include_directories(${MEX_TARGET} PUBLIC ${Matlab_INCLUDE_DIRS})
     list(APPEND MEX_TARGETS ${MEX_TARGET})
-    if(APPLE)
-      include(OSXFixDylibReferences)
-      OSX_FIX_DYLIB_REFERENCES(${MEX_TARGET} ${MKL_LIBRARIES})
-    endif()
   endforeach()
 endfunction()
 
