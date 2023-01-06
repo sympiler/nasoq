@@ -33,6 +33,8 @@ option(NASOQ_BUILD_TESTS "Build NASOQ Tests" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_BUILD_DOCS "Build NASOQ Documentation" ${NASOQ_IS_TOPLEVEL})
 option(NASOQ_WITH_EIGEN "Build NASOQ Eigen interface" ON)
 option(NASOQ_USE_CLAPACK "Use CLAPACK as the LAPACK implementaiton" OFF)
+option(NASOQ_USE_OPENMP "Use OpenMP" ON)
+option(NASOQ_WITH_MATLAB "Build NASOQ Matlab interface" OFF)
 
 set(NASOQ_BLAS_BACKEND "MKL" CACHE STRING "BLAS implementation for NASOQ to use")
 set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS)
@@ -65,6 +67,7 @@ if(NASOQ_WITH_EIGEN)
     include(eigen)
 endif()
 
+
 if(NASOQ_USE_BLAS_MKL)
     include(mkl)
 elseif(NASOQ_USE_BLAS_OpenBLAS)
@@ -92,7 +95,9 @@ include(metis)
 
 #-----------------------------------[ nasoq ]----------------------------------#
 
-find_package(OpenMP)
+if(NASOQ_USE_OPENMP)
+  find_package(OpenMP)
+endif()
 
 
 set(NASOQ_INTERNAL_INCLUDE_DIRS
@@ -187,6 +192,16 @@ if(NASOQ_WITH_EIGEN)
 endif()
 
 add_library(nasoq::nasoq ALIAS nasoq)
+
+if(NASOQ_WITH_MATLAB)
+  if(NASOQ_USE_BLAS_MKL)
+    message(WARNING "NASOQ_WITH_MATLAB=ON but NASOQ_USE_BLAS_MKL=ON. This is likely to fail")
+  endif()
+  if(NASOQ_USE_OPENMP)
+    message(WARNING "NASOQ_WITH_MATLAB=ON but NASOQ_USE_OPENMP=ON. This is likely to fail")
+  endif()
+  add_subdirectory(matlab)
+endif()
 
 #------------------------------------[ exes ]----------------------------------#
 

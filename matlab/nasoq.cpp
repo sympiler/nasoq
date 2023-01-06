@@ -9,7 +9,7 @@
 #include <igl/matlab/prepare_lhs.h>
 #include <igl/matlab/validate_arg.h>
 
-#include "../eigen_interface/nasoq_eigen.h"
+#include "../eigen_interface/include/nasoq/nasoq_eigen.h"
 using namespace nasoq;
 void mexFunction(
          int          nlhs,

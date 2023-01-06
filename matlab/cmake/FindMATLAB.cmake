@@ -225,8 +225,15 @@ if(NOT MATLAB_ADDITIONAL_VERSIONS)
 endif()
 
 set(MATLAB_VERSIONS_MAPPING
-  "R2020a=9.6"
-  "R2019a=9.5"
+  "R2022b=9.13"
+  "R2022a=9.12.0"
+  "R2021b=9.11"
+  "R2021a=9.10"
+  "R2020b=9.9"
+  "R2020a=9.8"
+  "R2019b=9.7"
+  "R2019a=9.6"
+  "R2018b=9.5"
   "R2018a=9.4"
   "R2017b=9.3"
   "R2017a=9.2"
