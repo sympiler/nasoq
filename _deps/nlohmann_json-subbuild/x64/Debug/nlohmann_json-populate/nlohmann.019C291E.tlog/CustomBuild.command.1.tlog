@@ -1,0 +1,152 @@
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir=/Debug -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/tmp/nlohmann_json-populate-mkdirs.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-DOWNLOAD.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/download-nlohmann_json-populate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/verify-nlohmann_json-populate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/extract-nlohmann_json-populate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-UPDATE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-update"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-CONFIGURE.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-BUILD.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-INSTALL.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\9090F242F2B09493B9C1FFF4162BEEDC\NLOHMANN_JSON-POPULATE-TEST.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-test"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\8EE01614F14129E1072478C82BE0338F\NLOHMANN_JSON-POPULATE-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/CMakeFiles/Debug/nlohmann_json-populate-complete"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\B9DFF81BF3B5169CF0321A8BB2B29076\NLOHMANN_JSON-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild" "-BE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild" --check-stamp-file "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/nlohmann_json-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

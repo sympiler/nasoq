@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-subbuild\x64\Debug\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-subbuild\x64\Debug\nlohmann_json-populate</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\nlohmann_json-subbuild\x64\Debug\ALL_BUILD</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

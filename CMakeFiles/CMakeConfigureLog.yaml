@@ -1,0 +1,917 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Windows - 10.0.22621 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/MinGW/bin/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+      生成启动时间为 2023/10/25 19:12:56。
+      
+      节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj”(默认目标)。
+      PrepareForBuild:
+        正在创建目录“Debug\\”。
+        正在创建目录“Debug\\CompilerIdCXX.tlog\\”。
+      InitializeBuildStatus:
+        正在创建“Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+        正在对“Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild”执行 Touch 任务。
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        正在删除文件“Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild”。
+        正在对“Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate”执行 Touch 任务。
+      已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj”(默认目标)的操作。
+      
+      已成功生成。
+          0 个警告
+          0 个错误
+      
+      已用时间 00:00:00.40
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/3.28.0-rc2/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/MinGW/bin/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+      生成启动时间为 2023/10/25 19:12:57。
+      
+      节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj”(默认目标)。
+      PrepareForBuild:
+        正在创建目录“Debug\\”。
+        正在创建目录“Debug\\CompilerIdC.tlog\\”。
+      InitializeBuildStatus:
+        正在创建“Debug\\CompilerIdC.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+        正在对“Debug\\CompilerIdC.tlog\\unsuccessfulbuild”执行 Touch 任务。
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        正在删除文件“Debug\\CompilerIdC.tlog\\unsuccessfulbuild”。
+        正在对“Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate”执行 Touch 任务。
+      已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\3.28.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj”(默认目标)的操作。
+      
+      已成功生成。
+          0 个警告
+          0 个错误
+      
+      已用时间 00:00:00.32
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/3.28.0-rc2/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-pa7cgj"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-pa7cgj"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-pa7cgj'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_262d9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:12:57。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-pa7cgj\\cmTC_262d9.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_262d9.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-pa7cgj\\Debug\\”。
+          正在创建目录“cmTC_262d9.dir\\Debug\\cmTC_262d9.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_262d9.dir\\Debug\\cmTC_262d9.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_262d9.dir\\Debug\\cmTC_262d9.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_262d9.dir\\Debug\\\\" /Fd"cmTC_262d9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CMakeCXXCompilerABI.cpp
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_262d9.dir\\Debug\\\\" /Fd"cmTC_262d9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-pa7cgj\\Debug\\cmTC_262d9.exe" /INCREMENTAL /ILK:"cmTC_262d9.dir\\Debug\\cmTC_262d9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-pa7cgj/Debug/cmTC_262d9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-pa7cgj/Debug/cmTC_262d9.lib" /MACHINE:X64  /machine:x64 cmTC_262d9.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_262d9.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-pa7cgj\\Debug\\cmTC_262d9.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_262d9.dir\\Debug\\cmTC_262d9.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_262d9.dir\\Debug\\cmTC_262d9.tlog\\cmTC_262d9.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-pa7cgj\\cmTC_262d9.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.31
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-vgo4t6"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-vgo4t6"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-vgo4t6'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3a631.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:12:58。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-vgo4t6\\cmTC_3a631.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_3a631.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-vgo4t6\\Debug\\”。
+          正在创建目录“cmTC_3a631.dir\\Debug\\cmTC_3a631.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_3a631.dir\\Debug\\cmTC_3a631.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_3a631.dir\\Debug\\cmTC_3a631.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3a631.dir\\Debug\\\\" /Fd"cmTC_3a631.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CMakeCCompilerABI.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3a631.dir\\Debug\\\\" /Fd"cmTC_3a631.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-vgo4t6\\Debug\\cmTC_3a631.exe" /INCREMENTAL /ILK:"cmTC_3a631.dir\\Debug\\cmTC_3a631.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-vgo4t6/Debug/cmTC_3a631.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-vgo4t6/Debug/cmTC_3a631.lib" /MACHINE:X64  /machine:x64 cmTC_3a631.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_3a631.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-vgo4t6\\Debug\\cmTC_3a631.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_3a631.dir\\Debug\\cmTC_3a631.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_3a631.dir\\Debug\\cmTC_3a631.tlog\\cmTC_3a631.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-vgo4t6\\cmTC_3a631.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:250 (check_include_file)"
+      - "cmake/FindMKL.cmake:76 (CHECK_TYPE_SIZE)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-rgw8da"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-rgw8da"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-rgw8da'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_dd292.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:01。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\cmTC_dd292.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_dd292.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\Debug\\”。
+          正在创建目录“cmTC_dd292.dir\\Debug\\cmTC_dd292.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_dd292.dir\\Debug\\cmTC_dd292.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_dd292.dir\\Debug\\cmTC_dd292.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dd292.dir\\Debug\\\\" /Fd"cmTC_dd292.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dd292.dir\\Debug\\\\" /Fd"cmTC_dd292.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\Debug\\cmTC_dd292.exe" /INCREMENTAL /ILK:"cmTC_dd292.dir\\Debug\\cmTC_dd292.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-rgw8da/Debug/cmTC_dd292.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-rgw8da/Debug/cmTC_dd292.lib" /MACHINE:X64  /machine:x64 cmTC_dd292.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_dd292.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\Debug\\cmTC_dd292.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_dd292.dir\\Debug\\cmTC_dd292.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_dd292.dir\\Debug\\cmTC_dd292.tlog\\cmTC_dd292.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-rgw8da\\cmTC_dd292.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:251 (check_include_file)"
+      - "cmake/FindMKL.cmake:76 (CHECK_TYPE_SIZE)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-nvv22x"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-nvv22x"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-nvv22x'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4db6e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:01。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\cmTC_4db6e.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_4db6e.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\Debug\\”。
+          正在创建目录“cmTC_4db6e.dir\\Debug\\cmTC_4db6e.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_4db6e.dir\\Debug\\cmTC_4db6e.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_4db6e.dir\\Debug\\cmTC_4db6e.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4db6e.dir\\Debug\\\\" /Fd"cmTC_4db6e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4db6e.dir\\Debug\\\\" /Fd"cmTC_4db6e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\Debug\\cmTC_4db6e.exe" /INCREMENTAL /ILK:"cmTC_4db6e.dir\\Debug\\cmTC_4db6e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-nvv22x/Debug/cmTC_4db6e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-nvv22x/Debug/cmTC_4db6e.lib" /MACHINE:X64  /machine:x64 cmTC_4db6e.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_4db6e.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\Debug\\cmTC_4db6e.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_4db6e.dir\\Debug\\cmTC_4db6e.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_4db6e.dir\\Debug\\cmTC_4db6e.tlog\\cmTC_4db6e.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-nvv22x\\cmTC_4db6e.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:252 (check_include_file)"
+      - "cmake/FindMKL.cmake:76 (CHECK_TYPE_SIZE)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-c2p7yd"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-c2p7yd"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-c2p7yd'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_97047.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:02。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\cmTC_97047.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_97047.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\Debug\\”。
+          正在创建目录“cmTC_97047.dir\\Debug\\cmTC_97047.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_97047.dir\\Debug\\cmTC_97047.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_97047.dir\\Debug\\cmTC_97047.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_97047.dir\\Debug\\\\" /Fd"cmTC_97047.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_97047.dir\\Debug\\\\" /Fd"cmTC_97047.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\Debug\\cmTC_97047.exe" /INCREMENTAL /ILK:"cmTC_97047.dir\\Debug\\cmTC_97047.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-c2p7yd/Debug/cmTC_97047.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-c2p7yd/Debug/cmTC_97047.lib" /MACHINE:X64  /machine:x64 cmTC_97047.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_97047.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\Debug\\cmTC_97047.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_97047.dir\\Debug\\cmTC_97047.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_97047.dir\\Debug\\cmTC_97047.tlog\\cmTC_97047.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-c2p7yd\\cmTC_97047.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.29
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/FindMKL.cmake:76 (CHECK_TYPE_SIZE)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Check size of void*"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xbhsax"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xbhsax"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "HAVE_SIZE_OF_VOIDP"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xbhsax'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a34a4.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:02。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\cmTC_a34a4.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_a34a4.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\Debug\\”。
+          正在创建目录“cmTC_a34a4.dir\\Debug\\cmTC_a34a4.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_a34a4.dir\\Debug\\cmTC_a34a4.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_a34a4.dir\\Debug\\cmTC_a34a4.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a34a4.dir\\Debug\\\\" /Fd"cmTC_a34a4.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\SIZE_OF_VOIDP.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          SIZE_OF_VOIDP.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a34a4.dir\\Debug\\\\" /Fd"cmTC_a34a4.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\SIZE_OF_VOIDP.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\Debug\\cmTC_a34a4.exe" /INCREMENTAL /ILK:"cmTC_a34a4.dir\\Debug\\cmTC_a34a4.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xbhsax/Debug/cmTC_a34a4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xbhsax/Debug/cmTC_a34a4.lib" /MACHINE:X64  /machine:x64 cmTC_a34a4.dir\\Debug\\SIZE_OF_VOIDP.obj
+          cmTC_a34a4.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\Debug\\cmTC_a34a4.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_a34a4.dir\\Debug\\cmTC_a34a4.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_a34a4.dir\\Debug\\cmTC_a34a4.tlog\\cmTC_a34a4.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xbhsax\\cmTC_a34a4.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/FindMKL.cmake:272 (CHECK_FUNCTION_EXISTS)"
+      - "cmake/FindMKL.cmake:315 (CHECK_ALL_LIBRARIES)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Looking for cblas_sgemm"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-2ciapi"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-2ciapi"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "MKL_LIBRARIES_mkl_intel_lp64_mkl_intel_thread_mkl_core_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-2ciapi'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d1404.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:03。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_d1404.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\Debug\\”。
+          正在创建目录“cmTC_d1404.dir\\Debug\\cmTC_d1404.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_d1404.dir\\Debug\\cmTC_d1404.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_d1404.dir\\Debug\\cmTC_d1404.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=cblas_sgemm /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d1404.dir\\Debug\\\\" /Fd"cmTC_d1404.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckFunctionExists.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=cblas_sgemm /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d1404.dir\\Debug\\\\" /Fd"cmTC_d1404.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\Debug\\cmTC_d1404.exe" /INCREMENTAL /ILK:"cmTC_d1404.dir\\Debug\\cmTC_d1404.ilk" /NOLOGO "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_lp64.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_thread.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_core.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_lp64.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_thread.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_core.lib" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-2ciapi/Debug/cmTC_d1404.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-2ciapi/Debug/cmTC_d1404.lib" /MACHINE:X64  /machine:x64 cmTC_d1404.dir\\Debug\\CheckFunctionExists.obj
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_critical_with_hint referenced in function omp_parallel_acopy_lookahead [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_end_critical referenced in function omp_parallel_acopy_lookahead [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_for_static_init_8u referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_init_8u [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_init_8u [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_for_static_fini referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_fini [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_fini [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol omp_get_num_threads referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(mkl_print_verbose_patched.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(mkl_threading_patched.obj) : error LNK2019: unresolved external symbol omp_in_parallel referenced in function mkl_serv_get_max_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(mkl_threading_patched.obj) : error LNK2019: unresolved external symbol omp_get_max_threads referenced in function mkl_serv_get_max_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_single referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_end_single referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_barrier referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_barrier [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2019: unresolved external symbol __kmpc_master referenced in function mkl_blas_sgemv_omp [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2019: unresolved external symbol __kmpc_end_master referenced in function mkl_blas_sgemv_omp [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\Debug\\cmTC_d1404.exe : fatal error LNK1120: 19 unresolved externals [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj”(默认目标)的操作 - 失败。
+        
+        生成失败。
+        
+        “E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj”(默认目标) (1) ->
+        (Link 目标) -> 
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_global_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_critical_with_hint referenced in function omp_parallel_acopy_lookahead [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_end_critical referenced in function omp_parallel_acopy_lookahead [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_ok_to_fork [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_push_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_fork_call [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_serialized_parallel [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_for_static_init_8u referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_init_8u [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_init_8u [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol __kmpc_for_static_fini referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_fini [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_for_static_fini [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2019: unresolved external symbol omp_get_num_threads referenced in function omp_simple_3d [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol omp_get_num_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(mkl_print_verbose_patched.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__copy_drv.obj) : error LNK2001: unresolved external symbol omp_get_thread_num [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(mkl_threading_patched.obj) : error LNK2019: unresolved external symbol omp_in_parallel referenced in function mkl_serv_get_max_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(mkl_threading_patched.obj) : error LNK2019: unresolved external symbol omp_get_max_threads referenced in function mkl_serv_get_max_threads [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_single referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_end_single referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemmger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s_ds_ger_omp.obj) : error LNK2001: unresolved external symbol __kmpc_end_single [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemm_omp_v1_drv.obj) : error LNK2019: unresolved external symbol __kmpc_barrier referenced in function mkl_blas_sgemm_omp_driver_v1 [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2001: unresolved external symbol __kmpc_barrier [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2019: unresolved external symbol __kmpc_master referenced in function mkl_blas_sgemv_omp [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          mkl_intel_thread.lib(s__gemv_omp.obj) : error LNK2019: unresolved external symbol __kmpc_end_master referenced in function mkl_blas_sgemv_omp [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+          E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\Debug\\cmTC_d1404.exe : fatal error LNK1120: 19 unresolved externals [E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-2ciapi\\cmTC_d1404.vcxproj]
+        
+            0 个警告
+            66 个错误
+        
+        已用时间 00:00:00.32
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/FindMKL.cmake:272 (CHECK_FUNCTION_EXISTS)"
+      - "cmake/FindMKL.cmake:328 (CHECK_ALL_LIBRARIES)"
+      - "cmake/third_party/mkl.cmake:5 (find_package)"
+      - "CMakeLists.txt:72 (include)"
+    checks:
+      - "Looking for cblas_sgemm"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-wr9r0b"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-wr9r0b"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "MKL_LIBRARIES_mkl_intel_lp64_mkl_sequential_mkl_core_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-wr9r0b'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0017d.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:03。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\cmTC_0017d.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_0017d.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\Debug\\”。
+          正在创建目录“cmTC_0017d.dir\\Debug\\cmTC_0017d.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_0017d.dir\\Debug\\cmTC_0017d.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_0017d.dir\\Debug\\cmTC_0017d.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=cblas_sgemm /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0017d.dir\\Debug\\\\" /Fd"cmTC_0017d.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckFunctionExists.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=cblas_sgemm /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0017d.dir\\Debug\\\\" /Fd"cmTC_0017d.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\Debug\\cmTC_0017d.exe" /INCREMENTAL /ILK:"cmTC_0017d.dir\\Debug\\cmTC_0017d.ilk" /NOLOGO "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_lp64.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_sequential.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_core.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_intel_lp64.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_sequential.lib" "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2023.2.0\\lib\\intel64\\mkl_core.lib" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-wr9r0b/Debug/cmTC_0017d.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-wr9r0b/Debug/cmTC_0017d.lib" /MACHINE:X64  /machine:x64 cmTC_0017d.dir\\Debug\\CheckFunctionExists.obj
+          cmTC_0017d.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\Debug\\cmTC_0017d.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_0017d.dir\\Debug\\cmTC_0017d.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_0017d.dir\\Debug\\cmTC_0017d.tlog\\cmTC_0017d.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-wr9r0b\\cmTC_0017d.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.35
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:484 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:99 (find_package)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-5ue36t"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-5ue36t"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_openmp"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-5ue36t'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a482e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:06。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\cmTC_a482e.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_a482e.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\Debug\\”。
+          正在创建目录“cmTC_a482e.dir\\Debug\\cmTC_a482e.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_a482e.dir\\Debug\\cmTC_a482e.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_a482e.dir\\Debug\\cmTC_a482e.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /openmp /Fo"cmTC_a482e.dir\\Debug\\\\" /Fd"cmTC_a482e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\OpenMPTryFlag.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          OpenMPTryFlag.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /openmp /Fo"cmTC_a482e.dir\\Debug\\\\" /Fd"cmTC_a482e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\OpenMPTryFlag.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\Debug\\cmTC_a482e.exe" /INCREMENTAL /ILK:"cmTC_a482e.dir\\Debug\\cmTC_a482e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-5ue36t/Debug/cmTC_a482e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-5ue36t/Debug/cmTC_a482e.lib" /MACHINE:X64  /machine:x64 cmTC_a482e.dir\\Debug\\OpenMPTryFlag.obj
+          cmTC_a482e.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\Debug\\cmTC_a482e.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_a482e.dir\\Debug\\cmTC_a482e.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_a482e.dir\\Debug\\cmTC_a482e.tlog\\cmTC_a482e.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-5ue36t\\cmTC_a482e.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.29
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:484 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:99 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-9vm5rn"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-9vm5rn"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_openmp"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-9vm5rn'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_416c1.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:06。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\cmTC_416c1.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_416c1.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\Debug\\”。
+          正在创建目录“cmTC_416c1.dir\\Debug\\cmTC_416c1.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_416c1.dir\\Debug\\cmTC_416c1.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_416c1.dir\\Debug\\cmTC_416c1.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /Fo"cmTC_416c1.dir\\Debug\\\\" /Fd"cmTC_416c1.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\OpenMPTryFlag.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          OpenMPTryFlag.cpp
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /Fo"cmTC_416c1.dir\\Debug\\\\" /Fd"cmTC_416c1.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\OpenMPTryFlag.cpp"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\Debug\\cmTC_416c1.exe" /INCREMENTAL /ILK:"cmTC_416c1.dir\\Debug\\cmTC_416c1.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-9vm5rn/Debug/cmTC_416c1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-9vm5rn/Debug/cmTC_416c1.lib" /MACHINE:X64  /machine:x64 cmTC_416c1.dir\\Debug\\OpenMPTryFlag.obj
+          cmTC_416c1.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\Debug\\cmTC_416c1.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_416c1.dir\\Debug\\cmTC_416c1.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_416c1.dir\\Debug\\cmTC_416c1.tlog\\cmTC_416c1.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-9vm5rn\\cmTC_416c1.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:420 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:99 (find_package)"
+    description: "Detecting C OpenMP version"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-fgrj4b"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-fgrj4b"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "OpenMP_SPECTEST_C_"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-fgrj4b'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_ed241.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:06。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\cmTC_ed241.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_ed241.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\Debug\\”。
+          正在创建目录“cmTC_ed241.dir\\Debug\\cmTC_ed241.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_ed241.dir\\Debug\\cmTC_ed241.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_ed241.dir\\Debug\\cmTC_ed241.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /openmp /Fo"cmTC_ed241.dir\\Debug\\\\" /Fd"cmTC_ed241.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\OpenMPCheckVersion.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          OpenMPCheckVersion.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /openmp /Fo"cmTC_ed241.dir\\Debug\\\\" /Fd"cmTC_ed241.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\OpenMPCheckVersion.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\Debug\\cmTC_ed241.exe" /INCREMENTAL /ILK:"cmTC_ed241.dir\\Debug\\cmTC_ed241.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-fgrj4b/Debug/cmTC_ed241.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-fgrj4b/Debug/cmTC_ed241.lib" /MACHINE:X64  /machine:x64 cmTC_ed241.dir\\Debug\\OpenMPCheckVersion.obj
+          cmTC_ed241.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\Debug\\cmTC_ed241.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_ed241.dir\\Debug\\cmTC_ed241.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_ed241.dir\\Debug\\cmTC_ed241.tlog\\cmTC_ed241.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-fgrj4b\\cmTC_ed241.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:420 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:99 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xyf5hg"
+      binary: "E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xyf5hg"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake;E:/McMaster University/NASOQ-Coding-Task/nasoq/cmake/third_party"
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xyf5hg'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_82a71.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        适用于 .NET Framework MSBuild 版本 17.7.2+d6990bcfa
+        生成启动时间为 2023/10/25 19:13:07。
+        
+        节点 1 上的项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\cmTC_82a71.vcxproj”(默认目标)。
+        PrepareForBuild:
+          正在创建目录“cmTC_82a71.dir\\Debug\\”。
+          正在创建目录“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\Debug\\”。
+          正在创建目录“cmTC_82a71.dir\\Debug\\cmTC_82a71.tlog\\”。
+        InitializeBuildStatus:
+          正在创建“cmTC_82a71.dir\\Debug\\cmTC_82a71.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_82a71.dir\\Debug\\cmTC_82a71.tlog\\unsuccessfulbuild”执行 Touch 任务。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /Fo"cmTC_82a71.dir\\Debug\\\\" /Fd"cmTC_82a71.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\OpenMPCheckVersion.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          OpenMPCheckVersion.cpp
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /Fo"cmTC_82a71.dir\\Debug\\\\" /Fd"cmTC_82a71.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\OpenMPCheckVersion.cpp"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\Debug\\cmTC_82a71.exe" /INCREMENTAL /ILK:"cmTC_82a71.dir\\Debug\\cmTC_82a71.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xyf5hg/Debug/cmTC_82a71.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/McMaster University/NASOQ-Coding-Task/nasoq/CMakeFiles/CMakeScratch/TryCompile-xyf5hg/Debug/cmTC_82a71.lib" /MACHINE:X64  /machine:x64 cmTC_82a71.dir\\Debug\\OpenMPCheckVersion.obj
+          cmTC_82a71.vcxproj -> E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\Debug\\cmTC_82a71.exe
+        FinalizeBuildStatus:
+          正在删除文件“cmTC_82a71.dir\\Debug\\cmTC_82a71.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_82a71.dir\\Debug\\cmTC_82a71.tlog\\cmTC_82a71.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“E:\\McMaster University\\NASOQ-Coding-Task\\nasoq\\CMakeFiles\\CMakeScratch\\TryCompile-xyf5hg\\cmTC_82a71.vcxproj”(默认目标)的操作。
+        
+        已成功生成。
+            0 个警告
+            0 个错误
+        
+        已用时间 00:00:00.30
+        
+      exitCode: 0
+...

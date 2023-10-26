@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\catch2-subbuild\CMakeFiles\dd52539a677e9517f9866c71a5000a2d\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{88421503-9C3E-331A-BBDA-02F207709709}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
