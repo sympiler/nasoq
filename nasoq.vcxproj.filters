@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\nasoq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\nasoq_step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\def.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\transpose_unsym.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\matrixVector\spmv_CSC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Norm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\QP\qp_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\SparseUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\DFS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\PostOrder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Etree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Transpose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\ColumnCount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\supernode_detection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\Partitioning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\TreeUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\PostOrderSpliting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\InspectionLevel_06.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Reach.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\performanceModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\symbolic\symbolic_phase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\common\Sym_BLAS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Serial_blocked_ldl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Serial_update_ldl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Serial_blocked_ldl_02_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Serial_update_ldl_static.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\serial_simplicial_ldl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Serial_update_simplicial_ldl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\triangularSolve\BLAS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\triangularSolve\Triangular_BCSC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\triangularSolve\Triangular_CSC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\linear_solver\solve_phase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\gmres\mgmres.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\matrixMatrix\spmm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\ldlt_check.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\QP\osqp_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\QP\updown_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\QP\nasoq_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\QP\linear_solver_wrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\parallel_blocked_ldlt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\parallel_blocked_ldlt_02.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\parallel_blocked_ldlt_03.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Parallel_update_ldl_02_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Parallel_simplicial_ldl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\src\ldl\Parallel_update_simplicial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-src\debug\msvc\eigen.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2109B56C-EE97-3998-9968-C9D6F3B7CBAC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

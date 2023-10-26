@@ -1,0 +1,150 @@
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir=/Debug -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/tmp/eigen-populate-mkdirs.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-DOWNLOAD.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/tmp/eigen-populate-gitclone.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-UPDATE.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-src"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -Dcan_fetch=YES -P "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/tmp/eigen-populate-gitupdate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-CONFIGURE.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-BUILD.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-INSTALL.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\55A9242E665CFD8B44F960F370A60FA9\EIGEN-POPULATE-TEST.RULE
+setlocal
+cd "E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-build"
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-test"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\CAFC54866883B239E53BCAFBB935AFF2\EIGEN-POPULATE-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/CMakeFiles/Debug/eigen-populate-complete"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/eigen-populate-prefix/src/eigen-populate-stamp/Debug/eigen-populate-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKEFILES\45B56BAE25BA0936A30916694790900A\EIGEN-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\EIGEN-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild" "-BE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild" --check-stamp-file "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/eigen-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

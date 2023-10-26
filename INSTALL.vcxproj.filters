@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\CMakeFiles\7070ee044b6900bef1db8b2b56f9ceaf\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F4D10EE3-4D35-39E2-BAAE-3F84D1FA8A39}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

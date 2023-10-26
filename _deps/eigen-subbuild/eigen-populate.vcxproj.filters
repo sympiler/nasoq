@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\55a9242e665cfd8b44f960f370a60fa9\eigen-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\cafc54866883b239e53bcafbb935aff2\eigen-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\45b56bae25ba0936a30916694790900a\eigen-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\eigen-subbuild\CMakeFiles\eigen-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FE761802-2707-3D2A-AB99-DAA06CD4A68B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

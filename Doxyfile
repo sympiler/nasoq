@@ -1,0 +1,23 @@
+# =============================================================================
+
+PROJECT_NAME           = "NASOQ"
+
+PROJECT_BRIEF          = "Numerically Accurate Sparsity-Oriented QP solver"
+
+PROJECT_LOGO           =
+
+# =============================================================================
+
+OUTPUT_DIRECTORY       = E:/McMaster University/NASOQ-Coding-Task/nasoq/doc_doxygen/
+INPUT                  = E:/McMaster University/NASOQ-Coding-Task/nasoq/src/  
+INPUT                 += E:/McMaster University/NASOQ-Coding-Task/nasoq/include/
+INPUT                 += E:/McMaster University/NASOQ-Coding-Task/nasoq/smp-format/
+INPUT                 += E:/McMaster University/NASOQ-Coding-Task/nasoq/../docs
+
+RECURSIVE              = YES
+
+EXCLUDE_PATTERNS       = */cxxopts.hpp
+
+# =============================================================================
+
+EXTRACT_ALL            = YES

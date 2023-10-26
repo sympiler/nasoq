@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\b64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\blas.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\csr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\error.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\evaluate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\fkvkselect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\fs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\graph.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\htable.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\itemsets.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\mcore.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\omp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\pdb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\pqueue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\random.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\rw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\seq.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\sort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\string.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\timers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\tokenizer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\auxapi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\balance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\bucketsort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\checkgraph.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\coarsen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\compress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\contig.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\debug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\fm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\fortran.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\frename.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\gklib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\graph.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\initpart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\kmetis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\kwayfm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\kwayrefine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\mcutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\mesh.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\meshpart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\minconn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\mincover.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\mmd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\ometis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\options.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\parmetis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\pmetis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\refine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\separator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\sfm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\srefine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\stat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\timing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\wspace.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\GKlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_arch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_defs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_externs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkblas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkmemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkpqueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkpqueue2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkrandom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mksort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_mkutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_proto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_struct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gk_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\gkregex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\ms_inttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\ms_stat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\GKlib\ms_stdint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\defs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\gklib_defs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\gklib_rename.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\metislib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\proto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\rename.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\stdheaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\_deps\metis-src\libmetis\struct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\McMaster University\NASOQ-Coding-Task\nasoq\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{5A07B467-5146-3416-B54D-E71C34706271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2109B56C-EE97-3998-9968-C9D6F3B7CBAC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

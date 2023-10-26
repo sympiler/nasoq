@@ -1,0 +1,10 @@
+^E:\MCMASTER UNIVERSITY\NASOQ-CODING-TASK\NASOQ\_DEPS\CATCH2-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/catch2-subbuild" "-BE:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/catch2-subbuild" --check-stamp-file "E:/McMaster University/NASOQ-Coding-Task/nasoq/_deps/catch2-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
