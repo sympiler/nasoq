@@ -2,10 +2,14 @@
 
 #include <vector>
 
+#if defined(NASOQ_USE_CLAPACK)
 extern "C" {
 #include "f2c.h"
 #include "clapack.h"
 }
+#elif defined(ACCELERATE)
+#include <Accelerate/Accelerate.h>
+#endif
 
 
 namespace nasoq {
@@ -20,7 +24,6 @@ template<typename T>
 inline const T& maximum(const T& a, const T& b) {
 	return a >= b ? a : b;
 }
-
 
 /**
  * DLAPMT rearranges the columns of the M by N matrix X as specified
@@ -66,17 +69,27 @@ int LAPACKE_dlapmt(
 		if(ldx < n) return -6;
 		std::vector<double> x_t(ldx_t * maximum<clapack_int>(1,n));
 		transpose_into(x_t.data(), ldx_t, x, ldx, m, n, matrix_layout);
+#if defined(NASOQ_USE_CLAPACK)
 		clapack_int info = dlapmt_(&forwrd, &m, &n, x_t.data(), &ldx_t, k);
 		if(info < 0) return info-1;
+#else
+		dlapmt_(&forwrd, &m, &n, x_t.data(), &ldx_t, k);
+#endif
 		transpose_into(x, ldx, x_t.data(), ldx_t, m, n, LAPACK_COL_MAJOR);
 	} else if(LAPACK_COL_MAJOR == matrix_layout) {
+#if defined(NASOQ_USE_CLAPACK)
 		clapack_int info = dlapmt_(&forwrd, &m, &n, x, &ldx, k);
 		if(info < 0) return info-1;
+#else
+		dlapmt_(&forwrd, &m, &n, x, &ldx, k);
+#endif
 	} else {
 		return -1; // argument 1 has an illegal value
 	}
 	return 0;
 }
+
+#if defined(NASOQ_USE_CLAPACK)
 
 int LAPACKE_dlapmt(
 	int matrix_layout,
@@ -104,6 +117,8 @@ int LAPACKE_dlapmt(
 
 	return info;
 }
+
+#endif
 
 } // namespace clapacke
 } // namespace nasoq
