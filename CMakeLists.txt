@@ -202,6 +202,7 @@ elseif(NASOQ_USE_BLAS_Accelerate)
     target_link_libraries(nasoq PRIVATE BLAS::BLAS)
     target_link_libraries(nasoq PRIVATE LAPACK::LAPACK)
     target_compile_definitions(nasoq PRIVATE "ACCELERATE")
+    target_compile_definitions(nasoq PRIVATE "VECLIB_MAXIMUM_THREADS=1")
     target_compile_definitions(nasoq PUBLIC "ACCELERATE_NEW_LAPACK")
 endif()
 
