@@ -174,11 +174,14 @@ if(OpenMP_FOUND)
     target_link_libraries(nasoq PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
-if(NASOQ_USE_CLAPACK)
+if(NASOQ_USE_CLAPACK OR NASOQ_USE_BLAS_Accelerate)
     target_sources(nasoq PRIVATE
         "src/clapacke/clapacke_dlapmt.cpp"
         "src/clapacke/clapacke_dsytrf.cpp"
     )
+endif()
+
+if(NASOQ_USE_CLAPACK)
     target_compile_definitions(nasoq PUBLIC "NASOQ_USE_CLAPACK")
     target_link_libraries(nasoq PRIVATE clapack::clapack)
 endif()
@@ -200,10 +203,6 @@ elseif(NASOQ_USE_BLAS_Accelerate)
     target_link_libraries(nasoq PRIVATE LAPACK::LAPACK)
     target_compile_definitions(nasoq PRIVATE "ACCELERATE")
     target_compile_definitions(nasoq PUBLIC "ACCELERATE_NEW_LAPACK")
-    target_sources(nasoq PRIVATE
-        "src/clapacke/clapacke_dlapmt.cpp"
-        "src/clapacke/clapacke_dsytrf.cpp"
-    )
 endif()
 
 if(NASOQ_WITH_EIGEN)
