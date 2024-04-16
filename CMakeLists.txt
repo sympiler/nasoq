@@ -62,7 +62,7 @@ list(PREPEND CMAKE_MODULE_PATH
     "${CMAKE_CURRENT_LIST_DIR}/cmake/third_party"
 )
 
-
+include(sanitizers)
 if(NASOQ_WITH_EIGEN)
     include(eigen)
 endif()
