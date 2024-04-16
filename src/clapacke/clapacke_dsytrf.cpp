@@ -46,6 +46,9 @@ int LAPACKE_dsytrf(
 	if('L' != uplo && 'U' != uplo) {
 		return -2; // argument 2 has an illegal value
 	}
+	char uplo_s[2];
+	uplo_s[0] = uplo;
+	uplo_s[1] = '\0';
 
 	// helper function to transpose an array
 	auto transpose_into = [](double* out_x_t, clapack_int ldx_t, const double* x, clapack_int ldx, clapack_int n, int matrix_layout, char uplo) {
@@ -75,7 +78,7 @@ int LAPACKE_dsytrf(
 		clapack_int info = 0;
 		clapack_int lwork = -1; // flag to query work size
 		double work_d; // a length-1 array of working space, as far as `dsytrf_` is concerned
-		dsytrf_(&uplo, &n, a, &lda, ipiv, &work_d, &lwork, &info);
+		dsytrf_(uplo_s, &n, a, &lda, ipiv, &work_d, &lwork, &info);
 		if(info < 0) {
 			return info-1;
 		} else {
@@ -97,7 +100,7 @@ int LAPACKE_dsytrf(
 		// call CLAPACK function on the transposed array
 		std::vector<double> a_t(lda_t * maximum<clapack_int>(1,n));
 		transpose_into(a_t.data(), lda_t, a, lda, n, matrix_layout, uplo);
-		dsytrf_(&uplo, &n, a_t.data(), &lda_t, ipiv, work.data(), &lwork, &info);
+		dsytrf_(uplo_s, &n, a_t.data(), &lda_t, ipiv, work.data(), &lwork, &info);
 		if(info < 0) return info-1;
 		transpose_into(a, lda, a_t.data(), lda_t, n, LAPACK_COL_MAJOR, uplo);
 	} else if(LAPACK_COL_MAJOR == matrix_layout) {
@@ -110,7 +113,7 @@ int LAPACKE_dsytrf(
 		std::vector<double> work(lwork);
 
 		// call CLAPACK function
-		dsytrf_(&uplo, &n, a, &lda, ipiv, work.data(), &lwork, &info);
+		dsytrf_(uplo_s, &n, a, &lda, ipiv, work.data(), &lwork, &info);
 		if(info < 0) return info-1;
 	} else {
 		return -1; // argument 1 has an illegal value
