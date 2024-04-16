@@ -215,6 +215,9 @@ namespace nasoq {
 #elif defined(OPENBLAS)
   num_thread = openblas_get_num_procs();
   openblas_set_num_threads(1);
+#elif defined(ACCELERATE)
+  // number of threads must be set at compile time in accelerate,
+  // using VECLIB_MAXIMUM_THREADS
 #else
 #error couldn't determine BLAS implementation
 #endif
