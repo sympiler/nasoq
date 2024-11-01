@@ -58,3 +58,4 @@ jobs:
           ${{github.workspace}}/build/examples/NASOQ_Test 
           ${{github.workspace}}/build/examples/NASOQ_Step_Test 
           ${{github.workspace}}/build/examples/LBLSOMOD_Test 
+          ${{github.workspace}}/build/tests/NASOQ_Catch2_Tests 
