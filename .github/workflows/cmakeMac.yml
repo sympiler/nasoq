@@ -50,7 +50,7 @@ jobs:
 
       - name: Build
       # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --target LBL_Test NASOQ_Test NASOQ_Step_Test LBLSOMOD_Test
+        run: cmake --build ${{github.workspace}}/build --target LBL_Test NASOQ_Test NASOQ_Step_Test LBLSOMOD_Test NASOQ_Catch2_Tests
 
       - name: run test 1
         run: |
