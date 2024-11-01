@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-11
+    runs-on: macos-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -44,7 +44,7 @@ jobs:
         run: |
           export LDFLAGS="-L/usr/local/opt/openblas/lib"
           export CPPFLAGS="-I/usr/local/opt/openblas/include"
-          cmake -B ${{github.workspace}}/build -DNASOQ_BLAS_BACKEND=OpenBLAS -DCMAKE_BUILD_TYPE=Release
+          cmake -B ${{github.workspace}}/build -DNASOQ_BLAS_BACKEND=OpenBLAS -DNASOQ_USE_CLAPACK=ON -DCMAKE_BUILD_TYPE=Release
 
 
 
