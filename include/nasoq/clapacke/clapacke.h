@@ -12,8 +12,13 @@ namespace clapacke {
 #define LAPACK_COL_MAJOR 102
 #endif
 
+#if defined(NASOQ_USE_CLAPACK)
 using clapack_int = long int;
 using clapack_logical = long int;
+#elif defined(ACCELERATE)
+using clapack_int = int;
+using clapack_logical = int;
+#endif
 
 
 /**
@@ -37,7 +42,7 @@ int LAPACKE_dsytrf(
 	clapack_int lda,
 	clapack_int* ipiv 
 );
-
+#if defined(NASOQ_USE_CLAPACK)
 int LAPACKE_dsytrf(
 	int matrix_layout,
 	char uplo,
@@ -46,6 +51,7 @@ int LAPACKE_dsytrf(
 	int lda,
 	int* ipiv 
 );
+#endif
 
 
 /**
@@ -69,6 +75,7 @@ int LAPACKE_dlapmt(
 	clapack_int* k
 );
 
+#if defined(NASOQ_USE_CLAPACK)
 int LAPACKE_dlapmt(
 	int matrix_layout,
 	int forwrd,
@@ -78,6 +85,7 @@ int LAPACKE_dlapmt(
 	int ldx,
 	int* k
 );
+#endif
 
 } // namespace clapacke
 } // namespace nasoq

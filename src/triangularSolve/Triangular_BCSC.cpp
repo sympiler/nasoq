@@ -83,7 +83,7 @@ namespace nasoq {
 #else
 
    int tmpRow = nSupR - supWdt;
-  #ifdef OPENBLAS
+  #if defined(OPENBLAS) || defined(ACCELERATE)
    cblas_dgemv(CblasColMajor,CblasTrans,tmpRow, supWdt, minus_one, Ltrng,
      nSupR, tempVec, ione, 1.0, &x[curCol], ione);
   #else
@@ -96,7 +96,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
    dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
 #else
-  #ifdef OPENBLAS
+  #if defined(OPENBLAS) || defined(ACCELERATE)
    cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasConjTrans, CblasNonUnit, supWdt, ione, 1.0,
                Ltrng, nSupR, &x[curCol], n);
   #else
@@ -165,7 +165,7 @@ namespace nasoq {
      dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
 #else
      int tmpRow = nSupR - supWdt;
-  #ifdef OPENBLAS
+  #if defined(OPENBLAS) || defined(ACCELERATE)
      cblas_dgemv(CblasColMajor,CblasTrans,tmpRow, supWdt, minus_one, Ltrng,
                  nSupR, tempVec, ione, 1.0, &x[curCol], ione);
   #else
@@ -179,7 +179,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
      dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
 #else
-   #ifdef OPENBLAS
+   #if defined(OPENBLAS) || defined(ACCELERATE)
       cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasConjTrans, CblasNonUnit, supWdt, ione, 1.0,
                  Ltrng, nSupR, &x[curCol], n);
    #else
@@ -225,7 +225,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
    dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);
 #else
-  #ifdef OPENBLAS
+  #if defined(OPENBLAS) || defined(ACCELERATE)
     cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, supWdt, ione, 1.0,
                Ltrng, nSupR, &x[curCol], n);
   #else
@@ -240,7 +240,7 @@ namespace nasoq {
    dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
 #else
    int tmpRow=nSupR - supWdt;
-   #ifdef OPENBLAS
+   #if defined(OPENBLAS) || defined(ACCELERATE)
        cblas_dgemv(CblasColMajor,CblasNoTrans,tmpRow, supWdt, one[0], Ltrng,
                    nSupR, &x[curCol], ione, zero[0], tempVec, ione);
    #else
@@ -407,7 +407,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
 #else
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
           cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, supWdt, ione, 1.0,
                       Ltrng, nSupR, &x[curCol], n);
     #else
@@ -422,7 +422,7 @@ namespace nasoq {
                    tempVec);
 #else
       int tmpRow = nSupR - supWdt;
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
       cblas_dgemv(CblasColMajor,CblasNoTrans,tmpRow, supWdt, one[0], Ltrng,
                       nSupR, &x[curCol], ione, zero[0], tempVec, ione);
     #else
@@ -490,7 +490,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
 #else
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
       cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, supWdt, ione, 1.0,
                       Ltrng, nSupR, &x[curCol], n);
     #else
@@ -505,7 +505,7 @@ namespace nasoq {
                    tempVec);
 #else
     int tmpRow = nSupR - supWdt;
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
           cblas_dgemv(CblasColMajor,CblasNoTrans,tmpRow, supWdt, one[0], Ltrng,
                       nSupR, &x[curCol], ione, zero[0], tempVec, ione);
     #else
@@ -569,7 +569,7 @@ namespace nasoq {
       dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
 #else
     int tmpRow = nSupR - supWdt;
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
           cblas_dgemv(CblasColMajor,CblasTrans,tmpRow, supWdt, minus_one, Ltrng,
                       nSupR, tempVec, ione, one[0], &x[curCol], ione);
     #else
@@ -581,7 +581,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
 #else
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
       cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasTrans, CblasNonUnit, supWdt, ione, 1.0,
                       Ltrng, nSupR, &x[curCol], n);
     #else
@@ -650,7 +650,7 @@ namespace nasoq {
       dmatvec_blas(nSupR,nSupR-supWdt,supWdt,Ltrng,&x[curCol],tempVec);
 #else
     int tmpRow = nSupR - supWdt;
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
           cblas_dgemv(CblasColMajor,CblasTrans,tmpRow, supWdt, minus_one, Ltrng,
                       nSupR, tempVec, ione, one[0], &x[curCol], ione);
     #else
@@ -662,7 +662,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
       dlsolve_blas_nonUnit(nSupR,supWdt,Ltrng,&x[curCol]);//FIXME make it for transpose
 #else
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
        cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasTrans, CblasNonUnit, supWdt, ione, 1.0,
                       Ltrng, nSupR, &x[curCol], n);
     #else
@@ -787,7 +787,7 @@ namespace nasoq {
 #ifdef SYM_BLAS
     dlsolve_blas_nonUnit(nSupR, supWdt, Ltrng, &x[curCol]);
 #else
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
         cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, supWdt, ione, 1.0,
                     Ltrng, nSupR, &x[curCol], n);
     #else
@@ -803,7 +803,7 @@ namespace nasoq {
                  tempVec);
 #else
     int tmpRow = nSupR - supWdt;
-    #ifdef OPENBLAS
+    #if defined(OPENBLAS) || defined(ACCELERATE)
         cblas_dgemv(CblasColMajor,CblasNoTrans,tmpRow, supWdt, one[0], Ltrng,
                     nSupR, &x[curCol], ione, zero[0], tempVec, ione);
     #else
