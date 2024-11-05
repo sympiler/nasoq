@@ -105,7 +105,7 @@ namespace nasoq {
   double factt, init;
   int num_update, num_downdate, num_refactor, num_solve;
 
-  qp_info();;
+  qp_info();
 
   std::chrono::time_point<std::chrono::system_clock> tic();
 

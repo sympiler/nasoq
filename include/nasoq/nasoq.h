@@ -52,7 +52,7 @@ namespace nasoq {
   int inner_iter, outer_iter;
   double pert_diag, stop_tol;
 
-  nasoq_config(int a, int b, double c, double d);;
+  nasoq_config(int a, int b, double c, double d);
  };
 
 /*
