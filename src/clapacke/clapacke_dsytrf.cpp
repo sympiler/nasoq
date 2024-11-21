@@ -2,10 +2,14 @@
 
 #include <vector>
 
+#if defined(NASOQ_USE_CLAPACK)
 extern "C" {
 #include "f2c.h"
 #include "clapack.h"
 }
+#elif defined(ACCELERATE)
+#include <Accelerate/Accelerate.h>
+#endif
 
 
 namespace nasoq {
@@ -122,6 +126,8 @@ int LAPACKE_dsytrf(
 	return 0;
 }
 
+#if defined(NASOQ_USE_CLAPACK)
+
 int LAPACKE_dsytrf(
 	int matrix_layout,
 	char uplo,
@@ -146,6 +152,8 @@ int LAPACKE_dsytrf(
 
 	return info;
 }
+
+#endif
 
 } // namespace clapacke
 } // namespace nasoq

@@ -19,7 +19,7 @@ namespace nasoq {
                           double *D, int *blockSet, int supNo, double *timing, int *aTree, int *cT, int *rT,
                           int *col2Sup, std::vector<int> mod_indices, int super_max, int col_max, int &nbpivot,
                           int *perm_piv, int *atree_sm, int *ws_int, double *ws_dbl, double threshold) {
-#if defined(OPENBLAS) && defined(NASOQ_USE_CLAPACK)
+#if (defined(OPENBLAS) && defined(NASOQ_USE_CLAPACK)) || defined(ACCELERATE)
   using nasoq::clapacke::LAPACKE_dlapmt;
   using nasoq::clapacke::LAPACKE_dsytrf;
 #endif
@@ -151,7 +151,7 @@ namespace nasoq {
     src = &lValues[lC[cSN] + lb];//first element of src supernode starting from row lb
     double *srcL = &lValues[lC[cSN] + ub + 1];
     blocked_2by2_mult(supWdts, nSupRs, &D[cSN], src, trn_diag, nSNRCur, n);
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
     cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
                 src, nSNRCur, 0.0, contribs, nSupRs);
 #else
@@ -211,7 +211,7 @@ namespace nasoq {
 //  std::cout<<"\n";
 //  /////
 
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
    cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasUnit, rowNo, supWdt, 1.0,
                cur, nSupR, &cur[supWdt], nSupR);
 #else
