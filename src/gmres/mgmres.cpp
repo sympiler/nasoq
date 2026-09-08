@@ -1015,7 +1015,8 @@ namespace nasoq {
  int pmgmres_ldlt_auto(int n, int nz_num, int *ia, int *ja, double *a, size_t *Lp, int *Li, double *Lx, size_t NNZ,
                        size_t *Li_ptr, int *col2sup, int *sup2col, int supNo, double *d_val, double *x, double *rhs,
                        int itr_max, int mr, double tol_abs, double tol_rel, int sorted, int blocked, int levels,
-                       int *levelPtr, int *levelSet, int parts, int *parPtr, int *partition, int chunk, double *ws)
+                       int *levelPtr, int *levelSet, int parts, int *parPtr, int *partition, int chunk, double *ws,
+                       int num_threads)
 
 /******************************************************************************/
 
@@ -1067,7 +1068,7 @@ namespace nasoq {
     solve_phase_ldl_blocked_parallel(n, d_val, r, col2sup, sup2col,
                                      Lp, Li, Lx, Li_ptr, supNo, NNZ,
                                      levels, levelPtr, levelSet,
-                                     parts, parPtr, partition, chunk);
+                                     parts, parPtr, partition, chunk, num_threads);
    else if (blocked == 1)
     solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
@@ -1107,7 +1108,7 @@ namespace nasoq {
      solve_phase_ldl_blocked_parallel(n, d_val, v[k + 1], col2sup, sup2col,
                                       Lp, Li, Lx, Li_ptr, supNo, NNZ,
                                       levels, levelPtr, levelSet,
-                                      parts, parPtr, partition, chunk);
+                                      parts, parPtr, partition, chunk, num_threads);
     else if (blocked == 1)
      solve_phase_ldl_blocked(n, d_val, v[k + 1], col2sup, sup2col,
                              Lp, Li, Lx, Li_ptr, supNo, NNZ);
@@ -1215,7 +1216,8 @@ namespace nasoq {
                           size_t *Li_ptr, int *col2sup, int *sup2col, int supNo, double *d_val, double *x, double *rhs,
                           int itr_max, int mr, double tol_abs, double tol_rel, bool *mask, int *mask_col, int sorted,
                           int blocked, int levels, int *levelPtr, int *levelSet, int parts, int *parPtr, int *partition,
-                          int s_level_no, int *s_level_ptr, int *s_level_set, int chunk, double *ws, double *ws_zerod)
+                          int s_level_no, int *s_level_ptr, int *s_level_set, int chunk, double *ws, double *ws_zerod,
+                          int num_threads)
 
 /******************************************************************************/
  {
@@ -1282,7 +1284,7 @@ namespace nasoq {
                                                      levels, levelPtr, levelSet,
                                                      parts, parPtr, partition, chunk,
                                                      s_level_no, s_level_ptr, s_level_set,
-                                                     mask, mask_col, ws_zerod);
+                                                     mask, mask_col, ws_zerod, num_threads);
    } else if (blocked == 1)
     solve_phase_ldl_blocked(n, d_val, r, col2sup, sup2col,
                             Lp, Li, Lx, Li_ptr, supNo, NNZ);
@@ -1324,7 +1326,7 @@ namespace nasoq {
                                                       levels, levelPtr, levelSet,
                                                       parts, parPtr, partition, chunk,
                                                       s_level_no, s_level_ptr, s_level_set,
-                                                      mask, mask_col, ws_zerod);
+                                                      mask, mask_col, ws_zerod, num_threads);
     else if (blocked == 1)
      solve_phase_ldl_blocked(n, d_val, v[k + 1], col2sup, sup2col,
                              Lp, Li, Lx, Li_ptr, supNo, NNZ);

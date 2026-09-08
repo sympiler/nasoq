@@ -68,7 +68,7 @@ namespace nasoq {
                        double tol_abs, double tol_rel, int sorted = 1, int blocked = 0,
                        int levels = 0, int *levelPtr = NULL, int *levelSet = NULL,
                        int parts = 0, int *parPtr = NULL, int *partition = NULL,
-                       int chunk = 0, double *ws = NULL);
+                       int chunk = 0, double *ws = NULL, int num_threads = 0);
 
 
 /******************************************************************************/
@@ -84,6 +84,7 @@ namespace nasoq {
                               int parts = 0, int *parPtr = NULL, int *partition = NULL,
                               int s_level_no = -1, int *s_level_ptr = NULL,
                               int *s_level_set = NULL,
-                              int chunk = 0, double *ws = NULL, double *ws_zerod = NULL);
+                              int chunk = 0, double *ws = NULL, double *ws_zerod = NULL,
+                              int num_threads = 0);
 
 }

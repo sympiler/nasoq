@@ -71,14 +71,16 @@ namespace nasoq {
  *Li_ptr,
                             int *col2sup, int *sup2col, int supNo, double *x,
                             int levels, int *levelPtr, int *levelSet,
-                            int parts, int *parPtr, int *partition, int chunk);
+                            int parts, int *parPtr, int *partition, int chunk,
+                            int num_threads = 0);
 
  int H2LeveledBlockedLsolve_update(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t
  *Li_ptr,
                                    int *col2sup, int *sup2col, int supNo, double *x,
                                    int levels, int *levelPtr, int *levelSet,
                                    int parts, int *parPtr, int *partition,
-                                   int chunk, bool *mask, double *ws_dbl = NULL);
+                                   int chunk, bool *mask, double *ws_dbl = NULL,
+                                   int num_threads = 0);
 /*
  * Backward solve blocked, unit triangular
  */
@@ -86,7 +88,8 @@ namespace nasoq {
  int H2LeveledBlockedLTsolve(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr,
                              int *col2sup, int *sup2col, int supNo, double *x,
                              int levels, int *levelPtr, int *levelSet,
-                             int parts, int *parPtr, int *partition, int chunk);
+                             int parts, int *parPtr, int *partition, int chunk,
+                             int num_threads = 0);
 
  int H2LeveledBlockedLTsolve_update(int n, size_t *Lp, int *Li,
                                     double *Lx, int NNZ, size_t *Li_ptr,
@@ -94,7 +97,8 @@ namespace nasoq {
                                     double *x,
                                     int levels, int *levelPtr, int *levelSet,
                                     int parts, int *parPtr, int *partition,
-                                    int chunk, bool *mask, double *ws_dbl = NULL);
+                                    int chunk, bool *mask, double *ws_dbl = NULL,
+                                    int num_threads = 0);
 
 
 

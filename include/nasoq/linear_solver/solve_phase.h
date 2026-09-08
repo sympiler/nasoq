@@ -57,13 +57,18 @@ void solve_phase_ldl_blocked(size_t n, double *d_val, double *x, int *col2sup, i
 /*
  * Solve phase for LDLT factorization
  * the input is a blocked L (BCSC)
+ * num_threads: size of the OpenMP team used for the parallel triangular
+ * solves below (H2LeveledBlockedLsolve/LTsolve). If <= 0 (default), the
+ * current OpenMP default (omp_get_max_threads()) is used, matching prior
+ * behavior. Pass e.g. SolverSettings::num_thread to bound the team size,
+ * since these functions do NOT otherwise honor that setting.
  */
 void solve_phase_ldl_blocked_parallel(size_t n, double *d_val, double *x, int *col2sup, int *sup2col,
                                       size_t *newCol, int *newRow, double *newVal,
                                       size_t *rowP, size_t nBlocks,int nnz,
                                       int levels, int *levelPtr, int *levelSet,
                                       int parts,  int *parPtr, int *partition,
-                                      int chunk
+                                      int chunk, int num_threads = 0
                              );
 
 
@@ -77,7 +82,7 @@ void solve_phase_ldl_blocked_parallel_permuted(size_t n, double *d_val, double *
                                       size_t *rowP, size_t nBlocks,int nnz,
                                       int levels, int *levelPtr, int *levelSet,
                                       int parts,  int *parPtr, int *partition, int chunk,
-                                      int *perm, int *iperm);
+                                      int *perm, int *iperm, int num_threads = 0);
 
 
 /*
@@ -92,7 +97,7 @@ void solve_phase_ldl_blocked_parallel_permuted_update
   int parts,  int *parPtr, int *partition, int chunk,
   int s_level_no, int *s_level_ptr, int *s_level_set,
   bool *mask,
-  int *mask_col, double *ws=NULL);
+  int *mask_col, double *ws=NULL, int num_threads = 0);
 
 
 
