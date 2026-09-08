@@ -1333,7 +1333,7 @@ namespace nasoq {
                                                     n_par, par_ptr, par_set, chunk,
                                                     s_level_no, s_level_ptr, s_level_set,
                                                     visible_sn,
-                                                    extra_cols, ws_zeroed);
+                                                    extra_cols, ws_zeroed, num_thread);
    //reset all modified cols, it is already updated.
    for (int k1 = 0; k1 < modified_sns.size(); ++k1) {
     marked[modified_sns[k1]] = 0;
@@ -1348,7 +1348,7 @@ namespace nasoq {
                                              L->nsuper, L->nzmax,
                                              n_level, level_ptr, level_set,
                                              n_par, par_ptr, par_set, chunk,
-                                             L->Perm, L->IPerm);
+                                             L->Perm, L->IPerm, num_thread);
   }
   if (req_ref_iter > 0) {
    max_iter = req_ref_iter;
@@ -1374,7 +1374,7 @@ namespace nasoq {
                                             n_level, level_ptr, level_set,
                                             n_par, par_ptr, par_set, s_level_no, s_level_ptr,
                                             s_level_set, chunk, ws + 2 * A_ord->ncol,
-                                            ws_zeroed);
+                                            ws_zeroed, num_thread);
    } else {
     num_ref_iter = pmgmres_ldlt_auto(A_ord->ncol, A_ord->nzmax, A_ord->p, A_ord->i,
                                      A_ord->x,
@@ -1384,7 +1384,7 @@ namespace nasoq {
                                      max_iter, max_inner_iter,
                                      tol_abs, tol_rel, 1, 2,
                                      n_level, level_ptr, level_set,
-                                     n_par, par_ptr, par_set, chunk);
+                                     n_par, par_ptr, par_set, chunk, NULL, num_thread);
 
    }
    //delete []rhs_ord;

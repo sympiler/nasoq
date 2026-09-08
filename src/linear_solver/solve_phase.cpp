@@ -87,11 +87,12 @@ namespace nasoq {
 
  void solve_phase_ldl_blocked_parallel(size_t n, double *d_val, double *x, int *col2sup, int *sup2col, size_t *newCol,
                                        int *newRow, double *newVal, size_t *rowP, size_t nBlocks, int nnz, int levels,
-                                       int *levelPtr, int *levelSet, int parts, int *parPtr, int *partition, int chunk) {
+                                       int *levelPtr, int *levelSet, int parts, int *parPtr, int *partition, int chunk,
+                                       int num_threads) {
   //*************** Parallel L solve
   H2LeveledBlockedLsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                          sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                         parts, parPtr, partition, chunk);
+                         parts, parPtr, partition, chunk, num_threads);
 #if 0
   for (int i = 0; i < n; ++i) {
   std::cout<<i<<"->"<<x[i]<<"/"<<d_val[i]<<"= "<<x[i]/d_val[i]<<"\n";
@@ -107,24 +108,24 @@ namespace nasoq {
   //*************** Parallel Blocked BWD solve
   H2LeveledBlockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                           sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                          parts, parPtr, partition, chunk);
+                          parts, parPtr, partition, chunk, num_threads);
  }
 
  void solve_phase_ldl_blocked_parallel_permuted(size_t n, double *d_val, double *x, int *col2sup, int *sup2col,
                                                 size_t *newCol, int *newRow, double *newVal, size_t *rowP,
                                                 size_t nBlocks, int nnz, int levels, int *levelPtr, int *levelSet,
                                                 int parts, int *parPtr, int *partition, int chunk, int *perm,
-                                                int *iperm) {
+                                                int *iperm, int num_threads) {
   //*************** Parallel L solve
   H2LeveledBlockedLsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                          sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                         parts, parPtr, partition, chunk);
+                         parts, parPtr, partition, chunk, num_threads);
   //***** diagonal scaling
   blocked_2by2_solver(n,d_val,x,1,1,n);
 //*************** Parallel Blocked BWD solve
   H2LeveledBlockedLTsolve(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                           sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                          parts, parPtr, partition, chunk);
+                          parts, parPtr, partition, chunk, num_threads);
  }
 
  void solve_phase_ldl_blocked_parallel_permuted_update(size_t n, double *d_val, double *x, int *col2sup, int *sup2col,
@@ -132,18 +133,18 @@ namespace nasoq {
                                                        size_t nBlocks, int nnz, int levels, int *levelPtr,
                                                        int *levelSet, int parts, int *parPtr, int *partition, int chunk,
                                                        int s_level_no, int *s_level_ptr, int *s_level_set, bool *mask,
-                                                       int *mask_col, double *ws) {
+                                                       int *mask_col, double *ws, int num_threads) {
   if(s_level_no<0){
    //*************** Parallel L solve
    H2LeveledBlockedLsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                                  sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                                 parts, parPtr, partition, chunk,mask,ws);
+                                 parts, parPtr, partition, chunk,mask,ws, num_threads);
    //***** diagonal scaling
    blocked_2by2_solver_update(n,d_val,x,1,1,n,mask_col);
    //*************** Parallel Blocked BWD solve
    H2LeveledBlockedLTsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                                   sup2col, nBlocks, x, levels, levelPtr, levelSet,
-                                  parts, parPtr, partition, chunk,mask,ws);
+                                  parts, parPtr, partition, chunk,mask,ws, num_threads);
   }else{
    leveledBlockedLsolve_update(n, newCol, newRow, newVal, nnz, rowP, col2sup,
                                sup2col, nBlocks, x,

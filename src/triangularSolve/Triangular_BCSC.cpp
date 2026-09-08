@@ -377,7 +377,7 @@ namespace nasoq {
 
  int H2LeveledBlockedLsolve(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup, int *sup2col,
                             int supNo, double *x, int levels, int *levelPtr, int *levelSet, int parts, int *parPtr,
-                            int *partition, int chunk) {
+                            int *partition, int chunk, int num_threads) {
   //int chunk = 70;
   double one[2], zero[2];
   one[0] = 1.0;    /* ALPHA for *syrk, *herk, *gemm, and *trsm */
@@ -387,10 +387,11 @@ namespace nasoq {
   int ione = 1;
   //double *tempVec = new double[n]();
   double *tempVec;
+  int nthreads = num_threads > 0 ? num_threads : omp_get_max_threads();
   if (!Lp || !Li || !x) return (0);                     /* check inputs */
   for (int i1 = 0; i1 < levels; ++i1) {
    int j1 = 0;
-#pragma omp parallel //shared(lValues)//private(map, contribs)
+#pragma omp parallel num_threads(nthreads) //shared(lValues)//private(map, contribs)
    {
 #pragma omp  for schedule(static) private(j1, tempVec)
     for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
@@ -447,7 +448,8 @@ namespace nasoq {
 
  int H2LeveledBlockedLsolve_update(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup,
                                    int *sup2col, int supNo, double *x, int levels, int *levelPtr, int *levelSet,
-                                   int parts, int *parPtr, int *partition, int chunk, bool *mask, double *ws_dbl) {
+                                   int parts, int *parPtr, int *partition, int chunk, bool *mask, double *ws_dbl,
+                                   int num_threads) {
   //int chunk = 70;
   double one[2], zero[2];
   one[0] = 1.0;    /* ALPHA for *syrk, *herk, *gemm, and *trsm */
@@ -455,13 +457,14 @@ namespace nasoq {
   zero[0] = 0.;     /* BETA for *syrk, *herk, and *gemm */
   zero[1] = 0.;
   int ione = 1;
+  int nthreads = num_threads > 0 ? num_threads : omp_get_max_threads();
 
   //double *tempVec = new double[n]();
   //double *tempVec;
   if (!Lp || !Li || !x) return (0);                     /* check inputs */
   for (int i1 = 0; i1 < levels; ++i1) {
    int j1 = 0;
-#pragma omp parallel //shared(lValues)//private(map, contribs)
+#pragma omp parallel num_threads(nthreads) //shared(lValues)//private(map, contribs)
    {
 #pragma omp  for schedule(static) private(j1)
     for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
@@ -534,7 +537,7 @@ namespace nasoq {
  int
  H2LeveledBlockedLTsolve(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup, int *sup2col,
                          int supNo, double *x, int levels, int *levelPtr, int *levelSet, int parts, int *parPtr,
-                         int *partition, int chunk) {
+                         int *partition, int chunk, int num_threads) {
   //int chunk = 70;
   double one[2], zero[2];
   one[0] = 1.0;    /* ALPHA for *syrk, *herk, *gemm, and *trsm */
@@ -545,10 +548,11 @@ namespace nasoq {
   double minus_one = -1;
   //double *tempVec = new double[n]();
   double *tempVec;
+  int nthreads = num_threads > 0 ? num_threads : omp_get_max_threads();
   if (!Lp || !Li || !x) return (0);                     /* check inputs */
   for (int i1 = levels - 1; i1 >= 0; --i1) {
    int j1 = 0;
-#pragma omp parallel //shared(lValues)//private(map, contribs)
+#pragma omp parallel num_threads(nthreads) //shared(lValues)//private(map, contribs)
    {
 #pragma omp  for schedule(static) private(j1, tempVec)
     for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
@@ -601,7 +605,8 @@ namespace nasoq {
 
  int H2LeveledBlockedLTsolve_update(int n, size_t *Lp, int *Li, double *Lx, int NNZ, size_t *Li_ptr, int *col2sup,
                                     int *sup2col, int supNo, double *x, int levels, int *levelPtr, int *levelSet,
-                                    int parts, int *parPtr, int *partition, int chunk, bool *mask, double *ws_dbl) {
+                                    int parts, int *parPtr, int *partition, int chunk, bool *mask, double *ws_dbl,
+                                    int num_threads) {
   //int chunk = 70;
   double one[2], zero[2];
   one[0] = 1.0;    /* ALPHA for *syrk, *herk, *gemm, and *trsm */
@@ -612,10 +617,11 @@ namespace nasoq {
   double minus_one = -1;
   //double *tempVec = new double[n]();
   //double *tempVec;
+  int nthreads = num_threads > 0 ? num_threads : omp_get_max_threads();
   if (!Lp || !Li || !x) return (0);                     /* check inputs */
   for (int i1 = levels - 1; i1 >= 0; --i1) {
    int j1 = 0;
-#pragma omp parallel //shared(lValues)//private(map, contribs)
+#pragma omp parallel num_threads(nthreads) //shared(lValues)//private(map, contribs)
    {
 #pragma omp  for schedule(static) private(j1)
     for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
@@ -703,7 +709,7 @@ namespace nasoq {
   if (!Lp || !Li || !x) return (0);                     /* check inputs */
   for (int i1 = 0; i1 < levels - 1; ++i1) {
    int j1 = 0;
-#pragma omp parallel //shared(lValues)//private(map, contribs)
+#pragma omp parallel num_threads(threads > 0 ? threads : omp_get_max_threads()) //shared(lValues)//private(map, contribs)
    {
 #pragma omp  for schedule(static) private(j1, tempVec)
     for (j1 = levelPtr[i1]; j1 < levelPtr[i1 + 1]; ++j1) {
