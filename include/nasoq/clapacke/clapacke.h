@@ -12,8 +12,12 @@ namespace clapacke {
 #define LAPACK_COL_MAJOR 102
 #endif
 
-using clapack_int = long int;
-using clapack_logical = long int;
+// Must match CLAPACK's `integer`/`logical` typedefs in its (patched) f2c.h
+// (see nasoq/cmake/third_party/clapack.cmake), i.e. the width of the
+// Fortran INTEGER OpenBLAS's own interface uses (4 bytes on LP64), not
+// f2c.h's historical default of `long int` (8 bytes on 64-bit platforms).
+using clapack_int = int;
+using clapack_logical = int;
 
 
 /**
@@ -35,16 +39,7 @@ int LAPACKE_dsytrf(
 	clapack_int n,
 	double* a,
 	clapack_int lda,
-	clapack_int* ipiv 
-);
-
-int LAPACKE_dsytrf(
-	int matrix_layout,
-	char uplo,
-	int n,
-	double* a,
-	int lda,
-	int* ipiv 
+	clapack_int* ipiv
 );
 
 
@@ -67,16 +62,6 @@ int LAPACKE_dlapmt(
 	double* x,
 	clapack_int ldx,
 	clapack_int* k
-);
-
-int LAPACKE_dlapmt(
-	int matrix_layout,
-	int forwrd,
-	int m,
-	int n,
-	double* x,
-	int ldx,
-	int* k
 );
 
 } // namespace clapacke

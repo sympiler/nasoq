@@ -78,32 +78,10 @@ int LAPACKE_dlapmt(
 	return 0;
 }
 
-int LAPACKE_dlapmt(
-	int matrix_layout,
-	int forwrd,
-	int m,
-	int n,
-	double* x,
-	int ldx,
-	int* k
-) {
-	std::vector<clapack_int> ck(n);
-	for(int i = 0; i < n; ++i) {
-		ck[i] = static_cast<clapack_int>(k[i]);
-	}
-	
-	int info = LAPACKE_dlapmt(
-		matrix_layout,
-		forwrd,
-		static_cast<clapack_int>(m),
-		static_cast<clapack_int>(n),
-		x,
-		static_cast<clapack_int>(ldx),
-		ck.data()
-	);
-
-	return info;
-}
+// Note: the `int`-typed overload of LAPACKE_dlapmt declared in clapacke.h
+// is intentionally not redefined here: now that `clapack_int`/
+// `clapack_logical` are `int` (see clapacke.h), it would be an
+// exact-signature redefinition of the clapack_int overload above.
 
 } // namespace clapacke
 } // namespace nasoq
