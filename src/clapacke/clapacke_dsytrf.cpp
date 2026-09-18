@@ -122,30 +122,10 @@ int LAPACKE_dsytrf(
 	return 0;
 }
 
-int LAPACKE_dsytrf(
-	int matrix_layout,
-	char uplo,
-	int n,
-	double* a,
-	int lda,
-	int* ipiv 
-) {
-	std::vector<clapack_int> cipiv(n);
-	int info = LAPACKE_dsytrf(
-		matrix_layout,
-		uplo,
-		static_cast<clapack_int>(n),
-		a,
-		static_cast<clapack_int>(lda),
-		cipiv.data()
-	);
-
-	for(int i = 0; i < n; ++i) {
-		ipiv[i] = static_cast<int>(cipiv[i]);
-	}
-
-	return info;
-}
+// Note: the `int`-typed overload of LAPACKE_dsytrf declared in clapacke.h
+// is intentionally not redefined here: now that `clapack_int` is `int`
+// (see clapacke.h), it would be an exact-signature redefinition of the
+// clapack_int overload above.
 
 } // namespace clapacke
 } // namespace nasoq
