@@ -37,14 +37,20 @@ option(NASOQ_USE_OPENMP "Use OpenMP" ON)
 option(NASOQ_WITH_MATLAB "Build NASOQ Matlab interface" OFF)
 
 set(NASOQ_BLAS_BACKEND "MKL" CACHE STRING "BLAS implementation for NASOQ to use")
-set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS)
+set_property(CACHE NASOQ_BLAS_BACKEND PROPERTY STRINGS MKL OpenBLAS Accelerate)
 
 if(${NASOQ_BLAS_BACKEND} STREQUAL "MKL")
-    set(NASOQ_USE_BLAS_MKL      ON)
-    set(NASOQ_USE_BLAS_OpenBLAS OFF)
+    set(NASOQ_USE_BLAS_MKL        ON)
+    set(NASOQ_USE_BLAS_OpenBLAS   OFF)
+    set(NASOQ_USE_BLAS_Accelerate OFF)
 elseif(${NASOQ_BLAS_BACKEND} STREQUAL "OpenBLAS")
-    set(NASOQ_USE_BLAS_MKL      OFF)
-    set(NASOQ_USE_BLAS_OpenBLAS ON)
+    set(NASOQ_USE_BLAS_MKL        OFF)
+    set(NASOQ_USE_BLAS_OpenBLAS   ON)
+    set(NASOQ_USE_BLAS_Accelerate OFF)
+elseif(${NASOQ_BLAS_BACKEND} STREQUAL "Accelerate")
+    set(NASOQ_USE_BLAS_MKL        OFF)
+    set(NASOQ_USE_BLAS_OpenBLAS   OFF)
+    set(NASOQ_USE_BLAS_Accelerate ON)
 else()
     message(FATAL_ERROR "unrecognized value for `NASOQ_BLAS_BACKEND` option: '${NASOQ_BLAS_BACKEND}'")
 endif()
@@ -53,6 +59,10 @@ if(NASOQ_USE_CLAPACK)
     if((NOT NASOQ_USE_BLAS_OpenBLAS) AND (NOT NASOQ_IS_TOPLEVEL))
         message(FATAL_ERROR "You can only set `NASOQ_USE_CLAPACK` to `ON` when `NASOQ_BLAS_BACKEND` is `OpenBLAS`")
     endif()
+endif()
+
+if(NASOQ_USE_BLAS_Accelerate AND NASOQ_USE_CLAPACK)
+    message(FATAL_ERROR "Accelerate already provides a LAPACKE-style interface via `nasoq::clapacke`; set `NASOQ_USE_CLAPACK` to `OFF` when `NASOQ_BLAS_BACKEND` is `Accelerate`.")
 endif()
 
 #--------------------------------[ third party ]-------------------------------#
@@ -80,6 +90,8 @@ elseif(NASOQ_USE_BLAS_OpenBLAS)
     if(openblas_WITHOUT_LAPACK AND NOT NASOQ_USE_CLAPACK)
         message(FATAL_ERROR "cannot build LAPACKE for use with OpenBLAS (maybe you don't have a Fortran compiler?) try setting `NASOQ_USE_CLAPACK` to `ON` to use a C-language alternative.")
     endif()
+elseif(NASOQ_USE_BLAS_Accelerate)
+    include(accelerate)
 endif()
 
 if(NASOQ_USE_CLAPACK)
@@ -163,11 +175,14 @@ if(OpenMP_FOUND)
     target_link_libraries(nasoq PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
-if(NASOQ_USE_CLAPACK)
+if(NASOQ_USE_CLAPACK OR NASOQ_USE_BLAS_Accelerate)
     target_sources(nasoq PRIVATE
         "src/clapacke/clapacke_dlapmt.cpp"
         "src/clapacke/clapacke_dsytrf.cpp"
     )
+endif()
+
+if(NASOQ_USE_CLAPACK)
     target_compile_definitions(nasoq PUBLIC "NASOQ_USE_CLAPACK")
     target_link_libraries(nasoq PRIVATE clapack::clapack)
 endif()
@@ -184,6 +199,19 @@ if(NASOQ_USE_BLAS_MKL)
 elseif(NASOQ_USE_BLAS_OpenBLAS)
     target_link_libraries(nasoq PRIVATE OpenBLAS::OpenBLAS)
     target_compile_definitions(nasoq PRIVATE "OPENBLAS")
+elseif(NASOQ_USE_BLAS_Accelerate)
+    target_link_libraries(nasoq PRIVATE BLAS::BLAS)
+    target_link_libraries(nasoq PRIVATE LAPACK::LAPACK)
+    target_compile_definitions(nasoq PRIVATE "ACCELERATE")
+    # Force Accelerate's internal BLAS/LAPACK thread pool down to a single
+    # thread. Accelerate's "new" LAPACK backend is not guaranteed reentrant
+    # when called concurrently from multiple threads, and NASOQ's own
+    # parallel (OpenMP) LDL variants call into LAPACKE_dsytrf/dgemm/dtrsm
+    # from multiple threads simultaneously; letting Accelerate additionally
+    # multithread underneath that was found to corrupt its own internal
+    # workspace non-deterministically (see PR description for details).
+    target_compile_definitions(nasoq PRIVATE "VECLIB_MAXIMUM_THREADS=1")
+    target_compile_definitions(nasoq PUBLIC "ACCELERATE_NEW_LAPACK")
 endif()
 
 if(NASOQ_WITH_EIGEN)

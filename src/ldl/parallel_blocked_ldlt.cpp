@@ -130,7 +130,7 @@ namespace nasoq {
        }
        /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
              src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
        cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
              src, nSNRCur, 0.0, contribs, nSupRs);
 #else
@@ -163,7 +163,7 @@ namespace nasoq {
         *(++stCol) = tmp * *(++curCol);
        }
       }
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
       cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasNonUnit, rowNo, supWdt, 1.0,
                 trn_diag, supWdt, &cur[supWdt], nSupR);
 #else
@@ -203,7 +203,7 @@ namespace nasoq {
 
 #if 1
   //LAst iteration
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
   openblas_set_num_threads(threads);
 #else
   MKL_Domain_Set_Num_Threads(threads, MKL_DOMAIN_BLAS);
@@ -289,7 +289,7 @@ namespace nasoq {
      }
      /*dgemm("N", "C", &ndrow3, &ndrow1, &supWdts, one, srcL, &nSNRCur,
            src, &nSNRCur, zero, &contribs[ndrow1], &nSupRs);*/
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
      cblas_dgemm(CblasColMajor,CblasNoTrans,CblasConjTrans, nSupRs, ndrow1, supWdts, 1.0, trn_diag, nSupRs,
                  src, nSNRCur, 0.0, contribs, nSupRs);
 #else
@@ -324,7 +324,7 @@ namespace nasoq {
       *(++stCol) = tmp * *(++curCol);
      }
     }
-#ifdef OPENBLAS
+#if defined(OPENBLAS) || defined(ACCELERATE)
     cblas_dtrsm(CblasColMajor, CblasRight, CblasLower, CblasConjTrans, CblasNonUnit, rowNo, supWdt, 1.0,
                 trn_diag, supWdt, &cur[supWdt], nSupR);
 #else

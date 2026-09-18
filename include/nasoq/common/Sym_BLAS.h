@@ -24,10 +24,15 @@
 #endif
     #include "openblas/cblas.h"
    // #endif
-#else
+#elif defined(MKL_BLAS)
 #include "mkl.h"
 #include <mkl_blas.h>
 #include <mkl_lapacke.h>
+#elif defined(ACCELERATE)
+#include <Accelerate/Accelerate.h>
+#include "nasoq/clapacke/clapacke.h"
+#else
+#error "unknown BLAS backend"
 #endif
 namespace nasoq {
 #  define VEC_SCAL(n, a, x, u){               \
@@ -42,13 +47,20 @@ namespace nasoq {
 #define SYM_DGEMV dgemv_
 #define SYM_DSCAL dscal_
 #define SET_BLAS_THREAD(t) (openblas_set_num_threads(t))
-#else
+#elif defined(MKL_BLAS)
 #define SYM_DGEMM dgemm
 #define SYM_DTRSM dtrsm
 #define SYM_DGEMV dgemv
 #define SYM_DSCAL dscal
 
 #define SET_BLAS_THREAD(t) (MKL_Domain_Set_Num_Threads(t, MKL_DOMAIN_BLAS))
+#elif defined(ACCELERATE)
+// Accelerate's thread count is fixed at compile time via
+// `VECLIB_MAXIMUM_THREADS` (see top-level CMakeLists.txt), so there is
+// nothing to do here at runtime.
+#define SET_BLAS_THREAD(t) ((void)0)
+#else
+#error "unknown BLAS backend"
 #endif
 
 

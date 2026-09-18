@@ -25,6 +25,38 @@ FetchContent_GetProperties(clapack)
 if(NOT clapack_POPULATED)
     FetchContent_Populate(clapack)
 
+    # CLAPACK's vendored f2c.h defines `integer` as `long int`, which is
+    # 8 bytes on 64-bit macOS/Linux. Every LAPACK routine in SRC/*.c calls
+    # out to external BLAS (dsyrk_, dgemv_, dscal_, idamax_, etc. are not
+    # part of this glob and resolve to OpenBLAS::OpenBLAS at link time; see
+    # target_link_libraries(nasoq PRIVATE clapack::clapack OpenBLAS::OpenBLAS)
+    # in the top-level CMakeLists.txt). OpenBLAS (like virtually every
+    # LP64 gfortran-built BLAS) uses the standard 4-byte Fortran INTEGER
+    # for its interface. Passing 8-byte `long*` dimension/increment
+    # arguments (n, lda, incx, ...) across that ABI boundary to a callee
+    # expecting 4-byte `int*` silently corrupts the calls and makes every
+    # NASOQ_USE_CLAPACK + OpenBLAS factorization return NaN. Patch the
+    # fetched header so `integer`/`uinteger` are 4 bytes, matching
+    # OpenBLAS's interface, before compiling any of CLAPACK's sources.
+    file(READ "${clapack_SOURCE_DIR}/INCLUDE/f2c.h" _clapack_f2c_h)
+    string(REPLACE
+        "typedef long int integer;\ntypedef unsigned long int uinteger;"
+        "typedef int integer;\ntypedef unsigned int uinteger;"
+        _clapack_f2c_h_patched "${_clapack_f2c_h}")
+    # `logical` (used e.g. as dlapmt_'s FORWRD argument) is the same
+    # Fortran INTEGER-width type and must be patched for the same reason.
+    string(REPLACE
+        "typedef long int logical;"
+        "typedef int logical;"
+        _clapack_f2c_h_patched "${_clapack_f2c_h_patched}")
+    if(_clapack_f2c_h_patched STREQUAL _clapack_f2c_h)
+        message(FATAL_ERROR "clapack.cmake: failed to patch f2c.h's `integer` "
+            "typedef to 4 bytes (upstream f2c.h layout changed?); NASOQ's "
+            "CLAPACK-to-OpenBLAS calls would silently corrupt with a 64-bit "
+            "`integer` and cause NaN results.")
+    endif()
+    file(WRITE "${clapack_SOURCE_DIR}/INCLUDE/f2c.h" "${_clapack_f2c_h_patched}")
+
     file(GLOB clapack_SOURCE_FILES "${clapack_SOURCE_DIR}/SRC/*.c")
     add_library(clapack ${clapack_SOURCE_FILES})
     target_compile_definitions(clapack PRIVATE "NO_BLAS_WRAP")
