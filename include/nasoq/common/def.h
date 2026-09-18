@@ -17,9 +17,10 @@
 
 namespace nasoq {
 #define MKL 1
-#define METIS 1
-
-
+// The fill-reducing ordering algorithm (METIS nested-dissection vs. AMD)
+// used in symbolic_phase.cpp is a build-time choice controlled by the
+// NASOQ_ORDERING CMake option, which defines NASOQ_ORDERING_METIS
+// accordingly -- rather than this being hardcoded on unconditionally.
 
 #define CS_MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define CS_MIN(a, b) (((a) < (b)) ? (a) : (b))
