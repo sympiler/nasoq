@@ -423,7 +423,7 @@ namespace nasoq {
   delete [] AFulli;
   delete [] permtab;
 
-#elif METIS
+#elif NASOQ_ORDERING_METIS
   L->ordering = CHOLMOD_METIS;
   CSC *ATrans;
   unsigned long nnzFull = A->nzmax * 2;//Symmetric case

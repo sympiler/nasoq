@@ -55,6 +55,17 @@ if(NASOQ_USE_CLAPACK)
     endif()
 endif()
 
+set(NASOQ_ORDERING "METIS" CACHE STRING "Fill-reducing ordering algorithm for NASOQ's symbolic analysis")
+set_property(CACHE NASOQ_ORDERING PROPERTY STRINGS METIS AMD)
+
+if(${NASOQ_ORDERING} STREQUAL "METIS")
+    set(NASOQ_ORDERING_METIS ON)
+elseif(${NASOQ_ORDERING} STREQUAL "AMD")
+    set(NASOQ_ORDERING_METIS OFF)
+else()
+    message(FATAL_ERROR "unrecognized value for `NASOQ_ORDERING` option: '${NASOQ_ORDERING}'")
+endif()
+
 #--------------------------------[ third party ]-------------------------------#
 
 list(PREPEND CMAKE_MODULE_PATH
@@ -91,7 +102,9 @@ endif()
 
 include(metis)
 
-# TODO: SuiteSparse
+if(NOT NASOQ_ORDERING_METIS)
+    include(amd)
+endif()
 
 #-----------------------------------[ nasoq ]----------------------------------#
 
@@ -177,6 +190,14 @@ target_include_directories(nasoq PUBLIC "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(nasoq PRIVATE ${NASOQ_INTERNAL_INCLUDE_DIRS})
 target_compile_definitions(nasoq PRIVATE "SYM_REMOV")
 target_link_libraries(nasoq PRIVATE metis::metis)
+
+if(NASOQ_ORDERING_METIS)
+    # PUBLIC: symbolic_phase.h (a public header) checks this macro too, to
+    # decide whether it needs to pull in amd.h.
+    target_compile_definitions(nasoq PUBLIC "NASOQ_ORDERING_METIS")
+else()
+    target_link_libraries(nasoq PRIVATE amd::amd)
+endif()
 
 if(NASOQ_USE_BLAS_MKL)
     target_link_libraries(nasoq PRIVATE mkl::mkl)
