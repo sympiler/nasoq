@@ -215,6 +215,11 @@ namespace nasoq {
 #elif defined(OPENBLAS)
   num_thread = openblas_get_num_procs();
   openblas_set_num_threads(1);
+#elif defined(ACCELERATE)
+  // Accelerate's internal thread count is fixed at compile time via
+  // `VECLIB_MAXIMUM_THREADS` (see top-level CMakeLists.txt); there is no
+  // runtime call to change it.
+  num_thread = 1;
 #else
 #error couldn't determine BLAS implementation
 #endif

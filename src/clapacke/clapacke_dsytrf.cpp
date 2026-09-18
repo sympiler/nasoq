@@ -2,10 +2,14 @@
 
 #include <vector>
 
+#if defined(ACCELERATE)
+#include <Accelerate/Accelerate.h>
+#else
 extern "C" {
 #include "f2c.h"
 #include "clapack.h"
 }
+#endif
 
 
 namespace nasoq {

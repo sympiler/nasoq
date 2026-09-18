@@ -2,10 +2,14 @@
 
 #include <vector>
 
+#if defined(ACCELERATE)
+#include <Accelerate/Accelerate.h>
+#else
 extern "C" {
 #include "f2c.h"
 #include "clapack.h"
 }
+#endif
 
 
 namespace nasoq {
@@ -66,12 +70,24 @@ int LAPACKE_dlapmt(
 		if(ldx < n) return -6;
 		std::vector<double> x_t(ldx_t * maximum<clapack_int>(1,n));
 		transpose_into(x_t.data(), ldx_t, x, ldx, m, n, matrix_layout);
+#if defined(ACCELERATE)
+		// Accelerate's `dlapmt_` matches reference LAPACK exactly: it is a
+		// `void`-returning subroutine with no INFO output argument (unlike
+		// CLAPACK's f2c-translated version, which synthesizes an `integer`
+		// return value), so there is nothing to check here.
+		dlapmt_(&forwrd, &m, &n, x_t.data(), &ldx_t, k);
+#else
 		clapack_int info = dlapmt_(&forwrd, &m, &n, x_t.data(), &ldx_t, k);
 		if(info < 0) return info-1;
+#endif
 		transpose_into(x, ldx, x_t.data(), ldx_t, m, n, LAPACK_COL_MAJOR);
 	} else if(LAPACK_COL_MAJOR == matrix_layout) {
+#if defined(ACCELERATE)
+		dlapmt_(&forwrd, &m, &n, x, &ldx, k);
+#else
 		clapack_int info = dlapmt_(&forwrd, &m, &n, x, &ldx, k);
 		if(info < 0) return info-1;
+#endif
 	} else {
 		return -1; // argument 1 has an illegal value
 	}
